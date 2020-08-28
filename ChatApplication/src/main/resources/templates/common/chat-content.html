@@ -38,7 +38,7 @@
                     <!-- Message: content -->
                     <div class="message-content bg-light">
                         <h6 class="mb-2" th:if="${!message.isOwner()}" th:text="${message.usernameSender}"></h6>
-                        <div th:utext="${#strings.replace(#strings.escapeJava(message.content),'\n','&lt;br /&gt;')}">
+                        <div th:utext="${#strings.replace(#strings.escapeJava(message.content),'\n','&lt;br /&gt;')}" style="white-space: pre-wrap;">
 
                         </div>
 

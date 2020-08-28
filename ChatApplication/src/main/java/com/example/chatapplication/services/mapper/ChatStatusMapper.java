@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = {})
 public interface ChatStatusMapper extends EntityMapper<ChatStatusDto, ChatStatus> {
-    default ChatStatus fromId(Integer id){
+    default ChatStatus fromId(Long id){
         if (id == null) {
             return null;
         }

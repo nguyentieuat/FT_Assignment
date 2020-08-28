@@ -17,7 +17,8 @@ import java.time.LocalDateTime;
 public class ChatStatus {
 
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     private String title;
     private String content;

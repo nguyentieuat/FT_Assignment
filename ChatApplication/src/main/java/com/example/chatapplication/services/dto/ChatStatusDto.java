@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class ChatStatusDto {
-    private int id;
+    private long id;
 
     private String title;
     private String content;

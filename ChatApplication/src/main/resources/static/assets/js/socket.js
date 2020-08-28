@@ -161,7 +161,7 @@ $(document).ready(function () {
             tagHtmlDropdownBefore = '';
         }
 
-        let messageContent = message.content.replace(/(?:\r|\r|)/g, '<br>');
+        let messageContent = message.content;
 
         let infoAttachment = message.infoAttachment;
         let tagHtmlAttachment = '<div class="form-row py-3">';
@@ -224,7 +224,7 @@ $(document).ready(function () {
             tagHtmlDropdownBefore +
             '                            <!-- Message: content -->' +
             '                            <div class="message-content bg-light">' + tagHtmlUserName +
-            '                                <div >' + messageContent + '</div>' +
+            '                                <div style="white-space: pre-wrap;">' + messageContent + '</div>' +
             tagHtmlAttachment +
             '                                <div class="mt-1">' +
             '                                    <small class="opacity-65" >' + dateString + '</small>' +
