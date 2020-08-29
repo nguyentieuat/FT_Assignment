@@ -13,7 +13,7 @@ $(document).ready(function () {
     });
 
     $('#btnSignin').click(function () {
-        if ($('#form-signin').valid()){
+        if ($('#form-signin').valid()) {
             $('#form-signin').submit();
         }
     });

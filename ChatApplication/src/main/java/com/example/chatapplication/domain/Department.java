@@ -32,7 +32,7 @@ public class Department implements Serializable {
     @ColumnDefault("1")
     private int status = Constants.Status.ACTIVE;
 
-    @OneToMany(mappedBy="department")
+    @OneToMany(mappedBy = "department")
     private Set<Employee> employees;
 
     @CreationTimestamp

@@ -1,6 +1,6 @@
 package com.example.chatapplication.services.dto;
 
-import com.example.chatapplication.domain.Account;
+import com.example.chatapplication.ultities.Constants;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,12 +11,13 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class ChatStatusDto {
+
     private long id;
 
     private String title;
     private String content;
 
-    private Account account;
+    private int status = Constants.Status.ACTIVE;
 
     private LocalDateTime createdDate;
     private String createdBy;

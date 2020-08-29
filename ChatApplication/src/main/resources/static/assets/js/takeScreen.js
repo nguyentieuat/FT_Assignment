@@ -2,7 +2,8 @@ const canIRun = navigator.mediaDevices.getDisplayMedia;
 
 const takeScreenShot = async () => {
     const stream = await navigator.mediaDevices.getDisplayMedia({
-        video: { mediaSource: 'screen' } });
+        video: {mediaSource: 'screen'}
+    });
 
     // get correct video track
     const track = stream.getVideoTracks()[0];
@@ -28,7 +29,8 @@ const takeScreenShot = async () => {
     // clone so we can rename, and put into array for easy proccessing
     const file = [
         new File([buff], `photo_${new Date()}.jpg`, {
-            type: 'image/jpeg' })];
+            type: 'image/jpeg'
+        })];
 
 
     return file;

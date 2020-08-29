@@ -12,4 +12,8 @@ public interface MessageService {
     MessageDto saveMessage(MessageDto messageDto);
 
     MessageDto findByMessageId(long l);
+
+    void deleteMessageByID(long idMessage);
+
+    List<MessageDto> findByContent(String keySearch, Pageable pageable);
 }

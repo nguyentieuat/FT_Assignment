@@ -6,7 +6,7 @@
         <a class="avatar avatar-sm mr-4 mr-lg-5" href="#"
            data-chat-sidebar-toggle="#chat-1-user-profile">
             <img class="avatar-img" th:with="avatar=${message.accountSender.employee.attachmentAvatar}"
-                 th:src="${ avatar!= null ? '/loadImage/' + avatar.id: ''}" alt="">
+                 th:src="${ avatar!= null ? '/loadImage/' + avatar.id : ''}" alt="">
         </a>
 
         <!-- Message: body -->
@@ -23,13 +23,13 @@
                         </a>
 
                         <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" th:idmessage="${message.id}" name="editMessage">
                                 Edit <span class="ml-auto fe-edit-3"></span>
                             </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Share <span class="ml-auto fe-share-2"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+<!--                            <a class="dropdown-item d-flex align-items-center" href="#">-->
+<!--                                Share <span class="ml-auto fe-share-2"></span>-->
+<!--                            </a>-->
+                            <a class="dropdown-item d-flex align-items-center" th:idmessage="${message.id}" name="deleteMessage">
                                 Delete <span class="ml-auto fe-trash-2"></span>
                             </a>
                         </div>
@@ -38,7 +38,8 @@
                     <!-- Message: content -->
                     <div class="message-content bg-light">
                         <h6 class="mb-2" th:if="${!message.isOwner()}" th:text="${message.usernameSender}"></h6>
-                        <div th:utext="${#strings.replace(#strings.escapeJava(message.content),'\n','&lt;br /&gt;')}" style="white-space: pre-wrap;">
+                        <div th:utext="${#strings.replace(#strings.escapeJava(message.content),'\n','&lt;br /&gt;')}"
+                             style="white-space: pre-wrap;">
 
                         </div>
 
@@ -80,13 +81,13 @@
                         </a>
 
                         <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="#" th:idmessage="${message.id}" name="editMessage" >
                                 Edit <span class="ml-auto fe-edit-3"></span>
                             </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Share <span class="ml-auto fe-share-2"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+<!--                            <a class="dropdown-item d-flex align-items-center" href="#">-->
+<!--                                Share <span class="ml-auto fe-share-2"></span>-->
+<!--                            </a>-->
+                            <a class="dropdown-item d-flex align-items-center" th:idmessage="${message.id}" name="deleteMessage" >
                                 Delete <span class="ml-auto fe-trash-2"></span>
                             </a>
                         </div>

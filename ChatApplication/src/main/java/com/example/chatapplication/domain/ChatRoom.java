@@ -31,6 +31,9 @@ public class ChatRoom {
     @OneToMany(mappedBy = "chatRoom")
     private Set<Attachment> attachments;
 
+    @OneToMany(mappedBy = "chatRoom")
+    private Set<Message> messages;
+
 
     @OneToOne
     @JoinColumn(name = "chatStatusId")
@@ -40,7 +43,7 @@ public class ChatRoom {
     private int status = Constants.Status.ACTIVE;
 
     @ManyToMany
-    @JoinTable(name = "room_account", joinColumns = @JoinColumn(name = "room_id"),inverseJoinColumns = @JoinColumn(name = "username"))
+    @JoinTable(name = "room_account", joinColumns = @JoinColumn(name = "room_id"), inverseJoinColumns = @JoinColumn(name = "username"))
     private Set<Account> accounts;
 
     @CreationTimestamp

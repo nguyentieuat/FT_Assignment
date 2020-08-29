@@ -41,15 +41,15 @@ public class Employee implements Serializable {
     private int salary;
 
     @OneToOne
-    @JoinColumn(name="username")
+    @JoinColumn(name = "username")
     private Account account;
 
     @ManyToOne
-    @JoinColumn(name="managerUsername")
+    @JoinColumn(name = "managerUsername")
     private Account managerAccount;
 
     @ManyToOne
-    @JoinColumn(name="department_id", nullable = true)
+    @JoinColumn(name = "department_id", nullable = true)
     private Department department;
 
     @Column(length = 2)

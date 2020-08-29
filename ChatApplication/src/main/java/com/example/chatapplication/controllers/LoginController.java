@@ -8,6 +8,7 @@ import com.example.chatapplication.ultities.Constants;
 import com.example.chatapplication.ultities.JwtTokenUtil;
 import com.example.chatapplication.ultities.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -37,6 +38,7 @@ public class LoginController {
 
     /**
      * Get page login
+     *
      * @return
      */
     @GetMapping(value = {"", "/", "/signin"})
@@ -55,7 +57,11 @@ public class LoginController {
     public String login(JwtLoginRequest authenticationRequest, HttpServletResponse response) throws Exception {
         String username = authenticationRequest.getUsername();
 
-        authenticate(username, authenticationRequest.getPassword());
+        boolean authenticate = authenticate(username, authenticationRequest.getPassword());
+        if (!authenticate){
+            return "/signin";
+        }
+
         final UserDetails userDetails = jwtUserDetailsService
                 .loadUserByUsername(authenticationRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
@@ -73,14 +79,19 @@ public class LoginController {
         return "redirect:/chat-light-mode";
     }
 
-    private void authenticate(String username, String password) throws Exception {
+    private boolean authenticate(String username, String password) throws Exception {
+        boolean result = false;
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            result = true;
         } catch (DisabledException e) {
-            throw new Exception("USER_DISABLED", e);
+//            throw new Exception("USER_DISABLED", e);
+            log.error(ExceptionUtils.getStackTrace(e));
         } catch (BadCredentialsException e) {
-            throw new Exception("INVALID_CREDENTIALS", e);
+//            throw new Exception("INVALID_CREDENTIALS", e);
+            log.error(ExceptionUtils.getStackTrace(e));
         }
+        return result;
     }
 
 

@@ -2,6 +2,7 @@ package com.example.chatapplication.services.dto;
 
 import com.example.chatapplication.domain.Account;
 import com.example.chatapplication.domain.Attachment;
+import com.example.chatapplication.domain.ChatRoom;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,8 @@ public class MessageDto implements Serializable {
     @JsonIgnore
     private Account accountReceiver;
 
+    private ChatRoom chatRoom;
+
     private LocalDateTime createdDate;
     private String createdBy;
 
@@ -46,14 +49,14 @@ public class MessageDto implements Serializable {
 
 
     public String getUsernameSender() {
-        if (!Objects.isNull(accountSender)){
+        if (!Objects.isNull(accountSender)) {
             return accountSender.getUsername();
         }
         return usernameSender;
     }
 
     public String getUsernameReceiver() {
-        if (!Objects.isNull(accountReceiver)){
+        if (!Objects.isNull(accountReceiver)) {
             return accountReceiver.getUsername();
         }
         return usernameReceiver;
@@ -62,7 +65,7 @@ public class MessageDto implements Serializable {
     public long getIdAvatar() {
         if (!Objects.isNull(accountSender)) {
             Attachment attachmentAvatar = accountSender.getEmployee().getAttachmentAvatar();
-            if (!Objects.isNull(attachmentAvatar)){
+            if (!Objects.isNull(attachmentAvatar)) {
                 return attachmentAvatar.getId();
             }
         }
@@ -70,7 +73,7 @@ public class MessageDto implements Serializable {
     }
 
     public Map<Long, String> getInfoAttachment() {
-        if (!Objects.isNull(attachments)){
+        if (!Objects.isNull(attachments)) {
             infoAttachment = new HashMap<>();
             attachments.forEach(attachment -> {
                 infoAttachment.put(attachment.getId(), attachment.getFileName());

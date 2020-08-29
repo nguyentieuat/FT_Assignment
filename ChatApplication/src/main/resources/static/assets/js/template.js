@@ -1,10 +1,10 @@
-(function($) {
+(function ($) {
 
     "use strict";
 
     Dropzone.autoDiscover = false;
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         //
         // Horizontal scroll
@@ -14,7 +14,7 @@
             function scrollHorizontally(e) {
                 e = window.event || e;
                 var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-                el.scrollLeft -= (delta*28);
+                el.scrollLeft -= (delta * 28);
                 e.preventDefault();
             }
 
@@ -31,22 +31,22 @@
         //
 
         var isMobile = {
-            Android: function() {
+            Android: function () {
                 return navigator.userAgent.match(/Android/i);
             },
-            BlackBerry: function() {
+            BlackBerry: function () {
                 return navigator.userAgent.match(/BlackBerry/i);
             },
-            iOS: function() {
+            iOS: function () {
                 return navigator.userAgent.match(/iPhone|iPod|iPad/i);
             },
-            Opera: function() {
+            Opera: function () {
                 return navigator.userAgent.match(/Opera Mini/i);
             },
-            Windows: function() {
+            Windows: function () {
                 return navigator.userAgent.match(/IEMobile/i) || navigator.userAgent.match(/WPDesktop/i);
             },
-            any: function() {
+            any: function () {
                 return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
             }
         };
@@ -55,9 +55,9 @@
         // Modified accordion(settings.html)
         //
 
-        if ( !isMobile.any() ) {
+        if (!isMobile.any()) {
             [].forEach.call(document.querySelectorAll('.modified-accordion [data-toggle="collapse"]'), function (e) {
-                e.addEventListener('click', function(event) {
+                e.addEventListener('click', function (event) {
                     event.preventDefault();
                     event.stopPropagation();
                 });
@@ -72,7 +72,7 @@
         // Emoji
         //
 
-        if ( !isMobile.any() ) {
+        if (!isMobile.any()) {
             [].forEach.call(document.querySelectorAll('[data-emoji-form]'), function (form) {
                 var button = form.querySelector('[data-emoji-btn]');
 
@@ -81,7 +81,7 @@
                     zIndex: 1020
                 });
 
-                picker.on('emoji', function(emoji) {
+                picker.on('emoji', function (emoji) {
                     form.querySelector('[data-emoji-input]').value += emoji;
                 });
 
@@ -102,7 +102,7 @@
         [].forEach.call(document.querySelectorAll('[data-chat="open"]'), function (a) {
             a.addEventListener('click', function () {
                 document.querySelector('.main').classList.toggle('main-visible');
-            }, false );
+            }, false);
         });
 
         //
@@ -118,8 +118,8 @@
                 var chat_sidebar_id = e.getAttribute('data-chat-sidebar-toggle');
                 var chat_sidebar = document.querySelector(chat_sidebar_id);
 
-                if (typeof(chat_sidebar) != 'undefined' && chat_sidebar != null) {
-                    if ( chat_sidebar.classList.contains('chat-sidebar-visible') ) {
+                if (typeof (chat_sidebar) != 'undefined' && chat_sidebar != null) {
+                    if (chat_sidebar.classList.contains('chat-sidebar-visible')) {
                         chat_sidebar.classList.remove('chat-sidebar-visible')
                         document.body.classList.remove('sidebar-is-open');
                     } else {
@@ -146,14 +146,14 @@
                 [].forEach.call(document.querySelectorAll('.chat-sidebar'), function (a) {
                     a.classList.remove('chat-sidebar-visible');
                 });
-            }, false );
+            }, false);
         });
 
         //
         // Dropzone
         //
 
-        if ( document.querySelector('#dropzone-template-js') ) {
+        if (document.querySelector('#dropzone-template-js')) {
             var template = document.querySelector('#dropzone-template-js');
             var template_element = document.querySelector('#dropzone-template-js');
             template_element.parentNode.removeChild(template_element);
@@ -162,8 +162,8 @@
 
         [].forEach.call(document.querySelectorAll('.dropzone-form-js'), function (el) {
 
-            var clickable         = el.querySelector('.dropzone-button-js').id;
-            var url               = el.getAttribute('data-dz-url');
+            var clickable = el.querySelector('.dropzone-button-js').id;
+            var url = el.getAttribute('data-dz-url');
             var previewsContainer = el.querySelector('.dropzone-previews-js');
 
             var myDropzone = new Dropzone(el, {
@@ -181,16 +181,16 @@
         //
 
         function mobileScreenHeight() {
-            if ( document.querySelectorAll('.navigation').length && document.querySelectorAll('.sidebar').length ) {
+            if (document.querySelectorAll('.navigation').length && document.querySelectorAll('.sidebar').length) {
                 document.querySelector('.sidebar').style.height = windowHeight - document.querySelector('.navigation').offsetHeight + 'px';
             }
         }
 
-        if ( isMobile.any() && (document.documentElement.clientWidth < 1024) ) {
+        if (isMobile.any() && (document.documentElement.clientWidth < 1024)) {
             var windowHeight = document.documentElement.clientHeight;
             mobileScreenHeight();
 
-            window.addEventListener('resize', function(event){
+            window.addEventListener('resize', function (event) {
                 if (document.documentElement.clientHeight != windowHeight) {
                     windowHeight = document.documentElement.clientHeight;
                     mobileScreenHeight();

@@ -50,7 +50,7 @@ public class FileUtilsUpload {
             Path locationResult = Paths.get(sbPathResult.toString());
             pathResult = locationResult.toString();
 
-        } catch (Exception ex){
+        } catch (Exception ex) {
             throw new BusinessException("Could not store file" + file.getOriginalFilename()
                     + ". Please try again!");
         }

@@ -54,6 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         // We don't need CSRF for this example
         http
                 .csrf().disable()
@@ -76,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().deleteCookies(Constants.COOKIE_NAME)
                 .logoutSuccessUrl("/signin")
                 .and()
-                .rememberMe().key("uniqueAndSecret");
+                .rememberMe().key("uniqueAndSecret");;
 
         // Add a filter to validate the tokens with every request
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

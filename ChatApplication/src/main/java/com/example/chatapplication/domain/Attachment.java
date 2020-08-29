@@ -23,11 +23,10 @@ public class Attachment {
     private long size;
 
     @ManyToOne
-    @JoinColumn(name = "messageId")
     private Message message;
 
     @ManyToOne
-    @JoinColumn(name = "roomID")
+    @JoinColumn(name = "roomId")
     private ChatRoom chatRoom;
 
     @CreationTimestamp

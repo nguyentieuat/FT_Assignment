@@ -1,385 +1,46 @@
-<div th:fragment="members">
-    <ul class="list-group list-group-flush list-group-no-border-first">
-        <!-- Member -->
-        <li class="list-group-item py-6">
-            <div class="media align-items-center">
+<ul th:fragment="members" class="list-group list-group-flush list-group-no-border-first"
+    th:each="account: ${chatRoomDto.accounts}">
+    <!-- Member -->
+    <li class="list-group-item py-6">
+        <div class="media align-items-center">
 
 
-                <div class="avatar avatar-sm avatar-online mr-5">
-                    <img class="avatar-img" th:src="@{/assets/images/avatars/10.jpg}"
-                         alt="Anna Bridges">
-                </div>
+            <div class="avatar avatar-sm mr-5">
+                <img class="avatar-img" th:with="avatar=${account.employee.attachmentAvatar}"
+                     th:src="${ avatar!= null ? '/loadImage/' + avatar.id : ''}" >
+            </div>
 
 
-                <div class="media-body">
-                    <h6 class="mb-0">
-                        <a href="#" class="text-reset">Anna Bridges</a>
-                    </h6>
-                    <small class="text-muted">Online</small>
-                </div>
+            <div class="media-body">
+                <h6 class="mb-0">
+                    <a href="#" class="text-reset" th:text="${account.username}"></a>
+                </h6>
+                <small class="text-muted"></small>
+            </div>
 
-                <div class="align-self-center ml-5">
-                    <div class="dropdown">
-                        <a href="#"
-                           class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            <i class="fe-more-vertical"></i>
+            <div class="align-self-center ml-5">
+                <div class="dropdown">
+                    <a href="#"
+                       class="btn btn-sm btn-ico btn-link text-muted w-auto"
+                       data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        <i class="fe-more-vertical"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item d-flex align-items-center" href="#">
+                            Promote <span class="ml-auto fe-trending-up"></span>
                         </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Promote <span class="ml-auto fe-trending-up"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Restrict <span class="ml-auto fe-trending-down"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Delete <span class="ml-auto fe-user-x"></span>
-                            </a>
-                        </div>
+                        <a class="dropdown-item d-flex align-items-center" href="#">
+                            Restrict <span class="ml-auto fe-trending-down"></span>
+                        </a>
+                        <a class="dropdown-item d-flex align-items-center" href="#">
+                            Delete <span class="ml-auto fe-user-x"></span>
+                        </a>
                     </div>
                 </div>
-
             </div>
-        </li>
-        <!-- Member -->
-        <!-- Member -->
-        <li class="list-group-item py-6">
-            <div class="media align-items-center">
 
-
-                <div class="avatar avatar-sm avatar-online mr-5">
-                    <img class="avatar-img" th:src="@{/assets/images/avatars/7.jpg}"
-                         alt="Simon Hensley">
-                </div>
-
-
-                <div class="media-body">
-                    <h6 class="mb-0">
-                        <a href="#" class="text-reset">Simon Hensley</a>
-                    </h6>
-                    <small class="text-muted">Online</small>
-                </div>
-
-                <div class="align-self-center ml-5">
-                    <div class="dropdown">
-                        <a href="#"
-                           class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            <i class="fe-more-vertical"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Promote <span class="ml-auto fe-trending-up"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Restrict <span class="ml-auto fe-trending-down"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Delete <span class="ml-auto fe-user-x"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </li>
-        <!-- Member -->
-        <!-- Member -->
-        <li class="list-group-item py-6">
-            <div class="media align-items-center">
-
-
-                <div class="avatar avatar-sm mr-5">
-                    <img class="avatar-img" th:src="@{/assets/images/avatars/9.jpg}"
-                         alt="William Wright">
-                </div>
-
-                <div class="media-body">
-                    <h6 class="mb-0">
-                        <a href="#" class="text-reset">William Wright</a>
-                    </h6>
-                    <small class="text-muted">last seen 7 hours ago</small>
-                </div>
-
-                <div class="align-self-center ml-5">
-                    <div class="dropdown">
-                        <a href="#"
-                           class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            <i class="fe-more-vertical"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Promote <span class="ml-auto fe-trending-up"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Restrict <span class="ml-auto fe-trending-down"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Delete <span class="ml-auto fe-user-x"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </li>
-        <!-- Member -->
-        <!-- Member -->
-        <li class="list-group-item py-6">
-            <div class="media align-items-center">
-
-
-                <div class="avatar avatar-sm mr-5">
-                    <img class="avatar-img" th:src="@{/assets/images/avatars/5.jpg}"
-                         alt="Leslie Sutton">
-                </div>
-
-                <div class="media-body">
-                    <h6 class="mb-0">
-                        <a href="#" class="text-reset">Leslie Sutton</a>
-                    </h6>
-                    <small class="text-muted">last seen 6 days ago</small>
-                </div>
-
-                <div class="align-self-center ml-5">
-                    <div class="dropdown">
-                        <a href="#"
-                           class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            <i class="fe-more-vertical"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Promote <span class="ml-auto fe-trending-up"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Restrict <span class="ml-auto fe-trending-down"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Delete <span class="ml-auto fe-user-x"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </li>
-        <!-- Member -->
-        <!-- Member -->
-        <li class="list-group-item py-6">
-            <div class="media align-items-center">
-
-
-                <div class="avatar avatar-sm mr-5">
-                    <img class="avatar-img" th:src="@{/assets/images/avatars/4.jpg}"
-                         alt="Matthew Wiggins">
-                </div>
-
-                <div class="media-body">
-                    <h6 class="mb-0">
-                        <a href="#" class="text-reset">Matthew Wiggins</a>
-                    </h6>
-                    <small class="text-muted">last seen 2 days ago</small>
-                </div>
-
-                <div class="align-self-center ml-5">
-                    <div class="dropdown">
-                        <a href="#"
-                           class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            <i class="fe-more-vertical"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Promote <span class="ml-auto fe-trending-up"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Restrict <span class="ml-auto fe-trending-down"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Delete <span class="ml-auto fe-user-x"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </li>
-        <!-- Member -->
-        <!-- Member -->
-        <li class="list-group-item py-6">
-            <div class="media align-items-center">
-
-
-                <div class="avatar avatar-sm mr-5">
-                    <img class="avatar-img" th:src="@{/assets/images/avatars/3.jpg}"
-                         alt="Thomas Walker">
-                </div>
-
-                <div class="media-body">
-                    <h6 class="mb-0">
-                        <a href="#" class="text-reset">Thomas Walker</a>
-                    </h6>
-                    <small class="text-muted">last seen 10 minutes ago</small>
-                </div>
-
-                <div class="align-self-center ml-5">
-                    <div class="dropdown">
-                        <a href="#"
-                           class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            <i class="fe-more-vertical"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Promote <span class="ml-auto fe-trending-up"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Restrict <span class="ml-auto fe-trending-down"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Delete <span class="ml-auto fe-user-x"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </li>
-        <!-- Member -->
-        <!-- Member -->
-        <li class="list-group-item py-6">
-            <div class="media align-items-center">
-
-
-                <div class="avatar avatar-sm mr-5">
-                    <img class="avatar-img" th:src="@{/assets/images/avatars/2.jpg}"
-                         alt="Zane Mayes">
-                </div>
-
-                <div class="media-body">
-                    <h6 class="mb-0">
-                        <a href="#" class="text-reset">Zane Mayes</a>
-                    </h6>
-                    <small class="text-muted">last seen 6 days ago</small>
-                </div>
-
-                <div class="align-self-center ml-5">
-                    <div class="dropdown">
-                        <a href="#"
-                           class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            <i class="fe-more-vertical"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Promote <span class="ml-auto fe-trending-up"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Restrict <span class="ml-auto fe-trending-down"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Delete <span class="ml-auto fe-user-x"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </li>
-        <!-- Member -->
-        <!-- Member -->
-        <li class="list-group-item py-6">
-            <div class="media align-items-center">
-
-
-                <div class="avatar avatar-sm mr-5">
-                    <img class="avatar-img" th:src="@{/assets/images/avatars/6.jpg}"
-                         alt="Brian Dawson">
-                </div>
-
-                <div class="media-body">
-                    <h6 class="mb-0">
-                        <a href="#" class="text-reset">Brian Dawson</a>
-                    </h6>
-                    <small class="text-muted">last seen 2 days ago</small>
-                </div>
-
-                <div class="align-self-center ml-5">
-                    <div class="dropdown">
-                        <a href="#"
-                           class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            <i class="fe-more-vertical"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Promote <span class="ml-auto fe-trending-up"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Restrict <span class="ml-auto fe-trending-down"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Delete <span class="ml-auto fe-user-x"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </li>
-        <!-- Member -->
-        <!-- Member -->
-        <li class="list-group-item py-6">
-            <div class="media align-items-center">
-
-
-                <div class="avatar avatar-sm mr-5">
-                    <img class="avatar-img" th:src="@{/assets/images/avatars/3.jpg}"
-                         alt="William Greer">
-                </div>
-
-                <div class="media-body">
-                    <h6 class="mb-0">
-                        <a href="#" class="text-reset">William Greer</a>
-                    </h6>
-                    <small class="text-muted">last seen 10 minutes ago</small>
-                </div>
-
-                <div class="align-self-center ml-5">
-                    <div class="dropdown">
-                        <a href="#"
-                           class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            <i class="fe-more-vertical"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Promote <span class="ml-auto fe-trending-up"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Restrict <span class="ml-auto fe-trending-down"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Delete <span class="ml-auto fe-user-x"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </li>
-        <!-- Member -->
-
-    </ul>
-</div>
+        </div>
+    </li>
+    <!-- Member -->
+</ul>

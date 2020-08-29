@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(schema = "luannt19")
-public class Message{
+public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +25,10 @@ public class Message{
 
     @OneToMany(mappedBy = "message")
     private Set<Attachment> attachments;
+
+    @ManyToOne
+    @JoinColumn(name = "roomId")
+    private ChatRoom chatRoom;
 
     @ManyToOne
     @JoinColumn(name = "sender", referencedColumnName = "username")

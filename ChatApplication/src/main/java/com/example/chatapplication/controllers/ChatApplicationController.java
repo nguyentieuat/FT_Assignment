@@ -4,15 +4,19 @@ import com.example.chatapplication.domain.Account;
 import com.example.chatapplication.domain.Attachment;
 import com.example.chatapplication.services.AccountService;
 import com.example.chatapplication.services.AttachmentService;
+import com.example.chatapplication.services.ChatRomService;
 import com.example.chatapplication.services.MessageService;
 import com.example.chatapplication.services.dto.AccountDto;
+import com.example.chatapplication.services.dto.ChatRoomDto;
 import com.example.chatapplication.services.dto.MessageDto;
+import com.example.chatapplication.services.dto.ResponseEntityDto;
 import com.example.chatapplication.services.mapper.AccountMapper;
 import com.example.chatapplication.ultities.Constants;
 import com.example.chatapplication.ultities.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
@@ -22,10 +26,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,7 +49,10 @@ public class ChatApplicationController {
     private MessageService messageService;
 
     @Autowired
-    AttachmentService attachmentService;
+    private AttachmentService attachmentService;
+
+    @Autowired
+    private ChatRomService chatRomService;
 
     @Autowired
     private AccountMapper accountMapper;
@@ -68,12 +72,15 @@ public class ChatApplicationController {
         if (!Objects.isNull(username)) {
             Account account = accountService.getAccountByUsername(username);
             AccountDto accountDto = accountMapper.toDto(account);
-            request.setAttribute("currentUser", accountDto);
+            request.setAttribute(Constants.NameAttribute.CURRENT_USER, accountDto);
             List<MessageDto> messageDtoList = messageService.getAllMessage(pageable);
             messageDtoList.forEach(messageDto -> {
                 messageDto.setOwner(messageDto.getAccountSender().getUsername().equalsIgnoreCase(username));
             });
-            request.setAttribute("messageDtoList", messageDtoList);
+            request.setAttribute(Constants.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
+
+            ChatRoomDto chatRoomDto = chatRomService.getChatRoomById(Constants.ID_CHAT_ROOM_ALL_USER);
+            request.setAttribute(Constants.NameAttribute.CHAT_ROOM_DTO, chatRoomDto);
         }
 
         return "chat-light-mode";
@@ -114,10 +121,45 @@ public class ChatApplicationController {
             messageDtoList.forEach(mess -> {
                 mess.setOwner(mess.getAccountSender().getUsername().equalsIgnoreCase(username));
             });
-            request.setAttribute("messageDtoList", messageDtoList);
+            request.setAttribute(Constants.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
         }
         return "common/chat-content";
     }
+
+
+    @PostMapping("/deleteMessage/{idMessage}")
+    @ResponseBody
+    public String deleteMessage(@PathVariable long idMessage) {
+        try {
+            messageService.deleteMessageByID(idMessage);
+
+            ResponseEntityDto responseEntityDto = new ResponseEntityDto();
+            responseEntityDto.setMessage("Delete sucess message id " + idMessage);
+            return "chat-light-mode";
+        }catch (Exception e){
+            log.error(ExceptionUtils.getStackTrace(e));
+            return  null;
+        }
+
+    }
+
+    @GetMapping("/searchMessage")
+    public String searchMessage(HttpServletRequest request,  HttpServletResponse response, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
+        String username = SecurityUtils.getAccountCurrentUserLogin().orElse(null);
+
+        if (!Objects.isNull(username)) {
+            String keySearch = request.getParameter(Constants.KEY_SEARCH);
+
+            List<MessageDto> messageDtoList = messageService.findByContent(keySearch, pageable);
+            messageDtoList.forEach(messageDto -> {
+                messageDto.setOwner(messageDto.getAccountSender().getUsername().equalsIgnoreCase(username));
+            });
+            request.setAttribute(Constants.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
+        }
+
+        return "common/chat-content";
+    }
+
 
     @MessageMapping("/chat.sendMessage")
     @SendTo("/topic/publicChatRoom")

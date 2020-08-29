@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = {})
 public interface CaptureScreenMapper extends EntityMapper<CaptureScreenDto, CaptureScreen> {
-    default CaptureScreen fromId(Long id){
+    default CaptureScreen fromId(Long id) {
         if (id == null) {
             return null;
         }

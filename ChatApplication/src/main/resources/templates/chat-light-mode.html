@@ -143,7 +143,7 @@
                                 <ul class="list-inline mb-0">
                                     <li class="list-inline-item">
                                         <a class="text-muted px-0" href="#" data-chat="open">
-                                            <i class="icon-md fe-chevron-left"></i>
+                                            <i class="icon-md fe-chevron-right"></i>
                                         </a>
                                     </li>
                                 </ul>
@@ -152,15 +152,18 @@
                             <!-- Chat photo -->
                             <div class="col-6 col-xl-6">
                                 <div class="media text-center text-xl-left">
-                                    <div class="avatar avatar-sm d-none d-xl-inline-block mr-5">
-                                        <img th:src="@{/assets/images/avatars/11.jpg}" class="avatar-img" alt="">
+                                    <div class="avatar avatar-online avatar-sm d-none d-xl-inline-block mr-5">
+                                        <img th:with="avatar=${chatRoomDto.attachmentAvatar}"
+                                             th:src="${ avatar!= null ? '/loadImage/' + avatar.id : ''}"
+                                             class="avatar-img" alt="">
                                     </div>
 
                                     <div class="media-body align-self-center text-truncate">
-                                        <h6 class="text-truncate mb-n1">Bootstrap Themes</h6>
-                                        <small class="text-muted">35 members</small>
+                                        <h6 class="text-truncate mb-n1" th:text="${chatRoomDto.name}"></h6>
+                                        <small class="text-muted"
+                                               th:text="${chatRoomDto.accounts.size() + 'members'}"></small>
                                         <small class="text-muted mx-2"> • </small>
-                                        <small class="text-muted">HTML, CSS, and Javascript Help</small>
+                                        <small class="text-muted" th:text="${chatRoomDto.chatStatus.title}"></small>
                                     </div>
                                 </div>
                             </div>
@@ -179,18 +182,19 @@
                 <!-- Chat: Search -->
                 <div class="collapse border-bottom px-lg-8" id="chat-1-search">
                     <div class="container-xxl py-4 py-lg-6">
+                        <form method="get" action="/searchMessage" id="formSearch">
+                            <div class="input-group">
+                                <input type="text" class="form-control form-control-lg" placeholder="Search this chat"
+                                       aria-label="Search this chat" name="keySearch">
 
-                        <div class="input-group">
-                            <input type="text" class="form-control form-control-lg" placeholder="Search this chat"
-                                   aria-label="Search this chat">
+                                <div class="input-group-append">
+                                    <button class="btn btn-lg btn-ico btn-secondary btn-minimal" type="submit">
+                                        <i class="fe-search"></i>
+                                    </button>
 
-                            <div class="input-group-append">
-                                <button class="btn btn-lg btn-ico btn-secondary btn-minimal" type="submit">
-                                    <i class="fe-search"></i>
-                                </button>
+                                </div>
                             </div>
-                        </div>
-
+                        </form>
                     </div>
                 </div>
                 <!-- Chat: Search -->
@@ -279,7 +283,7 @@
                                 <!-- Close sidebar -->
                                 <li class="nav-item list-inline-item">
                                     <a class="nav-link text-muted px-0" href="#" data-chat-sidebar-close="">
-                                        <i class="icon-md fe-chevron-left"></i>
+                                        <i class="icon-md fe-chevron-right"></i>
                                     </a>
                                 </li>
 
@@ -320,11 +324,11 @@
                         <div class="border-bottom text-center py-9 px-10">
                             <!-- Photo -->
                             <div class="avatar avatar-xl mx-5 mb-5">
-                                <img class="avatar-img" th:src="@{/assets/images/avatars/11.jpg}" alt="">
+                                <img class="avatar-img" th:src="${'/loadImage/'+ chatRoomDto.attachmentAvatar.id }"
+                                     alt="">
                             </div>
-                            <h5>Bootstrap Themes</h5>
-                            <p class="text-muted">Bootstrap is an open source toolkit for developing web with HTML,
-                                CSS, and JS.</p>
+                            <h5 th:text="${chatRoomDto.name}"></h5>
+                            <p class="text-muted" th:text="${chatRoomDto.chatStatus.content}"></p>
                         </div>
 
                         <!-- Navs -->
@@ -495,7 +499,8 @@
 <script th:src="@{/assets/js/template.js}"></script>
 <script th:src="@{/assets/js/common.js}"></script>
 <script th:src="@{/assets/js/socket.js}"></script>
-<!--<script th:src="@{/assets/js/takeScreen.js}"></script>-->
+<script th:src="@{/assets/js/app.js}"></script>
+<script th:src="@{/assets/js/takeScreen.js}"></script>
 <!-- Scripts -->
 </body>
 

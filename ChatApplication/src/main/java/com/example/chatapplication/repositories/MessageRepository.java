@@ -11,4 +11,6 @@ import java.util.List;
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
     List<Message> findAllByOrderByCreatedDateDesc(Pageable pageable);
+
+    List<Message> findAllByContentContainingIgnoreCaseOrderByCreatedDateDesc(String content, Pageable pageable);
 }

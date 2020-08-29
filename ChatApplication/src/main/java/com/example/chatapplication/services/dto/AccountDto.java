@@ -44,7 +44,7 @@ public class AccountDto implements Serializable {
     private long idAvatar;
 
     public long getIdAvatar() {
-        if (!Objects.isNull(employee)){
+        if (!Objects.isNull(employee)) {
             return employee.getAttachmentAvatar().getId();
         }
         return idAvatar;

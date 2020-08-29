@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = {})
 public interface MessageMapper extends EntityMapper<MessageDto, Message> {
-    default Message fromId(Long id){
+    default Message fromId(Long id) {
         if (id == null) {
             return null;
         }

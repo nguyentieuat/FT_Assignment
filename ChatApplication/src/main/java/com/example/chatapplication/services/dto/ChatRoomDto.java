@@ -3,8 +3,8 @@ package com.example.chatapplication.services.dto;
 import com.example.chatapplication.domain.Account;
 import com.example.chatapplication.domain.Attachment;
 import com.example.chatapplication.domain.ChatStatus;
+import com.example.chatapplication.domain.Message;
 import com.example.chatapplication.ultities.Constants;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,13 +18,18 @@ import java.util.Set;
 public class ChatRoomDto {
 
     private long id;
+    private String name;
+
+    private Attachment attachmentAvatar;
+
+    private Set<Attachment> attachments;
+    private Set<Message> messages;
 
     private ChatStatus chatStatus;
+
     private int status = Constants.Status.ACTIVE;
 
-    @JsonIgnore
     private Set<Account> accounts;
-    private Set<Attachment> attachments;
 
     private LocalDateTime createdDate;
     private String createdBy;

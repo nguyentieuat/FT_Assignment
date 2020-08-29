@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -79,11 +80,11 @@ public class MessageServiceImpl implements MessageService {
         return messageMapper.toDto(result);
     }
 
-    private List<Attachment> processSaveFileAttachment(String username, List<MultipartFile> files, LocalDateTime now, Message message){
+    private List<Attachment> processSaveFileAttachment(String username, List<MultipartFile> files, LocalDateTime now, Message message) {
         List<Attachment> attachmentResults = new ArrayList<>();
         Integer numberRecordInDay = attachmentRepository.countRecordCreatedInDateByUser(now, username);
         for (MultipartFile file : files) {
-            if (!file.isEmpty()){
+            if (!file.isEmpty()) {
                 try {
                     String path = fileUtilsUpload.saveFileUpload(username, numberRecordInDay, now, file);
                     Attachment attachment = new Attachment();
@@ -114,6 +115,22 @@ public class MessageServiceImpl implements MessageService {
             return messageMapper.toDto(message);
         }
         return null;
+    }
+
+    @Override
+    @Transactional
+    public void deleteMessageByID(long idMessage) {
+        Message message = messageRepository.findById(idMessage).get();
+        attachmentRepository.deleteAllByMessage(message);
+        messageRepository.delete(message);
+    }
+
+    @Override
+    public List<MessageDto> findByContent(String keySearch, Pageable pageable) {
+
+        List<Message> messages = messageRepository.findAllByContentContainingIgnoreCaseOrderByCreatedDateDesc(keySearch, pageable);
+        List<MessageDto> messageDtos = messages.stream().map(messageMapper::toDto).collect(Collectors.toList());
+        return messageDtos;
     }
 
 }

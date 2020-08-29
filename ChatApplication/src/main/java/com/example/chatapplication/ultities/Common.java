@@ -11,7 +11,7 @@ public class Common {
     }
 
     public boolean isImage(String fileName) {
-        if (!Objects.isNull(fileName)){
+        if (!Objects.isNull(fileName)) {
             String extension = FilenameUtils.getExtension(fileName);
             boolean validEnum = EnumUtils.isValidEnum(Constants.EXTENSION_IMAGE.class, extension.toUpperCase());
             return validEnum;

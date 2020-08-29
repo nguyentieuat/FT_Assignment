@@ -1,256 +1,48 @@
-<div  th:fragment="files">
-    <ul class="list-group list-group-flush list-group-no-border-first">
-        <!-- File -->
-        <li class="list-group-item py-6">
-            <div class="media">
+<ul th:fragment="files" class="list-group list-group-flush list-group-no-border-first">
+    <!-- File -->
+    <li class="list-group-item py-6" th:each="attachment: ${chatRoomDto.attachments}">
+        <div class="media">
 
-                <div class="icon-shape bg-primary text-white mr-5">
-                    <i class="fe-paperclip"></i>
-                </div>
+            <div class="icon-shape bg-primary text-white mr-5">
+                <i class="fe-paperclip"></i>
+            </div>
 
-                <div class="media-body align-self-center overflow-hidden">
-                    <h6 class="text-truncate mb-0">
-                        <a href="#" class="text-reset"
-                           title="E5419783-047D-4B4C-B30E-F24DD8247731.jpg">E5419783-047D-4B4C-B30E-F24DD8247731.jpg</a>
-                    </h6>
+            <div class="media-body align-self-center overflow-hidden">
+                <h6 class="text-truncate mb-0">
+                    <a href="#" class="text-reset"
+                       th:title="${attachment.fileName}" th:text="${attachment.fileName}" ></a>
+                </h6>
 
-                    <ul class="list-inline small mb-0">
-                        <li class="list-inline-item">
-                            <span class="text-muted">79.2 KB</span>
-                        </li>
-                        <li class="list-inline-item">
-                            <span class="text-muted text-uppercase">txt</span>
-                        </li>
-                    </ul>
-                </div>
+                <ul class="list-inline small mb-0">
+                    <li class="list-inline-item">
+                        <span class="text-muted" th:text="${attachment.size/1024 + 'KB'}"></span>
+                    </li>
+                    <li class="list-inline-item">
+                        <span class="text-muted text-uppercase"></span>
+                    </li>
+                </ul>
+            </div>
 
-                <div class="align-self-center ml-5">
-                    <div class="dropdown">
-                        <a href="#"
-                           class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            <i class="fe-more-vertical"></i>
+            <div class="align-self-center ml-5">
+                <div class="dropdown">
+                    <a href="#"
+                       class="btn btn-sm btn-ico btn-link text-muted w-auto"
+                       data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        <i class="fe-more-vertical"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item d-flex align-items-center" th:href="${'/download/' + attachment.id}">
+                            Download <span class="ml-auto fe-download"></span>
                         </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Download <span class="ml-auto fe-download"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Share <span class="ml-auto fe-share-2"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Delete <span class="ml-auto fe-trash-2"></span>
-                            </a>
-                        </div>
+<!--                        <a class="dropdown-item d-flex align-items-center" href="#">-->
+<!--                            Share <span class="ml-auto fe-share-2"></span>-->
+<!--                        </a>-->
                     </div>
                 </div>
-
             </div>
-        </li>
-        <!-- File -->
 
-        <!-- File -->
-        <li class="list-group-item py-6">
-            <div class="media">
-
-                <div class="icon-shape bg-primary text-white mr-5">
-                    <i class="fe-paperclip"></i>
-                </div>
-
-                <div class="media-body align-self-center overflow-hidden">
-                    <h6 class="text-truncate mb-0">
-                        <a href="#" class="text-reset"
-                           title="E5419783-047D-4B4C-B30E-F24DD8247731.jpg">E5419783-047D-4B4C-B30E-F24DD8247731.jpg</a>
-                    </h6>
-
-                    <ul class="list-inline small mb-0">
-                        <li class="list-inline-item">
-                            <span class="text-muted">79.2 KB</span>
-                        </li>
-                        <li class="list-inline-item">
-                            <span class="text-muted text-uppercase">psd</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="align-self-center ml-5">
-                    <div class="dropdown">
-                        <a href="#"
-                           class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            <i class="fe-more-vertical"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Download <span class="ml-auto fe-download"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Share <span class="ml-auto fe-share-2"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Delete <span class="ml-auto fe-trash-2"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </li>
-        <!-- File -->
-
-        <!-- File -->
-        <li class="list-group-item py-6">
-            <div class="media">
-
-                <div class="icon-shape bg-primary text-white mr-5">
-                    <i class="fe-paperclip"></i>
-                </div>
-
-                <div class="media-body align-self-center overflow-hidden">
-                    <h6 class="text-truncate mb-0">
-                        <a href="#" class="text-reset"
-                           title="E5419783-047D-4B4C-B30E-F24DD8247731.jpg">E5419783-047D-4B4C-B30E-F24DD8247731.jpg</a>
-                    </h6>
-
-                    <ul class="list-inline small mb-0">
-                        <li class="list-inline-item">
-                            <span class="text-muted">79.2 KB</span>
-                        </li>
-                        <li class="list-inline-item">
-                            <span class="text-muted text-uppercase">pdf</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="align-self-center ml-5">
-                    <div class="dropdown">
-                        <a href="#"
-                           class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            <i class="fe-more-vertical"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Download <span class="ml-auto fe-download"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Share <span class="ml-auto fe-share-2"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Delete <span class="ml-auto fe-trash-2"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </li>
-        <!-- File -->
-
-        <!-- File -->
-        <li class="list-group-item py-6">
-            <div class="media">
-
-                <div class="icon-shape bg-primary text-white mr-5">
-                    <i class="fe-paperclip"></i>
-                </div>
-
-                <div class="media-body align-self-center overflow-hidden">
-                    <h6 class="text-truncate mb-0">
-                        <a href="#" class="text-reset"
-                           title="E5419783-047D-4B4C-B30E-F24DD8247731.jpg">E5419783-047D-4B4C-B30E-F24DD8247731.jpg</a>
-                    </h6>
-
-                    <ul class="list-inline small mb-0">
-                        <li class="list-inline-item">
-                            <span class="text-muted">79.2 KB</span>
-                        </li>
-                        <li class="list-inline-item">
-                            <span class="text-muted text-uppercase">txt</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="align-self-center ml-5">
-                    <div class="dropdown">
-                        <a href="#"
-                           class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            <i class="fe-more-vertical"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Download <span class="ml-auto fe-download"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Share <span class="ml-auto fe-share-2"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Delete <span class="ml-auto fe-trash-2"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </li>
-        <!-- File -->
-
-        <!-- File -->
-        <li class="list-group-item py-6">
-            <div class="media">
-
-                <div class="icon-shape bg-primary text-white mr-5">
-                    <i class="fe-paperclip"></i>
-                </div>
-
-                <div class="media-body align-self-center overflow-hidden">
-                    <h6 class="text-truncate mb-0">
-                        <a href="#" class="text-reset"
-                           title="E5419783-047D-4B4C-B30E-F24DD8247731.jpg">E5419783-047D-4B4C-B30E-F24DD8247731.jpg
-                        </a>
-                    </h6>
-
-                    <ul class="list-inline small mb-0">
-                        <li class="list-inline-item">
-                            <span class="text-muted">79.2 KB</span>
-                        </li>
-                        <li class="list-inline-item">
-                            <span class="text-muted text-uppercase">pdf</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="align-self-center ml-5">
-                    <div class="dropdown">
-                        <a href="#"
-                           class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            <i class="fe-more-vertical"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Download <span class="ml-auto fe-download"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Share <span class="ml-auto fe-share-2"></span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                Delete <span class="ml-auto fe-trash-2"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </li>
-        <!-- File -->
-
-
-    </ul>
-</div>
+        </div>
+    </li>
+    <!-- File -->
+</ul>

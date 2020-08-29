@@ -112,6 +112,7 @@ $(document).ready(function () {
     }
 
     function addHtmlMessage(message) {
+        let idMessage = message.id;
         let isOwner = username == message.usernameSender;
         let divClassMain = 'message';
         let divClassMessageRow = 'd-flex align-items-center';
@@ -122,13 +123,13 @@ $(document).ready(function () {
             '                                    <i class="fe-more-vertical"></i>' +
             '                                </a>' +
             '                                <div class="dropdown-menu">' +
-            '                                    <a class="dropdown-item d-flex align-items-center" href="#">' +
+            '                                    <a class="dropdown-item d-flex align-items-center" href="#" idmessage="'+ idMessage + '"  id="editMessage" >' +
             '                                        Edit <span class="ml-auto fe-edit-3"></span>' +
             '                                    </a>' +
-            '                                    <a class="dropdown-item d-flex align-items-center" href="#">' +
-            '                                        Share <span class="ml-auto fe-share-2"></span>' +
-            '                                    </a>' +
-            '                                    <a class="dropdown-item d-flex align-items-center" href="#">' +
+            // '                                    <a class="dropdown-item d-flex align-items-center" href="#">' +
+            // '                                        Share <span class="ml-auto fe-share-2"></span>' +
+            // '                                    </a>' +
+            '                                    <a class="dropdown-item d-flex align-items-center" href="#"  idmessage="'+ idMessage + '" id="deleteMessage">' +
             '                                        Delete <span class="ml-auto fe-trash-2"></span>' +
             '                                    </a>' +
             '                                </div>' +
@@ -140,13 +141,13 @@ $(document).ready(function () {
             '                                    <i class="fe-more-vertical"></i>' +
             '                                </a>' +
             '                                <div class="dropdown-menu">' +
-            '                                    <a class="dropdown-item d-flex align-items-center" href="#">' +
+            '                                    <a class="dropdown-item d-flex align-items-center" href="#" idmessage="'+ idMessage + '"  id="editMessage">' +
             '                                        Edit <span class="ml-auto fe-edit-3"></span>' +
             '                                    </a>' +
-            '                                    <a class="dropdown-item d-flex align-items-center" href="#">' +
-            '                                        Share <span class="ml-auto fe-share-2"></span>' +
-            '                                    </a>' +
-            '                                    <a class="dropdown-item d-flex align-items-center" href="#">' +
+            // '                                    <a class="dropdown-item d-flex align-items-center" href="#">' +
+            // '                                        Share <span class="ml-auto fe-share-2"></span>' +
+            // '                                    </a>' +
+            '                                    <a class="dropdown-item d-flex align-items-center" href="#" idmessage="'+ idMessage + '"  id="deleteMessage">' +
             '                                        Delete <span class="ml-auto fe-trash-2"></span>' +
             '                                    </a>' +
             '                                </div>' +

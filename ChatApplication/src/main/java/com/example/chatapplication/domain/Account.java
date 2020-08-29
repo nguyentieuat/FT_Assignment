@@ -1,6 +1,7 @@
 package com.example.chatapplication.domain;
 
 import com.example.chatapplication.ultities.Constants;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,7 +30,7 @@ public class Account implements Serializable {
     @JoinColumn(name = "username", unique = true)
     private Employee employee;
 
-    @OneToMany(mappedBy="managerAccount")
+    @OneToMany(mappedBy = "managerAccount")
     private Set<Employee> employees;
 
     @Column(length = 2)
@@ -39,7 +40,7 @@ public class Account implements Serializable {
     @JoinColumn(name = "chatStatusId")
     private ChatStatus chatStatus;
 
-    @OneToMany(mappedBy="accountSender")
+    @OneToMany(mappedBy = "accountSender")
     private Set<Message> messages;
 
     @OneToMany(mappedBy = "account")
@@ -49,6 +50,7 @@ public class Account implements Serializable {
     private Set<ChatRoom> chatRooms;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
     private LocalDateTime lastLogin;
     private LocalDateTime lastLogout;

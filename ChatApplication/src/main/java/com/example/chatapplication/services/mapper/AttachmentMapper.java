@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = {})
 public interface AttachmentMapper extends EntityMapper<AttachmentDto, Attachment> {
-    default Attachment fromId(Long id){
+    default Attachment fromId(Long id) {
         if (id == null) {
             return null;
         }

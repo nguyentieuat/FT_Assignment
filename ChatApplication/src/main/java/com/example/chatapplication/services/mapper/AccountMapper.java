@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = {})
 public interface AccountMapper extends EntityMapper<AccountDto, Account> {
-    default Account fromId(String username){
+    default Account fromId(String username) {
         if (username == null) {
             return null;
         }

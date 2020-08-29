@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = {})
 public interface ChatRoomMapper extends EntityMapper<ChatRoomDto, ChatRoom> {
-    default ChatRoom fromId(Long id){
+    default ChatRoom fromId(Long id) {
         if (id == null) {
             return null;
         }

@@ -15,6 +15,15 @@ public class Constants {
     public static final String COOKIE_NAME = "login_token";
     public static final String SLACK = "/";
     public static final int DEFAULT_SIZE_PAGE = 50;
+    public static final int ID_CHAT_ROOM_ALL_USER = 1;
+    public static final String KEY_SEARCH = "keySearch";
+
+    public static class NameAttribute {
+
+        public static final String CURRENT_USER = "currentUser";
+        public static final String MESSAGE_DTO_LIST = "messageDtoList";
+        public static final String CHAT_ROOM_DTO = "chatRoomDto";
+    }
 
     public enum EXTENSION_IMAGE {
         JPEG, PNG, GIF, BMP
@@ -25,7 +34,7 @@ public class Constants {
         public static final int ACTIVE = 1;
     }
 
-    public class CommonValue{
+    public class CommonValue {
         public static final int CATEGORY_FILE = 1;
         public static final int CATEGORY_FILE_DOCUMENT = 1;
         public static final int CATEGORY_FILE_PICTURE = 2;
@@ -40,7 +49,7 @@ public class Constants {
 
     }
 
-    public class Number{
+    public class Number {
         public static final int NEGATIVE_ONE = -1;
         public static final int ZERO = 0;
         public static final int ONE = 1;
