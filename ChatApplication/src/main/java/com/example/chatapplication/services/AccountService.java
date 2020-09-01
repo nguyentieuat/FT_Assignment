@@ -1,6 +1,7 @@
 package com.example.chatapplication.services;
 
 import com.example.chatapplication.domain.Account;
+import com.example.chatapplication.services.dto.AccountDto;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface AccountService {
      * @param Account
      */
     void updateInfoAccount(Account Account);
+
+    List<AccountDto> findAllAccount();
 }

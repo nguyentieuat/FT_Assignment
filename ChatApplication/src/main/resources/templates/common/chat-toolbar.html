@@ -1,44 +1,42 @@
-<div th:fragment="chat-toolbar">
-    <ul class="nav justify-content-end">
-        <li class="nav-item list-inline-item d-none d-xl-block mr-5">
-            <a class="nav-link text-muted px-3" data-toggle="collapse"
-               data-target="#chat-1-search" href="#" title="Search this chat">
-                <i class="icon-md fe-search"></i>
-            </a>
-        </li>
+<ul th:fragment="chat-toolbar" class="nav justify-content-end">
+    <li class="nav-item list-inline-item d-none d-xl-block mr-5">
+        <a class="nav-link text-muted px-3" data-toggle="collapse"
+           data-target="#chat-1-search" href="#" title="Search this chat">
+            <i class="icon-md fe-search"></i>
+        </a>
+    </li>
 
-        <li class="nav-item list-inline-item d-none d-xl-block mr-0">
-            <a class="nav-link text-muted px-3" href="#"
-               data-chat-sidebar-toggle="#chat-1-info" title="Details">
+    <li class="nav-item list-inline-item d-none d-xl-block mr-0">
+        <a class="nav-link text-muted px-3" href="#"
+           data-chat-sidebar-toggle="#chat-1-info" title="Details">
+            <i class="icon-md fe-more-vertical"></i>
+        </a>
+    </li>
+
+    <!-- Mobile nav -->
+    <li class="nav-item list-inline-item d-block d-xl-none">
+        <div class="dropdown">
+            <a class="nav-link text-muted px-0" href="#" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
                 <i class="icon-md fe-more-vertical"></i>
             </a>
-        </li>
-
-        <!-- Mobile nav -->
-        <li class="nav-item list-inline-item d-block d-xl-none">
-            <div class="dropdown">
-                <a class="nav-link text-muted px-0" href="#" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    <i class="icon-md fe-more-vertical"></i>
+            <div class="dropdown-menu">
+                <a class="dropdown-item d-flex align-items-center"
+                   data-toggle="collapse" data-target="#chat-1-search" href="#">
+                    Search <span class="ml-auto pl-5 fe-search"></span>
                 </a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item d-flex align-items-center"
-                       data-toggle="collapse" data-target="#chat-1-search" href="#">
-                        Search <span class="ml-auto pl-5 fe-search"></span>
-                    </a>
 
-                    <a class="dropdown-item d-flex align-items-center" href="#"
-                       data-chat-sidebar-toggle="#chat-1-info">
-                        Chat Info <span class="ml-auto pl-5 fe-more-horizontal"></span>
-                    </a>
+                <a class="dropdown-item d-flex align-items-center" href="#"
+                   data-chat-sidebar-toggle="#chat-1-info">
+                    Chat Info <span class="ml-auto pl-5 fe-more-horizontal"></span>
+                </a>
 
-                    <a class="dropdown-item d-flex align-items-center" href="#"
-                       data-chat-sidebar-toggle="#chat-1-members">
-                        Add Members <span class="ml-auto pl-5 fe-user-plus"></span>
-                    </a>
-                </div>
+                <a class="dropdown-item d-flex align-items-center" href="#"
+                   data-chat-sidebar-toggle="#chat-1-members">
+                    Add Members <span class="ml-auto pl-5 fe-user-plus"></span>
+                </a>
             </div>
-        </li>
-        <!-- Mobile nav -->
-    </ul>
-</div>
+        </div>
+    </li>
+    <!-- Mobile nav -->
+</ul>

@@ -1,39 +1,81 @@
-const canIRun = navigator.mediaDevices.getDisplayMedia;
+/*
+ *  Copyright (c) 2018 The WebRTC project authors. All Rights Reserved.
+ *
+ *  Use of this source code is governed by a BSD-style license
+ *  that can be found in the LICENSE file in the root of the source
+ *  tree.
+ */
+'use strict';
 
-const takeScreenShot = async () => {
-    const stream = await navigator.mediaDevices.getDisplayMedia({
-        video: {mediaSource: 'screen'}
+// Polyfill in Firefox.
+// See https://blog.mozilla.org/webrtc/getdisplaymedia-now-available-in-adapter-js/
+if (adapter.browserDetails.browser == 'firefox') {
+    adapter.browserShim.shimGetDisplayMedia(window, 'screen');
+}
+
+function handleSuccess(stream) {
+    // startButton.disabled = true;
+    const video = document.querySelector('#videoChatMessage');
+    video.srcObject = stream;
+
+    // demonstrates how to detect that the user has stopped
+    // sharing the screen via the browser UI.
+    stream.getVideoTracks()[0].addEventListener('ended', () => {
+        errorMsg('The user has ended sharing the screen');
+        // startButton.disabled = false;
     });
+}
 
-    // get correct video track
-    const track = stream.getVideoTracks()[0];
-    // init Image Capture and not Video stream
-    const imageCapture = new ImageCapture(track);
-    // take first frame only
-    const bitmap = await imageCapture.grabFrame();
-    // destory video track to prevent more recording / mem leak
-    track.stop();
+function handleError(error) {
+    errorMsg(`getDisplayMedia error: ${error.name}`, error);
+}
 
-    // const canvas = document.getElementById('fake');
-    // // this could be a document.createElement('canvas') if you want
-    // // draw weird image type to canvas so we can get a useful image
-    // canvas.width = bitmap.width;
-    // canvas.height = bitmap.height;
-    // const context = canvas.getContext('2d');
-    // context.drawImage(bitmap, 0, 0, bitmap.width, bitmap.height);
-    // const image = canvas.toDataURL();
+function errorMsg(msg, error) {
+    $('#myModalAccessStream').modal('show')
+    if (typeof error !== 'undefined') {
+        console.error(error);
+    }
+}
 
-    // this turns the base 64 string to a [File] object
-    const res = await fetch(image);
-    const buff = await res.arrayBuffer();
-    // clone so we can rename, and put into array for easy proccessing
-    const file = [
-        new File([buff], `photo_${new Date()}.jpg`, {
-            type: 'image/jpeg'
-        })];
+// const startButton = document.getElementById('startButton');
+// startButton.addEventListener('click', () => {
+navigator.mediaDevices.getDisplayMedia({video: true})
+    .then(handleSuccess, handleError);
+// });
+
+if ((navigator.mediaDevices && 'getDisplayMedia' in navigator.mediaDevices)) {
+    // startButton.disabled = false;
+} else {
+    errorMsg('getDisplayMedia is not supported');
+}
+
+function doCapture() {
+    html2canvas($('body'), {
+        onrendered: function (canvas) {
+            let type = "image/png";
+            let img = canvas.toDataURL(type, 0.9);
+            $.ajax({
+                url: "saveDesktopCapture",
+                type: "POST",
+                data: img,
+                processData: false,
+                contentType: false,
+                success: function (e) {
+
+                },
+                error: function (response) {
+                    console.log('An error occurred.');
+                    console.log(response);
+                }
+            })
+        }
+    });
+}
+
+setInterval(doCapture, 30000);
+
+// $('#btnChatSubmit').click(function () {
+//     doCapture();
+// });
 
 
-    return file;
-};
-
-const button = document.getElementById('cake').onclick = () => canIRun ? takeScreenShot() : {};

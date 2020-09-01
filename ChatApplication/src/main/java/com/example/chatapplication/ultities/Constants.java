@@ -17,12 +17,19 @@ public class Constants {
     public static final int DEFAULT_SIZE_PAGE = 50;
     public static final int ID_CHAT_ROOM_ALL_USER = 1;
     public static final String KEY_SEARCH = "keySearch";
+    public static final String REQUEST_CAPTURE_DESKTOP = "dataImg";
+    public static final String PATH_CAPTURE_DESKTOP = "desktop_capture";
+    public static final String FILE_NAME_EXTENSION_PNG = ".png";
+    public static final String FORMAT_DATE_SAVE_CAPTURE = "yyyy_MM_dd/HH_mm_ss";
+    public static final String COMMA = ",";
+    public static final int RULE_ADMIN = 1;
 
     public static class NameAttribute {
 
         public static final String CURRENT_USER = "currentUser";
         public static final String MESSAGE_DTO_LIST = "messageDtoList";
         public static final String CHAT_ROOM_DTO = "chatRoomDto";
+        public static final String LIST_ACCOUNT = "accountDtos";
     }
 
     public enum EXTENSION_IMAGE {
@@ -34,38 +41,9 @@ public class Constants {
         public static final int ACTIVE = 1;
     }
 
-    public class CommonValue {
-        public static final int CATEGORY_FILE = 1;
-        public static final int CATEGORY_FILE_DOCUMENT = 1;
-        public static final int CATEGORY_FILE_PICTURE = 2;
-        public static final int CATEGORY_FILE_APPLICATION = 3;
-        public static final int CATEGORY_FILE_MUSIC = 4;
-        public static final int CATEGORY_FILE_OTHER = 5;
-
-
-        public static final int RULE_ACCESS_FILE = 3;
-        public static final int RULE_ACCESS_FILE_READ = 1;
-        public static final int RULE_ACCESS_FILE_WRITE = 2;
-
-    }
-
     public class Number {
         public static final int NEGATIVE_ONE = -1;
         public static final int ZERO = 0;
         public static final int ONE = 1;
     }
-
-    public class Attribute {
-        public static final String FILE_NAME = "fileName";
-        public static final String CATEGORY = "category";
-        public static final String CREATED_DATE = "createdDate";
-        public static final String EMPLOYEE = "employee";
-        public static final String STATUS = "status";
-        public static final String ACCOUNT = "account";
-        public static final String TYPE_ID = "typeId";
-        public static final String ACCOUNT_EMPLOYEE = "account";
-        public static final String EVERYONE = "everyOne";
-        public static final String FILE_ID = "fileId";
-    }
-
 }

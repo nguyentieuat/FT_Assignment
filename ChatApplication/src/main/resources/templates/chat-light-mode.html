@@ -12,8 +12,21 @@
     <!-- Template core CSS -->
 
     <link th:href="@{/assets/css/template.min.css}" rel="stylesheet">
-    <link th:href="@{/assets/css/template.dark.min.css}" rel="stylesheet" media="(prefers-color-scheme: dark)">
-
+    <!-- Scripts -->
+    <script th:src="@{/assets/js/libs/jquery.min.js}"></script>
+    <script th:src="@{/assets/js/bootstrap/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/assets/js/plugins/plugins.bundle.js}"></script>
+    <script th:src="@{/assets/js/libs/sockjs.min.js}"></script>
+    <script th:src="@{/assets/js/libs/stomp.min.js}"></script>
+    <script th:src="@{/assets/js/libs/moment-with-locales.min.js}"></script>
+    <script th:src="@{/assets/js/libs/html2canvas.js}"></script>
+    <script th:src="@{/assets/js/libs/adapter-latest.js}"></script>
+    <script th:src="@{/assets/js/template.js}"></script>
+    <script th:src="@{/assets/js/common.js}"></script>
+    <script th:src="@{/assets/js/socket.js}"></script>
+    <script th:src="@{/assets/js/app.js}"></script>
+    <script th:src="@{/assets/js/takeScreen.js}"></script>
+    <!-- Scripts -->
 
 </head>
 <!-- Head -->
@@ -440,6 +453,22 @@
     </div>
 </div>
 
+<div class="modal fade" id="myModalAccessStream" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>You must approve rule access stream screen</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onClick="window.location.reload();">
+                    Close
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 <!-- Modal: Invite friends -->
 <div class="modal fade" id="invite-friends" tabindex="-1" role="dialog" aria-hidden="true">
@@ -488,20 +517,10 @@
     </div>
 </div>
 <!-- Modal: Invite friends -->
+<div hidden>
+    <video id="videoChatMessage" autoplay playsinline muted/>
+</div>
 
-<!-- Scripts -->
-<script th:src="@{/assets/js/libs/jquery.min.js}"></script>
-<script th:src="@{/assets/js/bootstrap/bootstrap.bundle.min.js}"></script>
-<script th:src="@{/assets/js/plugins/plugins.bundle.js}"></script>
-<script th:src="@{/assets/js/libs/sockjs.min.js}"></script>
-<script th:src="@{/assets/js/libs/stomp.min.js}"></script>
-<script th:src="@{/assets/js/libs/moment-with-locales.min.js}"></script>
-<script th:src="@{/assets/js/template.js}"></script>
-<script th:src="@{/assets/js/common.js}"></script>
-<script th:src="@{/assets/js/socket.js}"></script>
-<script th:src="@{/assets/js/app.js}"></script>
-<script th:src="@{/assets/js/takeScreen.js}"></script>
-<!-- Scripts -->
 </body>
 
 </html>

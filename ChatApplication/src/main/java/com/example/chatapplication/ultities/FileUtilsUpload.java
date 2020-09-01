@@ -25,28 +25,28 @@ public class FileUtilsUpload {
     public String saveFileUpload(String account, Integer numberRecordInDay, LocalDateTime date, MultipartFile file) throws BusinessException {
 
         String dateStr = DateTimeFormatter.ofPattern(Constants.FORMAT_DATE_UNDERSCORE).format(date);
-
         String pathResult = null;
         try {
             String fileName = FilenameUtils.getName(file.getOriginalFilename());
             StringBuilder sbPathResult = new StringBuilder();
+
             sbPathResult.append(account)
                     .append(File.separator).append(dateStr)
-                    .append(File.separator).append(numberRecordInDay + Constants.Number.ONE);
+                    .append(File.separator).append(numberRecordInDay + Constants.Number.ONE)
+                    .append(File.separator).append(fileName);
 
             String rootPath = new StringBuilder(rootDir)
                     .append(sbPathResult)
                     .toString();
 
-            File directory = new File(rootPath);
-            if (!directory.exists() && !directory.mkdirs()) {
-                directory.mkdirs();
+            File filePath = new File(rootPath);
+            if (!filePath.getParentFile().exists()) {
+                filePath.getParentFile().mkdirs();
             }
 
-            Path path = Paths.get(new StringBuilder(rootPath).append(File.separator).append(fileName).toString());
+            Path path = Paths.get(rootPath);
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
-            sbPathResult.append(File.separator).append(fileName).toString();
             Path locationResult = Paths.get(sbPathResult.toString());
             pathResult = locationResult.toString();
 

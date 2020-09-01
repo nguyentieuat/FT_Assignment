@@ -1,153 +1,151 @@
-<div th:fragment="tab-content-user">
-    <div class="d-flex flex-column h-100">
+<div th:fragment="tab-content-user" class="d-flex flex-column h-100">
 
-        <div class="hide-scrollbar">
-            <div class="container-fluid py-6">
+    <div class="hide-scrollbar">
+        <div class="container-fluid py-6">
 
-                <!-- Title -->
-                <h2 class="font-bold mb-6">Profile</h2>
-                <!-- Title -->
+            <!-- Title -->
+            <h2 class="font-bold mb-6">Profile</h2>
+            <!-- Title -->
 
-                <!-- Search -->
-                <form class="mb-6">
-                    <div class="input-group">
-                        <input type="text" class="form-control form-control-lg"
-                               placeholder="Search for messages or users..."
-                               aria-label="Search for messages or users...">
-                        <div class="input-group-append">
-                            <button class="btn btn-lg btn-ico btn-secondary btn-minimal" type="submit">
-                                <i class="fe-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-                <!-- Search -->
-
-                <!-- Card -->
-                <div class="card mb-6">
-                    <div class="card-body">
-                        <div class="text-center py-6">
-                            <!-- Photo -->
-                            <div class="avatar avatar-xl mb-5">
-                                <img class="avatar-img"
-                                     th:with="avatar=${currentUser.employee.attachmentAvatar}"
-                                     th:src="${ avatar!= null ? '/loadImage/' + avatar.id: ''}" alt="">
-                            </div>
-
-                            <h5 th:text="${currentUser.username}" id="username"></h5>
-                            <p class="text-muted" th:with="chatStatus=${currentUser.chatStatus}"
-                               th:text="${chatStatus != null ?  chatStatus.content : ''}"></p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card -->
-
-                <!-- Card -->
-                <div class="card mb-6">
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item px-0 py-6">
-                                <div class="media align-items-center">
-                                    <div class="media-body">
-                                        <p class="small text-muted mb-0">Address</p>
-                                        <p th:text="${currentUser.employee.address}"></p>
-                                    </div>
-                                    <i class="text-muted icon-sm fe-globe"></i>
-                                </div>
-                            </li>
-
-                            <li class="list-group-item px-0 py-6">
-                                <div class="media align-items-center">
-                                    <div class="media-body">
-                                        <p class="small text-muted mb-0">Phone</p>
-                                        <p th:text="${currentUser.employee.phone}"></p>
-                                    </div>
-                                    <i class="text-muted icon-sm fe-mic"></i>
-                                </div>
-                            </li>
-
-                            <li class="list-group-item px-0 py-6">
-                                <div class="media align-items-center">
-                                    <div class="media-body">
-                                        <p class="small text-muted mb-0">Email</p>
-                                        <p th:text="${currentUser.employee.email}"></p>
-                                    </div>
-                                    <i class="text-muted icon-sm fe-mail"></i>
-                                </div>
-                            </li>
-
-                            <li class="list-group-item px-0 py-6">
-                                <div class="media align-items-center">
-                                    <div class="media-body">
-                                        <p class="small text-muted mb-0">Last login</p>
-                                        <p th:text="${#temporals.format(currentUser.lastLogin,'yyyy/MM/dd HH:mm')}"></p>
-                                    </div>
-                                    <i class="text-muted icon-sm fe-clock"></i>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Card -->
-
-                <!--                                &lt;!&ndash; Card &ndash;&gt;-->
-                <!--                                <div class="card mb-6">-->
-                <!--                                    <div class="card-body">-->
-                <!--                                        <ul class="list-group list-group-flush">-->
-                <!--                                            <li class="list-group-item px-0 py-6">-->
-                <!--                                                <a href="#" class="media text-muted">-->
-                <!--                                                    <div class="media-body align-self-center">-->
-                <!--                                                        Twitter-->
-                <!--                                                    </div>-->
-                <!--                                                    <i class="icon-sm fe-twitter"></i>-->
-                <!--                                                </a>-->
-                <!--                                            </li>-->
-
-                <!--                                            <li class="list-group-item px-0 py-6">-->
-                <!--                                                <a href="#" class="media text-muted">-->
-                <!--                                                    <div class="media-body align-self-center">-->
-                <!--                                                        Facebook-->
-                <!--                                                    </div>-->
-                <!--                                                    <i class="icon-sm fe-facebook"></i>-->
-                <!--                                                </a>-->
-                <!--                                            </li>-->
-
-                <!--                                            <li class="list-group-item px-0 py-6">-->
-                <!--                                                <a href="#" class="media text-muted">-->
-                <!--                                                    <div class="media-body align-self-center">-->
-                <!--                                                        Github-->
-                <!--                                                    </div>-->
-                <!--                                                    <i class="icon-sm fe-github"></i>-->
-                <!--                                                </a>-->
-                <!--                                            </li>-->
-                <!--                                        </ul>-->
-                <!--                                    </div>-->
-                <!--                                </div>-->
-                <!--                                &lt;!&ndash; Card &ndash;&gt;-->
-
-                <div class="form-row">
-                    <div class="col">
-                        <!-- Button -->
-                        <button type="button"
-                                class="btn btn-lg btn-block btn-basic d-flex align-items-center" id="editProfile">
-                            Settings
-                            <span class="fe-settings ml-auto"></span>
-                        </button>
-                    </div>
-
-                    <div class="col">
-                        <!-- Button -->
-                        <button type="button"
-                                class="btn btn-lg btn-block btn-basic d-flex align-items-center"
-                                id="btnLogout">
-                            Logout
-                            <span class="fe-log-out ml-auto"></span>
+            <!-- Search -->
+            <form class="mb-6">
+                <div class="input-group">
+                    <input type="text" class="form-control form-control-lg"
+                           placeholder="Search for messages or users..."
+                           aria-label="Search for messages or users...">
+                    <div class="input-group-append">
+                        <button class="btn btn-lg btn-ico btn-secondary btn-minimal" type="submit">
+                            <i class="fe-search"></i>
                         </button>
                     </div>
                 </div>
+            </form>
+            <!-- Search -->
 
+            <!-- Card -->
+            <div class="card mb-6">
+                <div class="card-body">
+                    <div class="text-center py-6">
+                        <!-- Photo -->
+                        <div class="avatar avatar-xl mb-5">
+                            <img class="avatar-img"
+                                 th:with="avatar=${currentUser.employee.attachmentAvatar}"
+                                 th:src="${ avatar!= null ? '/loadImage/' + avatar.id: ''}" alt="">
+                        </div>
+
+                        <h5 th:text="${currentUser.username}" id="username"></h5>
+                        <p class="text-muted" th:with="chatStatus=${currentUser.chatStatus}"
+                           th:text="${chatStatus != null ?  chatStatus.content : ''}"></p>
+                    </div>
+                </div>
             </div>
-        </div>
+            <!-- Card -->
 
+            <!-- Card -->
+            <div class="card mb-6">
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item px-0 py-6">
+                            <div class="media align-items-center">
+                                <div class="media-body">
+                                    <p class="small text-muted mb-0">Address</p>
+                                    <p th:text="${currentUser.employee.address}"></p>
+                                </div>
+                                <i class="text-muted icon-sm fe-globe"></i>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item px-0 py-6">
+                            <div class="media align-items-center">
+                                <div class="media-body">
+                                    <p class="small text-muted mb-0">Phone</p>
+                                    <p th:text="${currentUser.employee.phone}"></p>
+                                </div>
+                                <i class="text-muted icon-sm fe-mic"></i>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item px-0 py-6">
+                            <div class="media align-items-center">
+                                <div class="media-body">
+                                    <p class="small text-muted mb-0">Email</p>
+                                    <p th:text="${currentUser.employee.email}"></p>
+                                </div>
+                                <i class="text-muted icon-sm fe-mail"></i>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item px-0 py-6">
+                            <div class="media align-items-center">
+                                <div class="media-body">
+                                    <p class="small text-muted mb-0">Last login</p>
+                                    <p th:text="${#temporals.format(currentUser.lastLogin,'yyyy/MM/dd HH:mm')}"></p>
+                                </div>
+                                <i class="text-muted icon-sm fe-clock"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Card -->
+
+            <!--                                &lt;!&ndash; Card &ndash;&gt;-->
+            <!--                                <div class="card mb-6">-->
+            <!--                                    <div class="card-body">-->
+            <!--                                        <ul class="list-group list-group-flush">-->
+            <!--                                            <li class="list-group-item px-0 py-6">-->
+            <!--                                                <a href="#" class="media text-muted">-->
+            <!--                                                    <div class="media-body align-self-center">-->
+            <!--                                                        Twitter-->
+            <!--                                                    </div>-->
+            <!--                                                    <i class="icon-sm fe-twitter"></i>-->
+            <!--                                                </a>-->
+            <!--                                            </li>-->
+
+            <!--                                            <li class="list-group-item px-0 py-6">-->
+            <!--                                                <a href="#" class="media text-muted">-->
+            <!--                                                    <div class="media-body align-self-center">-->
+            <!--                                                        Facebook-->
+            <!--                                                    </div>-->
+            <!--                                                    <i class="icon-sm fe-facebook"></i>-->
+            <!--                                                </a>-->
+            <!--                                            </li>-->
+
+            <!--                                            <li class="list-group-item px-0 py-6">-->
+            <!--                                                <a href="#" class="media text-muted">-->
+            <!--                                                    <div class="media-body align-self-center">-->
+            <!--                                                        Github-->
+            <!--                                                    </div>-->
+            <!--                                                    <i class="icon-sm fe-github"></i>-->
+            <!--                                                </a>-->
+            <!--                                            </li>-->
+            <!--                                        </ul>-->
+            <!--                                    </div>-->
+            <!--                                </div>-->
+            <!--                                &lt;!&ndash; Card &ndash;&gt;-->
+
+            <div class="form-row">
+                <div class="col">
+                    <!-- Button -->
+                    <button type="button"
+                            class="btn btn-lg btn-block btn-basic d-flex align-items-center" id="editProfile">
+                        Settings
+                        <span class="fe-settings ml-auto"></span>
+                    </button>
+                </div>
+
+                <div class="col">
+                    <!-- Button -->
+                    <button type="button"
+                            class="btn btn-lg btn-block btn-basic d-flex align-items-center"
+                            id="btnLogout">
+                        Logout
+                        <span class="fe-log-out ml-auto"></span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
     </div>
+
 </div>

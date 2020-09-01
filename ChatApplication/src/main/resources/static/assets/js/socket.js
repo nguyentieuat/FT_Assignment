@@ -80,6 +80,17 @@ $(document).ready(function () {
         event.preventDefault();
     }
 
+    $('#chat-id-1-input').keyup(function (event) {
+        if (event.keyCode == 13 && event.shiftKey) {
+            event.stopPropagation();
+
+        } else if (event.keyCode == 13) {
+            event.stopPropagation();
+            sendMessage(event);
+        }
+    });
+
+
     function onMessageReceived(payload) {
         let message = JSON.parse(payload.body);
 

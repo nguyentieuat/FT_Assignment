@@ -58,9 +58,9 @@ public class LoginController {
         String username = authenticationRequest.getUsername();
 
         boolean authenticate = authenticate(username, authenticationRequest.getPassword());
-        if (!authenticate){
-            return "/signin";
-        }
+//        if (!authenticate){
+//            return "/signin";
+//        }
 
         final UserDetails userDetails = jwtUserDetailsService
                 .loadUserByUsername(authenticationRequest.getUsername());

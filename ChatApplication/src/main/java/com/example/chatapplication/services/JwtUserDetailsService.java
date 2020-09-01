@@ -30,7 +30,7 @@ public class JwtUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
         List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
-        GrantedAuthority authority = new SimpleGrantedAuthority(Common.convertNumberToString(user.getRole()));
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + Common.convertNumberToString(user.getRole()));
         grantList.add(authority);
 
         return new User(user.getUsername(), user.getPassword(), grantList);

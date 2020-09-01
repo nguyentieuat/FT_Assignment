@@ -3,16 +3,6 @@ $(document).ready(function () {
         location.href = "/logout"
     });
 
-    $('#chat-id-1-input').keyup(function (event) {
-        if (event.keyCode == 13 && event.shiftKey) {
-            event.stopPropagation();
-
-        } else if (event.keyCode == 13) {
-            event.stopPropagation();
-            sendMessage(event);
-        }
-    });
-
     [].forEach.call(document.getElementsByName("deleteMessage"), function (a) {
         a.addEventListener('click', myFunction, false);
     });
@@ -56,4 +46,22 @@ $(document).ready(function () {
         });
     });
 
+    // window.addEventListener("beforeunload", function (e) {
+    //     var confirmationMessage = "Warning! Are you logout?";
+    //
+    //     (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+    //     logout(confirmationMessage);
+    //     return confirmationMessage;
+    // });
+    //
+    // function logout(confirmationMessage) {
+    //     $.ajax({
+    //         url: "/signout"
+    //
+    //     }).done(function(response){ //
+    //
+    //     });
+    //
+    //
+    // }
 });

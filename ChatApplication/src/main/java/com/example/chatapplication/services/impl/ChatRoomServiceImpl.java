@@ -39,7 +39,7 @@ public class ChatRoomServiceImpl implements ChatRomService {
         ChatRoom chatRoom = chatRoomRepository.findById(id).get();
 
         Pageable pageable = PageRequest.of(Constants.Number.ZERO, Constants.DEFAULT_SIZE_PAGE);
-        List<Account> accounts = accountRepository.findAllByOrderByUsernameAsc(pageable);
+        List<Account> accounts = accountRepository.findAllByStatusOrderByUsernameAsc(Constants.Status.ACTIVE, pageable);
         chatRoom.setAccounts(new HashSet<>(accounts));
 
         List<Attachment> attachments = attachmentRepository.findAllByOrderByCreatedDateDesc(pageable);

@@ -80,6 +80,7 @@ public class ChatApplicationController {
             request.setAttribute(Constants.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
 
             ChatRoomDto chatRoomDto = chatRomService.getChatRoomById(Constants.ID_CHAT_ROOM_ALL_USER);
+            chatRoomDto.getAccounts().remove(account);
             request.setAttribute(Constants.NameAttribute.CHAT_ROOM_DTO, chatRoomDto);
         }
 
