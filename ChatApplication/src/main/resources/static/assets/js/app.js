@@ -34,12 +34,12 @@ $(document).ready(function () {
     });
 
     function logout(confirmationMessage) {
-        $.ajax({
-            url: "/signout"
-
-        }).done(function(response){ //
-
-        });
+        // $.ajax({
+        //     url: "/signout"
+        //
+        // }).done(function(response){ //
+        //
+        // });
 
 
     }
