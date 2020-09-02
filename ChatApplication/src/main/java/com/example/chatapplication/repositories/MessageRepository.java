@@ -16,4 +16,9 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     List<Message> findAllByContentContainingIgnoreCaseOrderByCreatedDateDesc(String content, Pageable pageable);
 
     Message findTop1ByAccountSenderOrderByCreatedDateDesc(Account account);
+
+    List<Message> findAllByAccountSenderOrderByCreatedDateDesc(Account account, Pageable pageable);
+
+
+    List<Message> findAllByAccountSenderAndContentContainingIgnoreCaseOrderByCreatedDateDesc(Account account,String content, Pageable pageable);
 }

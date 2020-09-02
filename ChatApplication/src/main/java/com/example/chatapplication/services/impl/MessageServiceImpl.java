@@ -130,6 +130,23 @@ public class MessageServiceImpl implements MessageService {
 
         List<Message> messages = messageRepository.findAllByContentContainingIgnoreCaseOrderByCreatedDateDesc(keySearch, pageable);
         List<MessageDto> messageDtos = messages.stream().map(messageMapper::toDto).collect(Collectors.toList());
+        Collections.reverse(messageDtos);
+        return messageDtos;
+    }
+
+    @Override
+    public List<MessageDto> findAllByAccount(Account account, Pageable pageable) {
+        List<Message> messages = messageRepository.findAllByAccountSenderOrderByCreatedDateDesc(account, pageable);
+        List<MessageDto> messageDtos = messages.stream().map(messageMapper::toDto).collect(Collectors.toList());
+        Collections.reverse(messageDtos);
+        return messageDtos;
+    }
+
+    @Override
+    public List<MessageDto> findAllByAccountAndContent(Account account, String content, Pageable pageable) {
+        List<Message> messages = messageRepository.findAllByAccountSenderAndContentContainingIgnoreCaseOrderByCreatedDateDesc(account, content, pageable);
+        List<MessageDto> messageDtos = messages.stream().map(messageMapper::toDto).collect(Collectors.toList());
+        Collections.reverse(messageDtos);
         return messageDtos;
     }
 

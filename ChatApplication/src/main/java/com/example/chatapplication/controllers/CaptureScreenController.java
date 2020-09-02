@@ -1,14 +1,21 @@
 package com.example.chatapplication.controllers;
 
 import com.example.chatapplication.services.CaptureScreenService;
+import com.example.chatapplication.services.dto.CaptureScreenDto;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Objects;
 
 
 @Controller
@@ -25,5 +32,29 @@ public class CaptureScreenController {
     @ResponseBody
     public void saveDesktopCapture(@RequestBody String dataImg) {
         captureScreenService.saveCapture(dataImg);
+    }
+
+
+    @GetMapping(value = {"/loadCaptureScreen/{idCapture}"})
+    public void loadCaptureScreen(@PathVariable Long idCapture, HttpServletResponse response) {
+
+        CaptureScreenDto captureScreenDto = captureScreenService.findCaptureById(idCapture);
+        if (!Objects.isNull(captureScreenDto)) {
+            String path = new StringBuilder(rootDir)
+                    .append(captureScreenDto.getPath())
+                    .toString();
+
+            File file = new File(path);
+            if (file.exists()) {
+                try {
+                    InputStream inputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+                    response.setContentType("image/jpeg");
+                    IOUtils.copy(inputStream, response.getOutputStream());
+                } catch (IOException e) {
+                    log.error("Cann't find avatar " + e);
+                }
+            }
+
+        }
     }
 }

@@ -22,4 +22,5 @@ public class CaptureScreenDto {
 
     private LocalDateTime updatedDate;
     private String updatedBy;
+    private boolean isOwner;
 }

@@ -145,11 +145,11 @@ public class ChatApplicationController {
     }
 
     @GetMapping("/searchMessage")
-    public String searchMessage(HttpServletRequest request,  HttpServletResponse response, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
+    public String searchMessage(HttpServletRequest request, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
         String username = SecurityUtils.getAccountCurrentUserLogin().orElse(null);
 
         if (!Objects.isNull(username)) {
-            String keySearch = request.getParameter(Constants.KEY_SEARCH);
+            String keySearch = request.getParameter(Constants.KEY_SEARCH).trim();
 
             List<MessageDto> messageDtoList = messageService.findByContent(keySearch, pageable);
             messageDtoList.forEach(messageDto -> {

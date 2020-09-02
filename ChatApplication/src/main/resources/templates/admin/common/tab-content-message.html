@@ -8,11 +8,11 @@
             <!-- Title -->
 
             <!-- Search -->
-            <form class="mb-6">
+            <form class="mb-6" id="searchUserTabMessage" method="get" action="/admin/searchUserTabMessage">
                 <div class="input-group">
                     <input type="text" class="form-control form-control-lg"
                            placeholder="Search for messages or users..."
-                           aria-label="Search for messages or users...">
+                           aria-label="Search for messages or users..." name="keySearch" th:value="${keySearch}">
                     <div class="input-group-append">
                         <button class="btn btn-lg btn-ico btn-secondary btn-minimal" type="submit" id="btnSearchUser">
                             <i class="fe-search"></i>
@@ -24,7 +24,8 @@
             <nav class="nav d-block list-discussions-js mb-n6">
                 <th:block th:each="account:${accountDtos}">
                     <!-- Chat link -->
-                    <a class="text-reset nav-link p-0 mb-6" th:idAccount="${account.username}"  name="messageUsername">
+                    <a class="text-reset nav-link p-0 mb-6" th:idAccount="${account.username}" name="messageUsername"
+                       onclick="getMessageAccount()">
                         <div class="card card-active-listener">
                             <div class="card-body">
 
@@ -32,29 +33,26 @@
                                     <div class="avatar mr-5">
                                         <img class="avatar-img" th:with="avatar=${account.employee.attachmentAvatar}"
                                              th:src="${ avatar!= null ? '/loadImage/' + avatar.id : ''}"
-                                             th:alt="${account.username}">
+                                             alt="">
                                     </div>
 
                                     <div class="media-body overflow-hidden">
                                         <div class="d-flex align-items-center mb-1">
                                             <h6 class="text-truncate mb-0 mr-auto" th:text="${account.username}"></h6>
-                                            <!--                                        <p class="small text-muted text-nowrap ml-4">10:42 am</p>-->
                                         </div>
                                         <th:block th:each="message:${account.messages}">
-                                            <div class="text-truncate" th:if="${message != null}" th:with="content=${message.content}"
+                                            <div class="text-truncate" th:if="${message != null}"
+                                                 th:with="content=${message.content}"
                                                  th:text="${ content != null ? content : '' }"></div>
                                         </th:block>
+                                        <small class="text-truncate"
+                                               th:text="${ account.lastLogin!= null ? 'Last login: ' +  #temporals.format(account.lastLogin, 'yyyy MMM dd HH:mm') : ''}"></small><br/>
+                                        <small class="text-truncate"
+                                               th:text="${   account.lastLogout != null ? 'Last logout: ' + #temporals.format(account.lastLogout, 'yyyy MMM dd HH:mm') : ''}"></small>
                                     </div>
                                 </div>
 
                             </div>
-
-
-                            <!--                        <div-->
-                            <!--                                class="badge badge-circle badge-primary badge-border-light badge-top-right">-->
-                            <!--                            <span>3</span>-->
-                            <!--                        </div>-->
-
                         </div>
                     </a>
                     <!-- Chat link -->
@@ -64,5 +62,4 @@
 
         </div>
     </div>
-
 </div>

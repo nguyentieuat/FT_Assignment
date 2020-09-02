@@ -7,7 +7,6 @@ import com.example.chatapplication.repositories.MessageRepository;
 import com.example.chatapplication.services.AccountService;
 import com.example.chatapplication.services.dto.AccountDto;
 import com.example.chatapplication.services.mapper.AccountMapper;
-import com.example.chatapplication.ultities.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -48,7 +47,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<AccountDto> findAllAccount() {
-        List<Account> accounts = accountRepository.findAllByStatusOrderByUsernameAsc(Constants.Status.ACTIVE);
+        List<Account> accounts = accountRepository.findAllByOrderByUsernameAsc();
 
         accounts.forEach(account -> {
             Message message = messageRepository.findTop1ByAccountSenderOrderByCreatedDateDesc(account);
@@ -57,6 +56,18 @@ public class AccountServiceImpl implements AccountService {
             account.setMessages(messageSet);
         });
 
+        return accounts.stream().map(accountMapper::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AccountDto> findAllAccountContainUsername(String keySearch) {
+        List<Account> accounts = accountRepository.findAllByUsernameContainingIgnoreCaseOrderByUsernameAsc(keySearch);
+        accounts.forEach(account -> {
+            Message message = messageRepository.findTop1ByAccountSenderOrderByCreatedDateDesc(account);
+            Set<Message> messageSet = new HashSet<>();
+            messageSet.add(message);
+            account.setMessages(messageSet);
+        });
         return accounts.stream().map(accountMapper::toDto).collect(Collectors.toList());
     }
 

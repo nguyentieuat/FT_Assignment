@@ -15,7 +15,7 @@
     <script th:src="@{/assets/js/libs/jquery.min.js}"></script>
     <script th:src="@{/assets/js/bootstrap/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/assets/js/plugins/plugins.bundle.js}"></script>
-    <script th:src="@{/assets/js/template.js}"></script>
+    <!--    <script th:src="@{/assets/js/template.js}"></script>-->
     <script th:src="@{/assets/js/admin.js}"></script>
     <!-- Scripts -->
 
@@ -44,14 +44,13 @@
                 <a class="nav-link position-relative p-0 py-xl-3 active" data-toggle="tab"
                    href="#tab-content-message" title="Chats" role="tab">
                     <i class="icon-lg fe-message-square"></i>
-                    <div class="badge badge-dot badge-primary badge-bottom-center"></div>
                 </a>
             </li>
 
             <!-- Capture screen -->
             <li class="nav-item mt-xl-9">
                 <a class="nav-link position-relative p-0 py-xl-3" data-toggle="tab" href="#tab-content-capture"
-                   title="User" role="tab">
+                   title="Capture" role="tab">
                     <i class="icon-lg fe-image"></i>
                 </a>
             </li>
@@ -81,115 +80,16 @@
     <div class="main main-visible" data-mobile-height="">
 
         <!-- Chat -->
-        <div id="chat-1" class="chat dropzone-form-js" data-dz-url="some.php">
+        <!-- Chat: body -->
+        <div id="chat-1" class="chat dropzone-form-js" data-dz-url="/app/chat.sendMessage">
 
             <!-- Chat: body -->
-            <div class="chat-body" hidden="">
+            <div class="chat-body" id="chat-content-body">
 
-                <!-- Chat: Header -->
-                <div class="chat-header border-bottom py-4 py-lg-6 px-lg-8">
-                    <div class="container-xxl">
-
-                        <div class="row align-items-center">
-
-                            <!-- Close chat(mobile) -->
-                            <div class="col-3 d-xl-none">
-                                <ul class="list-inline mb-0">
-                                    <li class="list-inline-item">
-                                        <a class="text-muted px-0" href="#" data-chat="open">
-                                            <i class="icon-md fe-chevron-left"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <!-- Chat photo -->
-                            <div class="col-6 col-xl-6">
-                                <div class="media text-center text-xl-left">
-                                    <div class="avatar avatar-sm d-none d-xl-inline-block mr-5">
-                                        <img th:src="@{/assets/images/avatars/11.jpg" class="avatar-img" alt="">
-                                    </div>
-
-                                    <div class="media-body align-self-center text-truncate">
-                                        <h6 class="text-truncate mb-n1">Bootstrap Themes</h6>
-                                        <small class="text-muted">35 members</small>
-                                        <small class="text-muted mx-2"> • </small>
-                                        <small class="text-muted">HTML, CSS, and Javascript Help</small>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Chat toolbar -->
-                            <div class="col-3 col-xl-6 text-right">
-                                <ul class="nav justify-content-end">
-                                    <li class="nav-item list-inline-item d-none d-xl-block mr-5">
-                                        <a class="nav-link text-muted px-3" data-toggle="collapse"
-                                           data-target="#chat-1-search" href="#" title="Search this chat">
-                                            <i class="icon-md fe-search"></i>
-                                        </a>
-                                    </li>
-
-                                    <!-- Mobile nav -->
-                                    <li class="nav-item list-inline-item d-block d-xl-none">
-                                        <div class="dropdown">
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item d-flex align-items-center"
-                                                   data-toggle="collapse" data-target="#chat-1-search" href="#">
-                                                    Search <span class="ml-auto pl-5 fe-search"></span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!-- Mobile nav -->
-                                </ul>
-                            </div>
-
-                        </div><!-- .row -->
-
-                    </div>
-                </div>
-                <!-- Chat: Header -->
-
-                <!-- Chat: Search -->
-                <div class="collapse border-bottom px-lg-8" id="chat-1-search">
-                    <div class="container-xxl py-4 py-lg-6">
-
-                        <div class="input-group">
-                            <input type="text" class="form-control form-control-lg" placeholder="Search this chat"
-                                   aria-label="Search this chat">
-
-                            <div class="input-group-append">
-                                <button class="btn btn-lg btn-ico btn-secondary btn-minimal" type="submit">
-                                    <i class="fe-search"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- Chat: Search -->
-
-                <!-- Chat: Content-->
-                <div class="chat-content px-lg-8" id="chat-content">
-
-                    <div id="messageArea">
-                        <div th:replace="admin/common/message.html :: message"></div>
-                    </div>
-
-                    <!-- Scroll to end -->
-                    <div class="end-of-chat"></div>
-                </div>
-                <!-- Chat: Content -->
-
-                <!-- Chat: DropzoneJS container -->
-<!--                <div class="chat-files hide-scrollbar px-lg-8">-->
-<!--                    <div class="container-xxl">-->
-<!--                        <div class="dropzone-previews-js form-row py-4"></div>-->
-<!--                    </div>-->
-<!--                </div>-->
             </div>
             <!-- Chat: body -->
         </div>
+        <!-- Chat: body -->
         <!-- Chat -->
 
     </div>

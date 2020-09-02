@@ -30,6 +30,7 @@ public class Constants {
         public static final String MESSAGE_DTO_LIST = "messageDtoList";
         public static final String CHAT_ROOM_DTO = "chatRoomDto";
         public static final String LIST_ACCOUNT = "accountDtos";
+        public static final String CAPTURE_DTO_LIST = "captureScreenDtos";
     }
 
     public enum EXTENSION_IMAGE {

@@ -5,12 +5,15 @@ import com.example.chatapplication.domain.CaptureScreen;
 import com.example.chatapplication.repositories.AccountRepository;
 import com.example.chatapplication.repositories.CaptureScreenRepository;
 import com.example.chatapplication.services.CaptureScreenService;
+import com.example.chatapplication.services.dto.CaptureScreenDto;
+import com.example.chatapplication.services.mapper.CaptureScreenMapper;
 import com.example.chatapplication.ultities.Constants;
 import com.example.chatapplication.ultities.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import sun.misc.BASE64Decoder;
 
@@ -20,6 +23,9 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -31,6 +37,9 @@ public class CaptureScreenServiceImpl implements CaptureScreenService {
     @Autowired
     private CaptureScreenRepository captureScreenRepository;
 
+    @Autowired
+    private CaptureScreenMapper captureScreenMapper;
+
     @Value("${file.path}")
     private String rootDir;
 
@@ -39,13 +48,18 @@ public class CaptureScreenServiceImpl implements CaptureScreenService {
         String username = SecurityUtils.getAccountCurrentUserLogin().get();
         LocalDateTime now = LocalDateTime.now();
         String dateStrMinute = DateTimeFormatter.ofPattern(Constants.FORMAT_DATE_SAVE_CAPTURE).format(now);
-        String filePath = new StringBuilder(rootDir)
+
+        String path = new StringBuilder()
                 .append(Constants.PATH_CAPTURE_DESKTOP)
                 .append(File.separator)
                 .append(username)
                 .append(File.separator)
                 .append(dateStrMinute)
                 .append(Constants.FILE_NAME_EXTENSION_PNG)
+                .toString();
+
+        String filePath = new StringBuilder(rootDir)
+                .append(path)
                 .toString();
 
         String data = dataImg.split(Constants.COMMA)[1].replace(" ", "+");
@@ -71,7 +85,7 @@ public class CaptureScreenServiceImpl implements CaptureScreenService {
             Account account = accountRepository.findByUsername(username);
             CaptureScreen captureScreen = new CaptureScreen();
             captureScreen.setAccount(account);
-            captureScreen.setPath(filePath);
+            captureScreen.setPath(path);
             captureScreen.setCreatedBy(username);
             captureScreen.setCreatedDate(now);
             captureScreen.setUpdatedBy(username);
@@ -82,5 +96,31 @@ public class CaptureScreenServiceImpl implements CaptureScreenService {
         } catch (Exception e) {
             log.error(ExceptionUtils.getStackTrace(e));
         }
+    }
+
+    @Override
+    public List<CaptureScreenDto> findAllByAccount(Account account, Pageable pageable) {
+
+        List<CaptureScreen> captureScreens = captureScreenRepository.findAllByAccountOrderByCreatedDateDesc(account, pageable);
+        List<CaptureScreenDto> captureScreenDtos = captureScreens.stream().map(captureScreenMapper::toDto).collect(Collectors.toList());
+        Collections.reverse(captureScreenDtos);
+        return captureScreenDtos;
+    }
+
+    @Override
+    public CaptureScreenDto findCaptureById(Long idCapture) {
+        CaptureScreen captureScreen = captureScreenRepository.findById(idCapture).get();
+
+        return captureScreenMapper.toDto(captureScreen);
+    }
+
+    @Override
+    public List<CaptureScreenDto> findAllByAccountAndCreateDate(Account account, String dateStr, Pageable pageable) {
+
+        LocalDateTime time = LocalDateTime.parse(dateStr);
+        List<CaptureScreen> captureScreens = captureScreenRepository.findAllByAccountAndCreatedDateAfterOrderByCreatedDateDesc(account, time, pageable);
+        List<CaptureScreenDto> captureScreenDtos = captureScreens.stream().map(captureScreenMapper::toDto).collect(Collectors.toList());
+        Collections.reverse(captureScreenDtos);
+        return captureScreenDtos;
     }
 }

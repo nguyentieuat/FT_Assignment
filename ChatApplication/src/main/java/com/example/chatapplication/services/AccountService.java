@@ -24,4 +24,6 @@ public interface AccountService {
     void updateInfoAccount(Account Account);
 
     List<AccountDto> findAllAccount();
+
+    List<AccountDto> findAllAccountContainUsername(String keySearch);
 }

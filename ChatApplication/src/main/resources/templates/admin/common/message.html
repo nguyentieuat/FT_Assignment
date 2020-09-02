@@ -16,25 +16,6 @@
             <div class="message-row">
                 <div th:class="${message.isOwner() ? 'd-flex align-items-center justify-content-end' : 'd-flex align-items-center'}">
 
-                    <div class="dropdown dropleft" th:if="${message.isOwner()}">
-                        <a class="text-muted opacity-60 ml-3" href="#" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            <i class="fe-more-vertical"></i>
-                        </a>
-
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" th:idmessage="${message.id}" name="editMessage">
-                                Edit <span class="ml-auto fe-edit-3"></span>
-                            </a>
-<!--                            <a class="dropdown-item d-flex align-items-center" href="#">-->
-<!--                                Share <span class="ml-auto fe-share-2"></span>-->
-<!--                            </a>-->
-                            <a class="dropdown-item d-flex align-items-center" th:idmessage="${message.id}" name="deleteMessage">
-                                Delete <span class="ml-auto fe-trash-2"></span>
-                            </a>
-                        </div>
-                    </div>
-
                     <!-- Message: content -->
                     <div class="message-content bg-light">
                         <h6 class="mb-2" th:if="${!message.isOwner()}" th:text="${message.usernameSender}"></h6>
@@ -72,27 +53,6 @@
                         </div>
                     </div>
                     <!-- Message: content -->
-
-                    <!-- Message: dropdown -->
-                    <div class="dropdown dropright" th:if="${!message.isOwner()}">
-                        <a class="text-muted opacity-60 ml-3" href="#" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            <i class="fe-more-vertical"></i>
-                        </a>
-
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" href="#" th:idmessage="${message.id}" name="editMessage" >
-                                Edit <span class="ml-auto fe-edit-3"></span>
-                            </a>
-<!--                            <a class="dropdown-item d-flex align-items-center" href="#">-->
-<!--                                Share <span class="ml-auto fe-share-2"></span>-->
-<!--                            </a>-->
-                            <a class="dropdown-item d-flex align-items-center" th:idmessage="${message.id}" name="deleteMessage" >
-                                Delete <span class="ml-auto fe-trash-2"></span>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Message: dropdown -->
 
                 </div>
             </div>

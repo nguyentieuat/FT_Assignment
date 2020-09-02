@@ -23,13 +23,10 @@
                         </a>
 
                         <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" th:idmessage="${message.id}" name="editMessage">
+                            <a class="dropdown-item d-flex align-items-center" th:idMessage="${message.id}" name="editMessage">
                                 Edit <span class="ml-auto fe-edit-3"></span>
                             </a>
-<!--                            <a class="dropdown-item d-flex align-items-center" href="#">-->
-<!--                                Share <span class="ml-auto fe-share-2"></span>-->
-<!--                            </a>-->
-                            <a class="dropdown-item d-flex align-items-center" th:idmessage="${message.id}" name="deleteMessage">
+                            <a class="dropdown-item d-flex align-items-center" th:idMessage="${message.id}" name="deleteMessage" onclick="deleteMessageChat()">
                                 Delete <span class="ml-auto fe-trash-2"></span>
                             </a>
                         </div>
@@ -81,14 +78,8 @@
                         </a>
 
                         <div class="dropdown-menu">
-                            <a class="dropdown-item d-flex align-items-center" href="#" th:idmessage="${message.id}" name="editMessage" >
+                            <a class="dropdown-item d-flex align-items-center" href="#" th:idMessage="${message.id}" name="editMessage" >
                                 Edit <span class="ml-auto fe-edit-3"></span>
-                            </a>
-<!--                            <a class="dropdown-item d-flex align-items-center" href="#">-->
-<!--                                Share <span class="ml-auto fe-share-2"></span>-->
-<!--                            </a>-->
-                            <a class="dropdown-item d-flex align-items-center" th:idmessage="${message.id}" name="deleteMessage" >
-                                Delete <span class="ml-auto fe-trash-2"></span>
                             </a>
                         </div>
                     </div>

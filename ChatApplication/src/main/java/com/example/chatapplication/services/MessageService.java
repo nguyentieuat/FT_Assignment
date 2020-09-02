@@ -1,5 +1,7 @@
 package com.example.chatapplication.services;
 
+import com.example.chatapplication.domain.Account;
+import com.example.chatapplication.services.dto.CaptureScreenDto;
 import com.example.chatapplication.services.dto.MessageDto;
 import org.springframework.data.domain.Pageable;
 
@@ -16,4 +18,9 @@ public interface MessageService {
     void deleteMessageByID(long idMessage);
 
     List<MessageDto> findByContent(String keySearch, Pageable pageable);
+
+    List<MessageDto> findAllByAccount(Account account, Pageable pageable);
+
+    List<MessageDto> findAllByAccountAndContent(Account account, String trim, Pageable pageable);
+
 }
