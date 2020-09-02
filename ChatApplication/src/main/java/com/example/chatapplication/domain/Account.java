@@ -69,4 +69,7 @@ public class Account implements Serializable {
     private LocalDateTime updatedDate;
     @Column(length = 25, nullable = false)
     private String updatedBy;
+
+    @Column(nullable = true)
+    private boolean isOnline;
 }

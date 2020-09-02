@@ -8,11 +8,37 @@ import java.util.List;
 
 public interface CaptureScreenService {
 
+    /**
+     * Save capture image
+     *
+     * @param dataImg
+     */
     void saveCapture(String dataImg);
 
+    /**
+     * Get capture by account
+     *
+     * @param account
+     * @param pageable
+     * @return
+     */
     List<CaptureScreenDto> findAllByAccount(Account account, Pageable pageable);
 
+    /**
+     * Find capture by id
+     *
+     * @param idCapture
+     * @return
+     */
     CaptureScreenDto findCaptureById(Long idCapture);
 
-    List<CaptureScreenDto> findAllByAccountAndCreateDate(Account account, String trim, Pageable pageable);
+    /**
+     * Find capture by account and condition created date
+     *
+     * @param account
+     * @param createDate
+     * @param pageable
+     * @return
+     */
+    List<CaptureScreenDto> findAllByAccountAndCreateDate(Account account, String createDate, Pageable pageable);
 }

@@ -34,6 +34,13 @@ public class DownloadController {
     private String rootDir;
 
 
+    /**
+     * Download file attached
+     *
+     * @param attachmentId
+     * @param response
+     * @return
+     */
     @GetMapping("/download/{attachmentId}")
     public ResponseEntity downloadFile(@PathVariable long attachmentId, HttpServletResponse response) {
 
@@ -43,7 +50,7 @@ public class DownloadController {
             String path = new StringBuilder(rootDir)
                     .append(File.separator)
                     .append(attachment.getPathAttachment())
-                    .toString()                    ;
+                    .toString();
             Path fullPath = Paths.get(path);
             File file = fullPath.toFile();
             try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));

@@ -11,6 +11,7 @@ import com.example.chatapplication.services.MessageService;
 import com.example.chatapplication.services.dto.MessageDto;
 import com.example.chatapplication.services.mapper.MessageMapper;
 import com.example.chatapplication.ultities.FileUtilsUpload;
+import com.example.chatapplication.ultities.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,10 +120,16 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional
-    public void deleteMessageByID(long idMessage) {
+    public void deleteMessageByID(long idMessage) throws BusinessException {
+        String username = SecurityUtils.getAccountCurrentUserLogin().get();
         Message message = messageRepository.findById(idMessage).get();
-        attachmentRepository.deleteAllByMessage(message);
-        messageRepository.delete(message);
+        if (message.getAccountSender().getUsername().equalsIgnoreCase(username)) {
+            attachmentRepository.deleteAllByMessage(message);
+            messageRepository.delete(message);
+        } else {
+            throw new BusinessException("You are not permission delete this message");
+        }
+
     }
 
     @Override

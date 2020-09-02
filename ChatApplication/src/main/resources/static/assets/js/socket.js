@@ -92,6 +92,18 @@ $(document).ready(function () {
 
 
     function onMessageReceived(payload) {
+
+        $.ajax({
+            url: "/getUserOnline",
+            processData: false,
+            contentType: false,
+            type: 'GET',
+            success: function (response) {
+               $('#tab-content-dialogs').html(response);
+            }
+        });
+
+
         let message = JSON.parse(payload.body);
 
         let messageElement = document.createElement('li');

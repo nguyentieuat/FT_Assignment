@@ -6,10 +6,7 @@ import com.example.chatapplication.services.AccountService;
 import com.example.chatapplication.services.AttachmentService;
 import com.example.chatapplication.services.ChatRomService;
 import com.example.chatapplication.services.MessageService;
-import com.example.chatapplication.services.dto.AccountDto;
-import com.example.chatapplication.services.dto.ChatRoomDto;
-import com.example.chatapplication.services.dto.MessageDto;
-import com.example.chatapplication.services.dto.ResponseEntityDto;
+import com.example.chatapplication.services.dto.*;
 import com.example.chatapplication.services.mapper.AccountMapper;
 import com.example.chatapplication.ultities.Constants;
 import com.example.chatapplication.ultities.SecurityUtils;
@@ -87,6 +84,12 @@ public class ChatApplicationController {
         return "chat-light-mode";
     }
 
+    /**
+     * Load image avatar
+     *
+     * @param idAvatar
+     * @param response
+     */
     @GetMapping(value = {"/loadImage/{idAvatar}"})
     public void getAvatar(@PathVariable Long idAvatar, HttpServletResponse response) {
 
@@ -100,7 +103,7 @@ public class ChatApplicationController {
             if (file.exists()) {
                 try {
                     InputStream inputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-                    response.setContentType("image/jpeg");
+                    response.setContentType(Constants.TYPE_IMAGE);
                     IOUtils.copy(inputStream, response.getOutputStream());
                 } catch (IOException e) {
                     log.error("Cann't find avatar " + e);
@@ -110,6 +113,14 @@ public class ChatApplicationController {
         }
     }
 
+    /**
+     * Process when message has exited file
+     *
+     * @param messageDto
+     * @param request
+     * @param pageable
+     * @return
+     */
     @PostMapping("/app/chat.uploadFile")
     public String chatUploadFile(@ModelAttribute MessageDto messageDto, HttpServletRequest request, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
         String username = SecurityUtils.getAccountCurrentUserLogin().orElse(null);
@@ -128,22 +139,34 @@ public class ChatApplicationController {
     }
 
 
+    /**
+     * Delete message owner
+     *
+     * @param idMessage
+     * @return
+     */
     @PostMapping("/deleteMessage/{idMessage}")
     @ResponseBody
     public String deleteMessage(@PathVariable long idMessage) {
         try {
             messageService.deleteMessageByID(idMessage);
-
             ResponseEntityDto responseEntityDto = new ResponseEntityDto();
             responseEntityDto.setMessage("Delete sucess message id " + idMessage);
             return "chat-light-mode";
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error(ExceptionUtils.getStackTrace(e));
-            return  null;
+            return null;
         }
 
     }
 
+    /**
+     * Search message
+     *
+     * @param request
+     * @param pageable
+     * @return
+     */
     @GetMapping("/searchMessage")
     public String searchMessage(HttpServletRequest request, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
         String username = SecurityUtils.getAccountCurrentUserLogin().orElse(null);
@@ -155,13 +178,42 @@ public class ChatApplicationController {
             messageDtoList.forEach(messageDto -> {
                 messageDto.setOwner(messageDto.getAccountSender().getUsername().equalsIgnoreCase(username));
             });
+            request.setAttribute(Constants.KEY_SEARCH, keySearch);
             request.setAttribute(Constants.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
         }
 
         return "common/chat-content";
     }
 
+    /**
+     * Get account is online
+     *
+     * @param request
+     * @param pageable
+     * @return
+     */
+    @GetMapping("/getUserOnline")
+    public String getUserOnline(HttpServletRequest request, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
+        List<AccountDto> accountDtos;
 
+        String keySearch = request.getParameter(Constants.KEY_SEARCH);
+        if (Objects.isNull(keySearch) || keySearch.isEmpty()) {
+            accountDtos = accountService.getAccountOnline(pageable);
+        } else {
+            accountDtos = accountService.getAccountOnline(keySearch.trim(), pageable);
+        }
+        request.setAttribute(Constants.KEY_SEARCH, keySearch);
+        request.setAttribute(Constants.NameAttribute.LIST_ACCOUNT, accountDtos);
+        return "common/tab-content-dialogs";
+    }
+
+
+    /**
+     * Process when a message is sent
+     *
+     * @param messageDto
+     * @return
+     */
     @MessageMapping("/chat.sendMessage")
     @SendTo("/topic/publicChatRoom")
     public MessageDto sendMessage(@Payload MessageDto messageDto) {
@@ -170,12 +222,25 @@ public class ChatApplicationController {
         return result;
     }
 
+    /**
+     * Process when a user connect
+     *
+     * @param messageDto
+     * @return
+     */
     @MessageMapping("/chat.addUser")
     @SendTo("/topic/publicChatRoom")
     public MessageDto joinChatRoom(@Payload MessageDto messageDto, SimpMessageHeaderAccessor headerAccessor) {
 
+        String username = messageDto.getCreatedBy();
+        Account account = accountService.getAccountByUsername(username);
+        account.setOnline(true);
+
+        accountService.updateInfoAccount(account);
+
         // Add username in web socket session
-        headerAccessor.getSessionAttributes().put("username", messageDto.getCreatedBy());
+        headerAccessor.getSessionAttributes().put("username", username);
+
 
         return messageDto;
     }

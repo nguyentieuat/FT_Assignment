@@ -41,6 +41,8 @@ public class AccountDto implements Serializable {
     private LocalDateTime updatedDate;
     private String updatedBy;
 
+    private boolean isOnline;
+
     private long idAvatar;
 
     public long getIdAvatar() {

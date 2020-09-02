@@ -71,7 +71,7 @@
         <form method="get" th:action="${'/admin/getAllMessage/' + currentUser.username}" id="formSearchMessage">
             <div class="input-group">
                 <input type="text" class="form-control form-control-lg" placeholder="Search this chat"
-                       aria-label="Search this chat" name="keySearch">
+                       aria-label="Search this chat" name="keySearch" th:value="${keySearch}">
 
                 <div class="input-group-append">
                     <button class="btn btn-lg btn-ico btn-secondary btn-minimal" type="submit">

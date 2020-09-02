@@ -25,6 +25,31 @@ $(document).ready(function () {
         });
     });
 
+
+    $(document).on('submit', "#formGetUserOnline", function (event) {
+        event.preventDefault();
+        let post_url = $(this).attr("action");
+        let request_method = $(this).attr("method");
+        let form_data = $(this).serialize();
+
+        $.ajax({
+            url: post_url,
+            type: request_method,
+            data: form_data,
+            processData: false,
+            contentType: false,
+            type: 'GET',
+            success: function (data) {
+                $('#tab-content-dialogs').html(data);
+            },
+            error: function (data) {
+                console.log('An error occurred.');
+                console.log(data);
+            },
+        });
+    });
+
+
     window.addEventListener("beforeunload", function (e) {
         var confirmationMessage = "Warning! Are you logout?";
 
@@ -34,14 +59,12 @@ $(document).ready(function () {
     });
 
     function logout(confirmationMessage) {
-        // $.ajax({
-        //     url: "/signout"
-        //
-        // }).done(function(response){ //
-        //
-        // });
+        $.ajax({
+            url: "/signout"
 
+        }).done(function (response) { //
 
+        });
     }
 });
 window.deleteMessageChat = function (event) {

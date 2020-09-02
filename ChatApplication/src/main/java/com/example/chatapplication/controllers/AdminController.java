@@ -63,6 +63,14 @@ public class AdminController {
         return "admin/manage-chat";
     }
 
+    /**
+     * Get all message by username
+     *
+     * @param request
+     * @param username
+     * @param pageable
+     * @return
+     */
     @GetMapping(value = {"/getAllMessage/{username}"})
     public String getAllMessageByUsername(HttpServletRequest request, @PathVariable String username,
                                           @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
@@ -72,7 +80,7 @@ public class AdminController {
         String keySearch = request.getParameter(Constants.KEY_SEARCH);
 
         List<MessageDto> messageDtoList;
-        if (Objects.isNull(keySearch) || keySearch.isEmpty()){
+        if (Objects.isNull(keySearch) || keySearch.isEmpty()) {
             messageDtoList = messageService.findAllByAccount(account, pageable);
         } else {
             messageDtoList = messageService.findAllByAccountAndContent(account, keySearch.trim(), pageable);
@@ -81,11 +89,20 @@ public class AdminController {
         messageDtoList.forEach(messageDto -> {
             messageDto.setOwner(messageDto.getAccountSender().getUsername().equalsIgnoreCase(username));
         });
+        request.setAttribute(Constants.KEY_SEARCH, keySearch);
         request.setAttribute(Constants.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
 
         return "admin/common/chat-body";
     }
 
+    /**
+     * Get all capture screen by username
+     *
+     * @param request
+     * @param username
+     * @param pageable
+     * @return
+     */
     @GetMapping(value = {"/getAllCapture/{username}"})
     public String getAllCaptureByUsername(HttpServletRequest request, @PathVariable String username,
                                           @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
@@ -95,7 +112,7 @@ public class AdminController {
         String keySearch = request.getParameter(Constants.KEY_SEARCH);
 
         List<CaptureScreenDto> captureScreenDtos;
-        if (Objects.isNull(keySearch) || keySearch.isEmpty()){
+        if (Objects.isNull(keySearch) || keySearch.isEmpty()) {
             captureScreenDtos = captureScreenService.findAllByAccount(account, pageable);
         } else {
             captureScreenDtos = captureScreenService.findAllByAccountAndCreateDate(account, keySearch.trim(), pageable);
@@ -103,12 +120,19 @@ public class AdminController {
         captureScreenDtos.forEach(captureScreenDto -> {
             captureScreenDto.setOwner(captureScreenDto.getAccount().getUsername().equalsIgnoreCase(username));
         });
+        request.setAttribute(Constants.KEY_SEARCH, keySearch);
         request.setAttribute(Constants.NameAttribute.CAPTURE_DTO_LIST, captureScreenDtos);
 
         return "admin/common/capture-body";
     }
 
 
+    /**
+     * Search user in screen manage message
+     *
+     * @param request
+     * @return
+     */
     @GetMapping("/searchUserTabMessage")
     public String searchUserTabMessage(HttpServletRequest request) {
         String keySearch = request.getParameter(Constants.KEY_SEARCH).trim();
@@ -121,6 +145,12 @@ public class AdminController {
         return "admin/common/tab-content-message";
     }
 
+    /**
+     * Search user in screen manage capture
+     *
+     * @param request
+     * @return
+     */
     @GetMapping("/searchUserTabCapture")
     public String searchUserTabCapture(HttpServletRequest request) {
         String keySearch = request.getParameter(Constants.KEY_SEARCH).trim();

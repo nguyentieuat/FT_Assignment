@@ -28,13 +28,23 @@ public class CaptureScreenController {
     @Value("${file.path}")
     private String rootDir;
 
+    /**
+     * Save image caprture screen
+     *
+     * @param dataImg
+     */
     @PostMapping("/saveDesktopCapture")
     @ResponseBody
     public void saveDesktopCapture(@RequestBody String dataImg) {
         captureScreenService.saveCapture(dataImg);
     }
 
-
+    /**
+     * Load image capture on screen
+     *
+     * @param idCapture
+     * @param response
+     */
     @GetMapping(value = {"/loadCaptureScreen/{idCapture}"})
     public void loadCaptureScreen(@PathVariable Long idCapture, HttpServletResponse response) {
 

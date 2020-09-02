@@ -22,6 +22,15 @@ public class FileUtilsUpload {
     @Value("${file.path}")
     private String rootDir;
 
+    /**
+     * Save file upload
+     * @param account
+     * @param numberRecordInDay
+     * @param date
+     * @param file
+     * @return
+     * @throws BusinessException
+     */
     public String saveFileUpload(String account, Integer numberRecordInDay, LocalDateTime date, MultipartFile file) throws BusinessException {
 
         String dateStr = DateTimeFormatter.ofPattern(Constants.FORMAT_DATE_UNDERSCORE).format(date);

@@ -1,5 +1,7 @@
 package com.example.chatapplication.listener;
 
+import com.example.chatapplication.domain.Account;
+import com.example.chatapplication.services.AccountService;
 import com.example.chatapplication.services.dto.MessageDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +12,17 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+import java.time.LocalDateTime;
+
 @Component
 @Slf4j
 public class WebSocketEventListener {
 
     @Autowired
     private SimpMessageSendingOperations messagingTemplate;
+
+    @Autowired
+    private AccountService accountService;
 
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
@@ -34,6 +41,11 @@ public class WebSocketEventListener {
             MessageDto messageDto = new MessageDto();
             messageDto.setType("LEAVE");
             messageDto.setCreatedBy(username);
+
+            Account account = accountService.getAccountByUsername(username);
+            account.setOnline(false);
+            account.setLastLogout(LocalDateTime.now());
+            accountService.updateInfoAccount(account);
 
             messagingTemplate.convertAndSend("/topic/publicChatRoom", messageDto);
         }

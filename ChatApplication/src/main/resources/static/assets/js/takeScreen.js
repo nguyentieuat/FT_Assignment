@@ -74,8 +74,3 @@ function doCapture() {
 
 setInterval(doCapture, 30000);
 
-// $('#btnChatSubmit').click(function () {
-//     doCapture();
-// });
-
-

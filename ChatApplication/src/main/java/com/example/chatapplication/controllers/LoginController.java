@@ -58,9 +58,11 @@ public class LoginController {
         String username = authenticationRequest.getUsername();
 
         boolean authenticate = authenticate(username, authenticationRequest.getPassword());
-//        if (!authenticate){
-//            return "/signin";
-//        }
+
+        //if login fail then redirect to page login
+        if (!authenticate) {
+            return "redirect: /signin";
+        }
 
         final UserDetails userDetails = jwtUserDetailsService
                 .loadUserByUsername(authenticationRequest.getUsername());
@@ -96,12 +98,15 @@ public class LoginController {
 
 
     /**
+     * When user click button logout then spriing security has processed
+     *
      * @return
      */
     @GetMapping("/signout")
     public String logout() {
         String username = SecurityUtils.getAccountCurrentUserLogin().get();
         Account account = accountService.getAccountByUsername(username);
+        account.setOnline(false);
         account.setLastLogout(LocalDateTime.now());
         accountService.updateInfoAccount(account);
         return "redirect:/logout";

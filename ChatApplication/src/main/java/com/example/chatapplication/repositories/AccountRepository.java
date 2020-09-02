@@ -11,9 +11,13 @@ import java.util.List;
 public interface AccountRepository extends JpaRepository<Account, String> {
     Account findByUsername(String username);
 
-    List<Account> findAllByStatusOrderByUsernameAsc( int status, Pageable pageable);
+    List<Account> findAllByStatusOrderByUsernameAsc(int status, Pageable pageable);
 
     List<Account> findAllByOrderByUsernameAsc();
 
     List<Account> findAllByUsernameContainingIgnoreCaseOrderByUsernameAsc(String username);
+
+    List<Account> findAllByIsOnlineOrderByUsernameAsc(boolean isOnline, Pageable pageable);
+
+    List<Account> findAllByUsernameContainingIgnoreCaseAndIsOnlineOrderByUsernameAsc(String username, boolean isOnline, Pageable pageable);
 }
