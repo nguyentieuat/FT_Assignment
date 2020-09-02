@@ -1,4 +1,6 @@
 $(document).ready(function () {
+
+    //Add function for elements
     [].forEach.call(document.getElementsByName("messageUsername"), function (a) {
         a.addEventListener('click', getMessageByUsername, false);
     });
@@ -7,7 +9,8 @@ $(document).ready(function () {
         a.addEventListener('click', getCaptureByUsername, false);
     });
 
-    $(document).on('submit',"#searchUserTabMessage",function(event){
+    //Search user on screen message
+    $(document).on('submit', "#searchUserTabMessage", function (event) {
         event.preventDefault();
         let post_url = $(this).attr("action");
         let request_method = $(this).attr("method");
@@ -15,9 +18,9 @@ $(document).ready(function () {
 
 
         $.ajax({
-            url : post_url,
+            url: post_url,
             type: request_method,
-            data : form_data,
+            data: form_data,
             processData: false,
             contentType: false,
             type: 'GET',
@@ -34,7 +37,8 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on('submit',"#searchUserTabCapture",function(event){
+    //Search user on screen capture
+    $(document).on('submit', "#searchUserTabCapture", function (event) {
         event.preventDefault();
         let post_url = $(this).attr("action");
         let request_method = $(this).attr("method");
@@ -42,9 +46,9 @@ $(document).ready(function () {
 
 
         $.ajax({
-            url : post_url,
+            url: post_url,
             type: request_method,
-            data : form_data,
+            data: form_data,
             processData: false,
             contentType: false,
             type: 'GET',
@@ -61,16 +65,18 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on('submit',"#formSearchMessage",function(event){
+
+    //Search message on screen message
+    $(document).on('submit', "#formSearchMessage", function (event) {
         event.preventDefault();
         let post_url = $(this).attr("action");
         let request_method = $(this).attr("method");
         let form_data = $(this).serialize();
 
         $.ajax({
-            url : post_url,
+            url: post_url,
             type: request_method,
-            data : form_data,
+            data: form_data,
             processData: false,
             contentType: false,
             type: 'GET',
@@ -87,16 +93,17 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on('submit',"#formSearchCapture",function(event){
+    //Search capture on screen capture
+    $(document).on('submit', "#formSearchCapture", function (event) {
         event.preventDefault();
         let post_url = $(this).attr("action");
         let request_method = $(this).attr("method");
         let form_data = $(this).serialize();
 
         $.ajax({
-            url : post_url,
+            url: post_url,
             type: request_method,
-            data : form_data,
+            data: form_data,
             processData: false,
             contentType: false,
             type: 'GET',
@@ -114,12 +121,14 @@ $(document).ready(function () {
     });
 });
 
+//Add function for elements
 window.getMessageAccount = function () {
     [].forEach.call(document.getElementsByName("messageUsername"), function (a) {
         a.addEventListener('click', getMessageByUsername, false);
     });
 }
 
+//Declare function
 function getMessageByUsername() {
     [].forEach.call(document.getElementsByName("messageUsername"), function (a) {
         $(a).removeClass("active");

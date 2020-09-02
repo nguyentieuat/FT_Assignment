@@ -36,6 +36,7 @@ $(document).ready(function () {
         $('#chat-content').append(connectingElement);
     }
 
+    //Action send message
     function sendMessage(event) {
         let messageContent = $('#chat-id-1-input').val().trim();
 
@@ -80,6 +81,7 @@ $(document).ready(function () {
         event.preventDefault();
     }
 
+    // Change key up shift+enter to line break, enter to sent
     $('#chat-id-1-input').keyup(function (event) {
         if (event.keyCode == 13 && event.shiftKey) {
             event.stopPropagation();
@@ -91,6 +93,7 @@ $(document).ready(function () {
     });
 
 
+    //Action when receive a message
     function onMessageReceived(payload) {
 
         $.ajax({
@@ -134,6 +137,7 @@ $(document).ready(function () {
 
     }
 
+    //Show message on screen
     function addHtmlMessage(message) {
         let idMessage = message.id;
         let isOwner = username == message.usernameSender;

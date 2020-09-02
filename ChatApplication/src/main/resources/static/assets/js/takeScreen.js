@@ -37,11 +37,10 @@ function errorMsg(msg, error) {
     }
 }
 
-// const startButton = document.getElementById('startButton');
-// startButton.addEventListener('click', () => {
+// Permission access stream of system
 navigator.mediaDevices.getDisplayMedia({video: true})
     .then(handleSuccess, handleError);
-// });
+
 
 if ((navigator.mediaDevices && 'getDisplayMedia' in navigator.mediaDevices)) {
     // startButton.disabled = false;
@@ -49,6 +48,7 @@ if ((navigator.mediaDevices && 'getDisplayMedia' in navigator.mediaDevices)) {
     errorMsg('getDisplayMedia is not supported');
 }
 
+//Action capture screen
 function doCapture() {
     html2canvas($('body'), {
         onrendered: function (canvas) {
@@ -72,5 +72,6 @@ function doCapture() {
     });
 }
 
+//Set auto 30s capture
 setInterval(doCapture, 30000);
 

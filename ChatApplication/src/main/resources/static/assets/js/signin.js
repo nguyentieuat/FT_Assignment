@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+    // Validate form login by jquery
     $('#form-signin').validate({
         rules: {
             username: "required",
@@ -12,6 +13,7 @@ $(document).ready(function () {
         }
     });
 
+    //Action login
     $('#btnSignin').click(function () {
         if ($('#form-signin').valid()) {
             $('#form-signin').submit();

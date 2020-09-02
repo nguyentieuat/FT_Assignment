@@ -1,13 +1,15 @@
 $(document).ready(function () {
+    //click button logout
     $('#btnLogout').click(function () {
         location.href = "/logout"
     });
 
-
+    //add function for tag a to delete message
     [].forEach.call(document.getElementsByName("deleteMessage"), function (a) {
         a.addEventListener('click', delMessage, false);
     });
 
+    //Search message
     $(document).on('submit', "#formSearch", function (event) {
         event.preventDefault();
         var post_url = $(this).attr("action");
@@ -26,6 +28,7 @@ $(document).ready(function () {
     });
 
 
+    //Find user online
     $(document).on('submit', "#formGetUserOnline", function (event) {
         event.preventDefault();
         let post_url = $(this).attr("action");
@@ -49,7 +52,7 @@ $(document).ready(function () {
         });
     });
 
-
+    //Event when out page
     window.addEventListener("beforeunload", function (e) {
         var confirmationMessage = "Warning! Are you logout?";
 
@@ -67,12 +70,15 @@ $(document).ready(function () {
         });
     }
 });
+
+// Function delete message of tag a
 window.deleteMessageChat = function (event) {
     [].forEach.call(document.getElementsByName("deleteMessage"), function (a) {
         a.addEventListener('click', delMessage, false);
     });
 };
 
+// Action delete
 function delMessage() {
     let parentElement = $(this).parent().parent().parent().parent().parent().parent().parent();
 
