@@ -23,6 +23,8 @@ public class AccessDeniedExceptionHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response,
                        AccessDeniedException ex) throws IOException, ServletException {
         response.setStatus(HttpStatus.FORBIDDEN.value());
-        request.getRequestDispatcher("/signin").forward(request, response);
+
+        String contextPath = request.getContextPath();
+        response.sendRedirect(contextPath + "/signin");
     }
 }
