@@ -98,20 +98,4 @@ public class AdminLoginController {
         }
         return result;
     }
-
-
-//    /**
-//     * When user click button logout then spring security has processed
-//     *
-//     * @return
-//     */
-//    @GetMapping("/signout")
-//    public String logout() {
-//        String username = SecurityUtils.getAccountCurrentUserLogin().get();
-//        Account account = accountService.getAccountByUsername(username);
-//        account.setOnline(false);
-//        account.setLastLogout(LocalDateTime.now());
-//        accountService.updateInfoAccount(account);
-//        return "redirect:/logout";
-//    }
 }
