@@ -55,6 +55,15 @@
                 </a>
             </li>
 
+            <!-- Profile -->
+            <li class="nav-item mt-xl-9">
+                <a class="nav-link position-relative p-0 py-xl-3" data-toggle="tab"
+                   title="Profile" href="#tab-content-user" role="tab">
+                    <i class="icon-lg fe-user"></i>
+                </a>
+            </li>
+
+
         </ul>
         <!-- Menu -->
 
@@ -71,6 +80,10 @@
 
             <div class="tab-pane fade h-100" id="tab-content-capture" role="tabpanel">
                 <div th:replace="admin/common/tab-content-capture.html :: tab-content-capture"></div>
+            </div>
+
+            <div class="tab-pane fade h-100" id="tab-content-user" role="tabpanel">
+                <div th:replace="admin/common/tab-content-user.html :: tab-content-user"></div>
             </div>
         </div>
     </div>

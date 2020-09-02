@@ -1,5 +1,10 @@
 $(document).ready(function () {
 
+    //click button logout
+    $('#btnLogout').click(function () {
+        location.href = "/logout"
+    });
+
     //Add function for elements
     [].forEach.call(document.getElementsByName("messageUsername"), function (a) {
         a.addEventListener('click', getMessageByUsername, false);

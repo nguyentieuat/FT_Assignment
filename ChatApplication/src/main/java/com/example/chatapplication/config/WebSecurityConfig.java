@@ -63,6 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/signin", "/signout", "/error").permitAll()
                 .antMatchers("/assets/**", "/dist/**", "/favicon.ico").permitAll()
                 .antMatchers("/register").permitAll()
+                .antMatchers("/admin", "/admin/signin").permitAll()
                 .antMatchers("/admin/**").hasRole("1")
                 // all other requests need to be authenticated
                 .anyRequest().authenticated()

@@ -6,7 +6,6 @@ import com.example.chatapplication.services.JwtUserDetailsService;
 import com.example.chatapplication.services.dto.JwtLoginRequest;
 import com.example.chatapplication.ultities.Constants;
 import com.example.chatapplication.ultities.JwtTokenUtil;
-import com.example.chatapplication.ultities.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,9 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +25,8 @@ import java.time.LocalDateTime;
 
 @Slf4j
 @Controller
-public class LoginController {
+@RequestMapping("/admin")
+public class AdminLoginController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -43,7 +45,7 @@ public class LoginController {
      */
     @GetMapping(value = {"", "/", "/signin"})
     public String login() {
-        return "signin";
+        return "admin/signin";
     }
 
     /**
@@ -61,7 +63,7 @@ public class LoginController {
 
         //if login fail then redirect to page login
         if (!authenticate) {
-            return "redirect: /signin";
+            return "redirect:/admin/signin";
         }
 
         final UserDetails userDetails = jwtUserDetailsService
@@ -79,7 +81,7 @@ public class LoginController {
         account.setLastLogin(LocalDateTime.now());
         accountService.updateInfoAccount(account);
 
-        return "redirect:/chat-light-mode";
+        return "redirect:/admin/manager-chat";
     }
 
     private boolean authenticate(String username, String password) throws Exception {
@@ -98,18 +100,18 @@ public class LoginController {
     }
 
 
-    /**
-     * When user click button logout then spring security has processed
-     *
-     * @return
-     */
-    @GetMapping("/signout")
-    public String logout() {
-        String username = SecurityUtils.getAccountCurrentUserLogin().get();
-        Account account = accountService.getAccountByUsername(username);
-        account.setOnline(false);
-        account.setLastLogout(LocalDateTime.now());
-        accountService.updateInfoAccount(account);
-        return "redirect:/logout";
-    }
+//    /**
+//     * When user click button logout then spring security has processed
+//     *
+//     * @return
+//     */
+//    @GetMapping("/signout")
+//    public String logout() {
+//        String username = SecurityUtils.getAccountCurrentUserLogin().get();
+//        Account account = accountService.getAccountByUsername(username);
+//        account.setOnline(false);
+//        account.setLastLogout(LocalDateTime.now());
+//        accountService.updateInfoAccount(account);
+//        return "redirect:/logout";
+//    }
 }

@@ -11,9 +11,9 @@
 
     <!-- Template core CSS -->
 
-    <link th:href="@{assets/css/template.min.css}" rel="stylesheet">
-    <link th:href="@{assets/css/template.dark.min.css}" rel="stylesheet" media="(prefers-color-scheme: dark)">
-    <link rel="stylesheet" th:href="@{assets/css/customize.css}">
+    <link th:href="@{/assets/css/template.min.css}" rel="stylesheet">
+    <link th:href="@{/assets/css/template.dark.min.css}" rel="stylesheet" media="(prefers-color-scheme: dark)">
+    <link rel="stylesheet" th:href="@{/assets/css/customize.css}">
 
 </head>
 <!-- Head -->
@@ -36,7 +36,7 @@
                 <p class="text-center mb-6">Welcome to the official Chat web-client.</p>
 
                 <!-- Form -->
-                <form class="mb-6" id="form-signin" method="post" action="/signin">
+                <form class="mb-6" id="form-signin" method="post" action="/admin/signin">
                     <!-- Email -->
                     <div class="form-group">
                         <label for="username" class="sr-only">Username</label>
@@ -78,12 +78,12 @@
 </div><!-- .layout -->
 
 <!-- Scripts -->
-<script th:src="@{/assets/js/libs/jquery.min.js}"></script>
-<script th:src="@{/assets/js/libs/jquery.validate.min.js}"></script>
-<script th:src="@{/assets/js/bootstrap/bootstrap.bundle.min.js}"></script>
-<script th:src="@{/assets/js/plugins/plugins.bundle.js}"></script>
-<script th:src="@{/assets/js/template.js}"></script>
-<script th:src="@{/assets/js/signin.js}"></script>
+<script th:src="@{/static/assets/js/libs/jquery.min.js}"></script>
+<script th:src="@{/static/assets/js/libs/jquery.validate.min.js}"></script>
+<script th:src="@{/static/assets/js/bootstrap/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/static/assets/js/plugins/plugins.bundle.js}"></script>
+<script th:src="@{/static/assets/js/template.js}"></script>
+<script th:src="@{/static/assets/js/signin.js}"></script>
 <!-- Scripts -->
 
 </body>

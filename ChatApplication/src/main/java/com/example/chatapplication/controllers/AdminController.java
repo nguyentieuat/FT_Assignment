@@ -11,6 +11,7 @@ import com.example.chatapplication.services.dto.MessageDto;
 import com.example.chatapplication.services.mapper.AccountMapper;
 import com.example.chatapplication.ultities.Constants;
 import com.example.chatapplication.ultities.JwtTokenUtil;
+import com.example.chatapplication.ultities.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -52,15 +53,20 @@ public class AdminController {
      *
      * @return
      */
-    @GetMapping(value = {"/manager-chat"})
+    @GetMapping(value = {"/manager-chat", "/manager"})
     public String chatApplication(HttpServletRequest request) {
+        String username = SecurityUtils.getAccountCurrentUserLogin().orElse(null);
 
-        List<AccountDto> accountDtos = accountService.findAllAccount();
+        if (!Objects.isNull(username)) {
+            Account account = accountService.getAccountByUsername(username);
+            AccountDto accountDto = accountMapper.toDto(account);
+            request.setAttribute(Constants.NameAttribute.CURRENT_USER, accountDto);
+            List<AccountDto> accountDtos = accountService.findAllAccount();
 
-        request.setAttribute(Constants.NameAttribute.LIST_ACCOUNT, accountDtos);
+            request.setAttribute(Constants.NameAttribute.LIST_ACCOUNT, accountDtos);
+        }
 
-
-        return "admin/manage-chat";
+        return "admin/manager-chat";
     }
 
     /**
