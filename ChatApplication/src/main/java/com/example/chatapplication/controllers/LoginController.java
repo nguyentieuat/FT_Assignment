@@ -61,7 +61,7 @@ public class LoginController {
 
         //if login fail then redirect to page login
         if (!authenticate) {
-            return "redirect: /signin";
+            return "redirect:/signin";
         }
 
         final UserDetails userDetails = jwtUserDetailsService

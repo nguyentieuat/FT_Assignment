@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.text.MessageFormat;
 
 @ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
-public class BusinessException extends Exception {
+public class BusinessException extends RuntimeException {
     private static final long serialVersionUID = 1;
 
     private String message;
