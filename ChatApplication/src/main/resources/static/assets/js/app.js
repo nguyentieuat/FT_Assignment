@@ -52,24 +52,25 @@ $(document).ready(function () {
         });
     });
 
-    //Event when out page
-    window.addEventListener("beforeunload", function (e) {
-        var confirmationMessage = "Warning! Are you logout?";
+    // //Event when out page
+    // window.addEventListener("beforeunload", function (e) {
+    //     var confirmationMessage = "Warning! Are you logout?";
+    //
+    //     (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+    //     logout(confirmationMessage);
+    //     return confirmationMessage;
+    // });
 
-        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-        logout(confirmationMessage);
-        return confirmationMessage;
-    });
-
-    function logout(confirmationMessage) {
-        $.ajax({
-            url: "/signout"
-
-        }).done(function (response) { //
-
-        });
-    }
 });
+
+function logout(confirmationMessage) {
+    $.ajax({
+        url: "/signout"
+
+    }).done(function (response) { //
+
+    });
+}
 
 // Function delete message of tag a
 window.deleteMessageChat = function (event) {

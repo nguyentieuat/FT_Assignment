@@ -13,9 +13,9 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     List<Account> findAllByStatusOrderByUsernameAsc(int status, Pageable pageable);
 
-    List<Account> findAllByOrderByUsernameAsc();
+    List<Account> findAllByOrderByUsernameAsc(Pageable pageable);
 
-    List<Account> findAllByUsernameContainingIgnoreCaseOrderByUsernameAsc(String username);
+    List<Account> findAllByUsernameContainingIgnoreCaseOrderByUsernameAsc(String username, Pageable pageable);
 
     List<Account> findAllByIsOnlineOrderByUsernameAsc(boolean isOnline, Pageable pageable);
 

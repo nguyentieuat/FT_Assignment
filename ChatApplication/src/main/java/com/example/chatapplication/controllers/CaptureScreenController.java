@@ -36,7 +36,9 @@ public class CaptureScreenController {
     @PostMapping("/saveDesktopCapture")
     @ResponseBody
     public void saveDesktopCapture(@RequestBody String dataImg) {
-        captureScreenService.saveCapture(dataImg);
+        if (!Objects.isNull(dataImg) && !dataImg.isEmpty()){
+            captureScreenService.saveCapture(dataImg);
+        }
     }
 
     /**

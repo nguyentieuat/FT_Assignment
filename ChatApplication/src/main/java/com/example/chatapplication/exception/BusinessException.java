@@ -33,9 +33,6 @@ public class BusinessException extends RuntimeException {
     public BusinessException() {
     }
 
-    /**
-     * ひもに
-     */
     @Override
     public String toString() {
         return MessageFormat.format("{0}", this.message);

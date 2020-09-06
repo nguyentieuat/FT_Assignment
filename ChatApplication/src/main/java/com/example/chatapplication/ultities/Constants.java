@@ -11,6 +11,7 @@ public class Constants {
     public static final String KEY_SEARCH = "keySearch";
     public static final String REQUEST_CAPTURE_DESKTOP = "dataImg";
     public static final String PATH_CAPTURE_DESKTOP = "desktop_capture";
+    public static final String PATH_ATTACH_MESSAGE = "attach_file_message";
     public static final String FILE_NAME_EXTENSION_PNG = ".png";
     public static final String FORMAT_DATE_SAVE_CAPTURE = "yyyy_MM_dd/HH_mm_ss";
     public static final String COMMA = ",";

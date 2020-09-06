@@ -47,8 +47,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<AccountDto> findAllAccount() {
-        List<Account> accounts = accountRepository.findAllByOrderByUsernameAsc();
+    public List<AccountDto> findAllAccount(Pageable pageable) {
+        List<Account> accounts = accountRepository.findAllByOrderByUsernameAsc(pageable);
 
         accounts.forEach(account -> {
             Message message = messageRepository.findTop1ByAccountSenderOrderByCreatedDateDesc(account);
@@ -61,8 +61,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<AccountDto> findAllAccountContainUsername(String keySearch) {
-        List<Account> accounts = accountRepository.findAllByUsernameContainingIgnoreCaseOrderByUsernameAsc(keySearch);
+    public List<AccountDto> findAllAccountContainUsername(String keySearch, Pageable pageable) {
+        List<Account> accounts = accountRepository.findAllByUsernameContainingIgnoreCaseOrderByUsernameAsc(keySearch, pageable);
         accounts.forEach(account -> {
             Message message = messageRepository.findTop1ByAccountSenderOrderByCreatedDateDesc(account);
             Set<Message> messageSet = new HashSet<>();

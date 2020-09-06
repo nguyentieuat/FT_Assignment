@@ -24,14 +24,14 @@ public class FileUtilsUpload {
 
     /**
      * Save file upload
-     * @param account
+     * @param username
      * @param numberRecordInDay
      * @param date
      * @param file
      * @return
      * @throws BusinessException
      */
-    public String saveFileUpload(String account, Integer numberRecordInDay, LocalDateTime date, MultipartFile file) throws BusinessException {
+    public String saveFileUpload(String username, Integer numberRecordInDay, LocalDateTime date, MultipartFile file) throws BusinessException {
 
         String dateStr = DateTimeFormatter.ofPattern(Constants.FORMAT_DATE_UNDERSCORE).format(date);
         String pathResult = null;
@@ -39,7 +39,8 @@ public class FileUtilsUpload {
             String fileName = FilenameUtils.getName(file.getOriginalFilename());
             StringBuilder sbPathResult = new StringBuilder();
 
-            sbPathResult.append(account)
+            sbPathResult.append(username)
+                    .append(File.separator).append(Constants.PATH_ATTACH_MESSAGE)
                     .append(File.separator).append(dateStr)
                     .append(File.separator).append(numberRecordInDay + Constants.Number.ONE)
                     .append(File.separator).append(fileName);

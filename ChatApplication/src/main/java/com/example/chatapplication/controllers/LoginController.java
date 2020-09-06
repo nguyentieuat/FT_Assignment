@@ -76,6 +76,7 @@ public class LoginController {
 
         Account account = accountService.getAccountByUsername(username);
         account.setOnline(true);
+        
         account.setLastLogin(LocalDateTime.now());
         accountService.updateInfoAccount(account);
 

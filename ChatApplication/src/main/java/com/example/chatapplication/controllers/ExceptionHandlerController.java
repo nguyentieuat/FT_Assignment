@@ -13,14 +13,12 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(BusinessException.class)
     public void handlerBusinessException(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String contextPath = request.getContextPath();
-        response.sendRedirect(contextPath + "/signin");
+        response.sendRedirect("/signin");
     }
 
 
-    @ExceptionHandler(RuntimeException.class)
+    @ExceptionHandler(Exception.class)
     public void handlerAccessDeniedException(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String contextPath = request.getContextPath();
-        response.sendRedirect(contextPath + "/signin");
+        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Has error from server");
     }
 }

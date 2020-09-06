@@ -28,16 +28,18 @@ public interface AccountService {
      * Get all account
      *
      * @return
+     * @param pageable
      */
-    List<AccountDto> findAllAccount();
+    List<AccountDto> findAllAccount(Pageable pageable);
 
     /**
      * Get accounts contain key search
      *
      * @param keySearch
+     * @param pageable
      * @return
      */
-    List<AccountDto> findAllAccountContainUsername(String keySearch);
+    List<AccountDto> findAllAccountContainUsername(String keySearch, Pageable pageable);
 
     /**
      * Get all account online
