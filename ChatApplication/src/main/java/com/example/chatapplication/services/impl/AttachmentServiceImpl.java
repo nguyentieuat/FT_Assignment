@@ -12,7 +12,7 @@ public class AttachmentServiceImpl implements AttachmentService {
     private AttachmentRepository attachmentRepository;
 
     @Override
-    public Attachment findAttachmentById(Long idAvatar) {
-        return attachmentRepository.findById(idAvatar).orElseGet(null);
+    public Attachment findAttachmentById(Long idAttachment) {
+        return attachmentRepository.findById(idAttachment).orElseGet(null);
     }
 }

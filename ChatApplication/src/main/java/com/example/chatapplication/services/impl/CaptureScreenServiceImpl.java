@@ -62,7 +62,7 @@ public class CaptureScreenServiceImpl implements CaptureScreenService {
                 .append(path)
                 .toString();
 
-        String data = dataImg.split(Constants.COMMA)[1].replace(" ", "+");
+        String data = dataImg.split(Constants.COMMA)[1].replace(Constants.SPACE, Constants.PLUS);
         File file = new File(filePath);
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();

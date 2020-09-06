@@ -3,14 +3,12 @@ package com.example.chatapplication.controllers;
 import com.example.chatapplication.domain.Account;
 import com.example.chatapplication.services.AccountService;
 import com.example.chatapplication.services.CaptureScreenService;
-import com.example.chatapplication.services.JwtUserDetailsService;
 import com.example.chatapplication.services.MessageService;
 import com.example.chatapplication.services.dto.AccountDto;
 import com.example.chatapplication.services.dto.CaptureScreenDto;
 import com.example.chatapplication.services.dto.MessageDto;
 import com.example.chatapplication.services.mapper.AccountMapper;
 import com.example.chatapplication.ultities.Constants;
-import com.example.chatapplication.ultities.JwtTokenUtil;
 import com.example.chatapplication.ultities.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +36,6 @@ public class AdminController {
 
     @Autowired
     private AccountMapper accountMapper;
-
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-
-    @Autowired
-    private JwtUserDetailsService jwtUserDetailsService;
 
     @Autowired
     private AccountService accountService;

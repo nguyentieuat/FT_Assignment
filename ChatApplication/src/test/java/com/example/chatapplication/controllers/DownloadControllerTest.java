@@ -65,7 +65,6 @@ public class DownloadControllerTest {
         ResponseEntity responseEntity = new ResponseEntity(HttpStatus.OK);
         Assert.assertEquals(responseEntity.getStatusCode(),
                 downloadController.downloadFile(attachmentId, response).getStatusCode());
-
     }
     @Test
     public void downloadFileError() throws IOException {

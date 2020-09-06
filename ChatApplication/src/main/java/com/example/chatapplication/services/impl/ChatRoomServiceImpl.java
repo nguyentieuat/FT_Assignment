@@ -11,7 +11,6 @@ import com.example.chatapplication.services.dto.ChatRoomDto;
 import com.example.chatapplication.services.mapper.ChatRoomMapper;
 import com.example.chatapplication.ultities.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -35,14 +34,16 @@ public class ChatRoomServiceImpl implements ChatRomService {
     private ChatRoomMapper chatRoomMapper;
 
     @Override
-    public ChatRoomDto getChatRoomById(long id) {
+    public ChatRoomDto getChatRoomById(long id, Pageable pageable) {
         ChatRoom chatRoom = chatRoomRepository.findById(id).get();
 
-        Pageable pageable = PageRequest.of(Constants.Number.ZERO, Constants.DEFAULT_SIZE_PAGE);
+        //Chat public contain all account is active
         List<Account> accounts = accountRepository.findAllByStatusOrderByUsernameAsc(Constants.Status.ACTIVE, pageable);
         chatRoom.setAccounts(new HashSet<>(accounts));
 
-        List<Attachment> attachments = attachmentRepository.findAllByOrderByCreatedDateDesc(pageable);
+        //File attach in room public can set id is room public's id or no set id
+        // and to easy process, file attachment no set id.
+        List<Attachment> attachments = attachmentRepository.findAllByChatRoomOrChatRoomIsNullOrderByCreatedDateDesc(chatRoom, pageable);
         chatRoom.setAttachments(new HashSet<>(attachments));
 
         return chatRoomMapper.toDto(chatRoom);

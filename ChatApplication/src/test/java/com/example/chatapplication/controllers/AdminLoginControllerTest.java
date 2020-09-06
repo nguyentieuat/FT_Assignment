@@ -30,7 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(MockitoJUnitRunner.class)
 @ExtendWith(MockitoExtension.class)
-@ExtendWith(MockitoExtension.class)
 public class AdminLoginControllerTest {
 
     @Mock

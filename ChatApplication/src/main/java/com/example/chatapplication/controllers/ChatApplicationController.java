@@ -76,8 +76,9 @@ public class ChatApplicationController {
             });
             request.setAttribute(Constants.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
 
-            ChatRoomDto chatRoomDto = chatRomService.getChatRoomById(Constants.ID_CHAT_ROOM_ALL_USER);
-            chatRoomDto.getAccounts().remove(account);
+            //Develop app, it will has many chat room, and chat room public for every one is a chat room specific where
+            // has all everyone.
+            ChatRoomDto chatRoomDto = chatRomService.getChatRoomById(Constants.ID_CHAT_ROOM_ALL_USER, pageable);
             request.setAttribute(Constants.NameAttribute.CHAT_ROOM_DTO, chatRoomDto);
         }
 

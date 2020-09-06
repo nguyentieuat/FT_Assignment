@@ -173,7 +173,7 @@ public class FileDocumentControllerTest {
 
         List list = new ArrayList();
         final Page<FileDocumentDto> page = new PageImpl<>(list);
-        when(fileDocumentService.getAllFile(fileName, category, status, pageable)).thenReturn(page).thenReturn(page);
+        when(fileDocumentService.getAllFile(fileName, category, status, pageable)).thenReturn(page);
 
         ResponseEntity responseEntity = ResponseEntity.ok(page);
 

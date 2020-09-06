@@ -1,6 +1,7 @@
 package com.example.chatapplication.repositories;
 
 import com.example.chatapplication.domain.Attachment;
+import com.example.chatapplication.domain.ChatRoom;
 import com.example.chatapplication.domain.Message;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,7 +20,7 @@ public interface AttachmentRepository extends JpaRepository<Attachment, Long> {
             "Where DATE (att.created_date) = DATE (:date) and att.created_by = :username", nativeQuery = true)
     Integer countRecordCreatedInDateByUser(LocalDateTime date, String username);
 
-    List<Attachment> findAllByOrderByCreatedDateDesc(Pageable pageable);
+    List<Attachment> findAllByChatRoomOrChatRoomIsNullOrderByCreatedDateDesc(ChatRoom chatroom,Pageable pageable);
 
     void deleteAllByMessage(Message messageId);
 }
