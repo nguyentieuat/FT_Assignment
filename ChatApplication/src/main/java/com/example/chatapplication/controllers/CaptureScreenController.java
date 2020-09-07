@@ -63,7 +63,7 @@ public class CaptureScreenController {
                     response.setContentType("image/jpeg");
                     IOUtils.copy(inputStream, response.getOutputStream());
                 } catch (IOException e) {
-                    log.error("Cann't find avatar " + e);
+                    log.error("Can't find avatar " + e);
                 }
             }
 

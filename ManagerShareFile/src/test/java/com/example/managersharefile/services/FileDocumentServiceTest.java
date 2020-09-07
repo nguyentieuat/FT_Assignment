@@ -79,8 +79,6 @@ public class FileDocumentServiceTest {
 
         String username = "emp001";
 
-        LocalDateTime now = LocalDateTime.now();
-
         Common commonCategory = new Common();
         commonCategory.setTypeSubName("subName1");
         when(commonRepository.findByTypeIdAndTypeSubId(Constants.CommonValue.CATEGORY_FILE, category))

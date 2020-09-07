@@ -128,6 +128,9 @@ public class ChatApplicationController {
 
         if (!Objects.isNull(username)) {
             MessageDto messageDtoResult = messageService.saveMessage(messageDto);
+            if (Objects.isNull(messageDtoResult)){
+                throw new NullPointerException("Error when save message has file attach");
+            }
 
             List<MessageDto> messageDtoList = new ArrayList<>();
             messageDtoList.add(messageDtoResult);
@@ -152,7 +155,7 @@ public class ChatApplicationController {
         try {
             messageService.deleteMessageByID(idMessage);
             ResponseEntityDto responseEntityDto = new ResponseEntityDto();
-            responseEntityDto.setMessage("Delete sucess message id " + idMessage);
+            responseEntityDto.setMessage("Delete success message id " + idMessage);
             return "chat-light-mode";
         } catch (Exception e) {
             log.error(ExceptionUtils.getStackTrace(e));

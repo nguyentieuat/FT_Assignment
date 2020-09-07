@@ -90,10 +90,8 @@ public class AdminLoginController {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             result = true;
         } catch (DisabledException e) {
-//            throw new Exception("USER_DISABLED", e);
             log.error(ExceptionUtils.getStackTrace(e));
         } catch (BadCredentialsException e) {
-//            throw new Exception("INVALID_CREDENTIALS", e);
             log.error(ExceptionUtils.getStackTrace(e));
         }
         return result;

@@ -48,7 +48,7 @@ public class MessageServiceImpl implements MessageService {
         List<Message> listMessages = messageRepository.findAllByOrderByCreatedDateDesc(pageable);
         listMessages.forEach(message -> {
             List<Attachment> attachments = attachmentRepository.findAllByMessage(message);
-            message.setAttachments(new HashSet<Attachment>(attachments));
+            message.setAttachments(new HashSet<>(attachments));
         });
         List<MessageDto> result = listMessages.stream().map(messageMapper::toDto).collect(Collectors.toList());
         Collections.reverse(result);
@@ -71,22 +71,24 @@ public class MessageServiceImpl implements MessageService {
         message.setUpdatedDate(now);
         Message result = messageRepository.save(message);
 
-        List<MultipartFile> files = messageDto.getFiles();
-        if (!Objects.isNull(files)) {
-            List<Attachment> attachments = processSaveFileAttachment(currentUsername, files, now, result);
-            result.setAttachments(new HashSet<>(attachments));
+        if (!Objects.isNull(result)) {
+            List<MultipartFile> files = messageDto.getFiles();
+            if (!Objects.isNull(files)) {
+                List<Attachment> attachments = processSaveFileAttachment(currentUsername, files, now, result);
+                result.setAttachments(new HashSet<>(attachments));
+            }
+            return messageMapper.toDto(result);
         }
 
-
-        return messageMapper.toDto(result);
+        return null;
     }
 
     private List<Attachment> processSaveFileAttachment(String username, List<MultipartFile> files, LocalDateTime now, Message message) {
         List<Attachment> attachmentResults = new ArrayList<>();
-        Integer numberRecordInDay = attachmentRepository.countRecordCreatedInDateByUser(now, username);
         for (MultipartFile file : files) {
             if (!file.isEmpty()) {
                 try {
+                    Integer numberRecordInDay = attachmentRepository.countRecordCreatedInDateByUser(now, username);
                     String path = fileUtilsUpload.saveFileUpload(username, numberRecordInDay, now, file);
                     Attachment attachment = new Attachment();
                     attachment.setFileName(file.getOriginalFilename());
@@ -136,6 +138,10 @@ public class MessageServiceImpl implements MessageService {
     public List<MessageDto> findByContent(String keySearch, Pageable pageable) {
 
         List<Message> messages = messageRepository.findAllByContentContainingIgnoreCaseOrderByCreatedDateDesc(keySearch, pageable);
+        messages.forEach(message -> {
+            List<Attachment> attachments = attachmentRepository.findAllByMessage(message);
+            message.setAttachments(new HashSet<>(attachments));
+        });
         List<MessageDto> messageDtos = messages.stream().map(messageMapper::toDto).collect(Collectors.toList());
         Collections.reverse(messageDtos);
         return messageDtos;
@@ -144,6 +150,10 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<MessageDto> findAllByAccount(Account account, Pageable pageable) {
         List<Message> messages = messageRepository.findAllByAccountSenderOrderByCreatedDateDesc(account, pageable);
+        messages.forEach(message -> {
+            List<Attachment> attachments = attachmentRepository.findAllByMessage(message);
+            message.setAttachments(new HashSet<>(attachments));
+        });
         List<MessageDto> messageDtos = messages.stream().map(messageMapper::toDto).collect(Collectors.toList());
         Collections.reverse(messageDtos);
         return messageDtos;
@@ -152,6 +162,10 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<MessageDto> findAllByAccountAndContent(Account account, String content, Pageable pageable) {
         List<Message> messages = messageRepository.findAllByAccountSenderAndContentContainingIgnoreCaseOrderByCreatedDateDesc(account, content, pageable);
+        messages.forEach(message -> {
+            List<Attachment> attachments = attachmentRepository.findAllByMessage(message);
+            message.setAttachments(new HashSet<>(attachments));
+        });
         List<MessageDto> messageDtos = messages.stream().map(messageMapper::toDto).collect(Collectors.toList());
         Collections.reverse(messageDtos);
         return messageDtos;
