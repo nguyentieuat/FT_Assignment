@@ -10,7 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,10 +29,10 @@ public class ChatRoom {
     private Attachment attachmentAvatar;
 
     @OneToMany(mappedBy = "chatRoom")
-    private Set<Attachment> attachments;
+    private List<Attachment> attachments;
 
     @OneToMany(mappedBy = "chatRoom")
-    private Set<Message> messages;
+    private List<Message> messages;
 
 
     @OneToOne
@@ -44,7 +44,7 @@ public class ChatRoom {
 
     @ManyToMany
     @JoinTable(name = "room_account", joinColumns = @JoinColumn(name = "room_id"), inverseJoinColumns = @JoinColumn(name = "username"))
-    private Set<Account> accounts;
+    private List<Account> accounts;
 
     @CreationTimestamp
     @Column(nullable = false)

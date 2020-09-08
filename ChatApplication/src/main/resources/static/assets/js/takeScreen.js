@@ -11,7 +11,9 @@ $(document).ready(function () {
     function handleSuccess(stream) {
         // startButton.disabled = true;
         const video = document.querySelector('#videoChatMessage');
+        const videoTab = document.querySelector('#videoChatMessageTab');
         video.srcObject = stream;
+        videoTab.srcObject = stream;
 
         // demonstrates how to detect that the user has stopped
         // sharing the screen via the browser UI.

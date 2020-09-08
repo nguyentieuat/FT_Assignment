@@ -6,13 +6,15 @@ import com.example.chatapplication.services.AccountService;
 import com.example.chatapplication.services.AttachmentService;
 import com.example.chatapplication.services.ChatRomService;
 import com.example.chatapplication.services.MessageService;
-import com.example.chatapplication.services.dto.*;
+import com.example.chatapplication.services.dto.AccountDto;
+import com.example.chatapplication.services.dto.ChatRoomDto;
+import com.example.chatapplication.services.dto.MessageDto;
+import com.example.chatapplication.services.dto.ResponseEntityDto;
 import com.example.chatapplication.services.mapper.AccountMapper;
 import com.example.chatapplication.ultities.Constants;
 import com.example.chatapplication.ultities.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +25,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,7 +66,7 @@ public class ChatApplicationController {
      * @return
      */
     @GetMapping(value = {"/chat-light-mode", "/chat"})
-    public String chatApplication(HttpServletRequest request, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
+    public String chatApplication(HttpServletRequest request, @PageableDefault Pageable pageable) {
         String username = SecurityUtils.getAccountCurrentUserLogin().orElse(null);
 
         if (!Objects.isNull(username)) {
@@ -105,9 +108,16 @@ public class ChatApplicationController {
                 try {
                     InputStream inputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
                     response.setContentType(Constants.TYPE_IMAGE);
-                    IOUtils.copy(inputStream, response.getOutputStream());
+                    FileCopyUtils.copy(inputStream, response.getOutputStream());
                 } catch (IOException e) {
                     log.error("Cann't find avatar " + e);
+                } finally {
+                    try {
+                        response.getOutputStream().flush();
+                        response.flushBuffer();
+                    } catch (IOException e) {
+                        log.error(ExceptionUtils.getStackTrace(e));
+                    }
                 }
             }
 
@@ -128,7 +138,7 @@ public class ChatApplicationController {
 
         if (!Objects.isNull(username)) {
             MessageDto messageDtoResult = messageService.saveMessage(messageDto);
-            if (Objects.isNull(messageDtoResult)){
+            if (Objects.isNull(messageDtoResult)) {
                 throw new NullPointerException("Error when save message has file attach");
             }
 
@@ -141,7 +151,6 @@ public class ChatApplicationController {
         }
         return "common/chat-content";
     }
-
 
     /**
      * Delete message owner
@@ -173,18 +182,17 @@ public class ChatApplicationController {
      */
     @GetMapping("/searchMessage")
     public String searchMessage(HttpServletRequest request, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
-        String username = SecurityUtils.getAccountCurrentUserLogin().orElse(null);
+        String username = SecurityUtils.getAccountCurrentUserLogin().get();
 
-        if (!Objects.isNull(username)) {
-            String keySearch = request.getParameter(Constants.KEY_SEARCH).trim();
+        String keySearch = request.getParameter(Constants.KEY_SEARCH);
+        keySearch = Objects.isNull(keySearch) ? Constants.BLANK : keySearch.trim();
 
-            List<MessageDto> messageDtoList = messageService.findByContent(keySearch, pageable);
-            messageDtoList.forEach(messageDto -> {
-                messageDto.setOwner(messageDto.getAccountSender().getUsername().equalsIgnoreCase(username));
-            });
-            request.setAttribute(Constants.KEY_SEARCH, keySearch);
-            request.setAttribute(Constants.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
-        }
+        List<MessageDto> messageDtoList = messageService.findByContent(keySearch, pageable);
+        messageDtoList.forEach(messageDto -> {
+            messageDto.setOwner(messageDto.getAccountSender().getUsername().equalsIgnoreCase(username));
+        });
+        request.setAttribute(Constants.KEY_SEARCH, keySearch);
+        request.setAttribute(Constants.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
 
         return "common/chat-content";
     }
@@ -198,13 +206,14 @@ public class ChatApplicationController {
      */
     @GetMapping("/getUserOnline")
     public String getUserOnline(HttpServletRequest request, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
-        List<AccountDto> accountDtos;
 
         String keySearch = request.getParameter(Constants.KEY_SEARCH);
-        if (Objects.isNull(keySearch) || keySearch.isEmpty()) {
+        keySearch = Objects.isNull(keySearch) ? Constants.BLANK : keySearch.trim();
+        List<AccountDto> accountDtos;
+        if (keySearch.isEmpty()) {
             accountDtos = accountService.getAccountOnline(pageable);
         } else {
-            accountDtos = accountService.getAccountOnline(keySearch.trim(), pageable);
+            accountDtos = accountService.getAccountOnline(keySearch, pageable);
         }
         request.setAttribute(Constants.KEY_SEARCH, keySearch);
         request.setAttribute(Constants.NameAttribute.LIST_ACCOUNT, accountDtos);
@@ -244,7 +253,6 @@ public class ChatApplicationController {
 
         // Add username in web socket session
         headerAccessor.getSessionAttributes().put("username", username);
-
 
         return messageDto;
     }

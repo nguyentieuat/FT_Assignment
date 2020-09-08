@@ -28,7 +28,7 @@
                             <th:block th:each="attachment: ${message.attachments}">
                                 <div class="col" th:if="${attachment.fileName.toLowerCase().contains('jpg') || attachment.fileName.toLowerCase().contains('png')
                                     || attachment.fileName.toLowerCase().contains('gif') || attachment.fileName.toLowerCase().contains('bmp')}">
-                                    <img class="img-fluid rounded"
+                                    <img class="img-fluid"
                                          th:src="${ '/loadImage/' + attachment.id}" data-action="zoom"
                                          alt="" style="">
                                 </div>
@@ -42,7 +42,7 @@
                                 <i class="fe-paperclip"></i>
                             </a>
                             <div class="media-body overflow-hidden flex-fill">
-                                <a href="#" class="d-block text-truncate font-medium text-reset"
+                                <a th:href="${'/download/' + attachment.id}" class="d-block text-truncate font-medium text-reset"
                                    th:text="${attachment.fileName}"></a>
                             </div>
                         </div>

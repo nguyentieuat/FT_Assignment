@@ -4,10 +4,11 @@ import com.example.chatapplication.services.CaptureScreenService;
 import com.example.chatapplication.services.dto.CaptureScreenDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -36,7 +37,7 @@ public class CaptureScreenController {
     @PostMapping("/saveDesktopCapture")
     @ResponseBody
     public void saveDesktopCapture(@RequestBody String dataImg) {
-        if (!Objects.isNull(dataImg) && !dataImg.isEmpty()){
+        if (!Objects.isNull(dataImg) && !dataImg.isEmpty()) {
             captureScreenService.saveCapture(dataImg);
         }
     }
@@ -58,12 +59,18 @@ public class CaptureScreenController {
 
             File file = new File(path);
             if (file.exists()) {
-                try {
-                    InputStream inputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+                try (InputStream inputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file))) {
                     response.setContentType("image/jpeg");
-                    IOUtils.copy(inputStream, response.getOutputStream());
+                    FileCopyUtils.copy(inputStream, response.getOutputStream());
                 } catch (IOException e) {
                     log.error("Can't find avatar " + e);
+                } finally {
+                    try {
+                        response.getOutputStream().flush();
+                        response.flushBuffer();
+                    } catch (IOException e) {
+                        log.error(ExceptionUtils.getStackTrace(e));
+                    }
                 }
             }
 

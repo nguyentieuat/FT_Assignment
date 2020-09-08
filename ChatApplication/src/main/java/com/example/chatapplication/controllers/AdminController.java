@@ -72,6 +72,8 @@ public class AdminController {
     @GetMapping(value = {"/getAllMessage/{username}"})
     public String getAllMessageByUsername(HttpServletRequest request, @PathVariable String username,
                                           @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
+        String currentUsername = SecurityUtils.getAccountCurrentUserLogin().get();
+
         Account account = accountService.getAccountByUsername(username);
         request.setAttribute(Constants.NameAttribute.CURRENT_USER, accountMapper.toDto(account));
 
@@ -85,7 +87,7 @@ public class AdminController {
         }
 
         messageDtoList.forEach(messageDto -> {
-            messageDto.setOwner(messageDto.getAccountSender().getUsername().equalsIgnoreCase(username));
+            messageDto.setOwner(messageDto.getAccountSender().getUsername().equalsIgnoreCase(currentUsername));
         });
         request.setAttribute(Constants.KEY_SEARCH, keySearch);
         request.setAttribute(Constants.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
@@ -104,6 +106,8 @@ public class AdminController {
     @GetMapping(value = {"/getAllCapture/{username}"})
     public String getAllCaptureByUsername(HttpServletRequest request, @PathVariable String username,
                                           @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
+        String currentUsername = SecurityUtils.getAccountCurrentUserLogin().get();
+
         Account account = accountService.getAccountByUsername(username);
         request.setAttribute(Constants.NameAttribute.CURRENT_USER, accountMapper.toDto(account));
 
@@ -116,7 +120,7 @@ public class AdminController {
             captureScreenDtos = captureScreenService.findAllByAccountAndCreateDate(account, createDateStr.trim(), pageable);
         }
         captureScreenDtos.forEach(captureScreenDto -> {
-            captureScreenDto.setOwner(captureScreenDto.getAccount().getUsername().equalsIgnoreCase(username));
+            captureScreenDto.setOwner(captureScreenDto.getAccount().getUsername().equalsIgnoreCase(currentUsername));
         });
         request.setAttribute(Constants.KEY_SEARCH, createDateStr);
         request.setAttribute(Constants.NameAttribute.CAPTURE_DTO_LIST, captureScreenDtos);

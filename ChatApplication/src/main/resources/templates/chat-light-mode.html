@@ -67,8 +67,9 @@
             <!-- Demo only: Documentation -->
             <li class="nav-item mt-xl-9 d-none d-xl-block flex-xl-grow-1">
                 <a class="nav-link position-relative p-0 py-xl-3" data-toggle="tab" href="#tab-content-demos"
-                   title="Demos" role="tab">
-                    <i class="icon-lg fe-layers"></i>
+                   title="Screen Sharing" role="tab">
+<!--                    <i class="icon-lg fe-layers"></i>-->
+                    <video class="icon-lg " style="width: 50px;height: 50px" id="videoChatMessage" autoplay playsinline muted/>
                 </a>
             </li>
 
@@ -176,7 +177,7 @@
 
                 <!-- Chat: Content-->
                 <div class="chat-content px-lg-8" id="chat-content">
-                    <div id="messageArea">
+                    <div id="messageArea" th:page="${page}" >
                         <div th:replace="common/chat-content.html :: chat-content"></div>
                     </div>
                     <!-- Scroll to end -->

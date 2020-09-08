@@ -28,12 +28,12 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
 @PowerMockIgnore({"javax.management.*", "javax.script.*"})
 @RunWith(PowerMockRunner.class)
@@ -128,7 +128,7 @@ public class MessageServiceTest {
         attachmentResult.setId(1l);
         attachmentResults.add(attachmentResult);
 
-        messageResult.setAttachments(new HashSet<>(attachmentResults));
+        messageResult.setAttachments(attachmentResults);
 
         int numberRecordInDay = 0;
         when(attachmentRepository.countRecordCreatedInDateByUser(any(), eq(username))).thenReturn(numberRecordInDay);

@@ -20,6 +20,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
 
 //        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
 
-        response.sendRedirect("/signin");
+        response.sendRedirect( request.getContextPath() + "/signin");
     }
 }

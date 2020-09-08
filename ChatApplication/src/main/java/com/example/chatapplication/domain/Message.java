@@ -8,7 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,7 +24,7 @@ public class Message {
     private String content;
 
     @OneToMany(mappedBy = "message")
-    private Set<Attachment> attachments;
+    private List<Attachment> attachments;
 
     @ManyToOne
     @JoinColumn(name = "roomId")

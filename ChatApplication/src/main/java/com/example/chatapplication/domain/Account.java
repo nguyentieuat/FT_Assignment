@@ -12,7 +12,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,7 +31,7 @@ public class Account implements Serializable {
     private Employee employee;
 
     @OneToMany(mappedBy = "managerAccount")
-    private Set<Employee> employees;
+    private List<Employee> employees;
 
     @Column(length = 2)
     private int role;
@@ -41,13 +41,13 @@ public class Account implements Serializable {
     private ChatStatus chatStatus;
 
     @OneToMany(mappedBy = "accountSender")
-    private Set<Message> messages;
+    private List<Message> messages;
 
     @OneToMany(mappedBy = "account")
-    private Set<CaptureScreen> captureScreens;
+    private List<CaptureScreen> captureScreens;
 
     @ManyToMany(mappedBy = "accounts")
-    private Set<ChatRoom> chatRooms;
+    private List<ChatRoom> chatRooms;
 
     @Column(nullable = false)
     @JsonIgnore

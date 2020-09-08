@@ -19,6 +19,7 @@ public class Constants {
     public static final String PLUS = "+";
     public static final int RULE_ADMIN = 1;
     public static final String TYPE_IMAGE = "image/png";
+    public static final String BLANK = "";
 
 
     public static class NameAttribute {

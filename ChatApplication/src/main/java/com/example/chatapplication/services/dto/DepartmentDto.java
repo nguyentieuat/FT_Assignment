@@ -9,7 +9,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,7 +23,7 @@ public class DepartmentDto implements Serializable {
     private Account managerAccount;
     private int status = Constants.Status.ACTIVE;
 
-    private Set<Employee> employees;
+    private List<Employee> employees;
 
     private LocalDateTime createdDate;
     private String createdBy;

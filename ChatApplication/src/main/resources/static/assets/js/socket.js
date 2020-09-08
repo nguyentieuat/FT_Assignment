@@ -199,7 +199,7 @@ $(document).ready(function () {
                         || fileName.includes('gif') || fileName.includes('bmp')) {
 
                         let tagHtmlAttachImage = '<div class="col">' +
-                            '                         <img class="img-fluid rounded"' +
+                            '                         <img class="getAttachmentForMessage(messages);"' +
                             '                              src="/loadImage/' + key + '" data-action="zoom"' + 'alt="" style="">' +
                             '                     </div>';
 
@@ -218,7 +218,7 @@ $(document).ready(function () {
                             '                                <i class="fe-paperclip"></i>' +
                             '                           </a>' +
                             '                           <div class="media-body overflow-hidden flex-fill">' +
-                            '                                 <a href="#" class="d-block text-truncate font-medium text-reset">' + fileName + '</a>' +
+                            '                                 <a href="/download/' + key + '" class="d-block text-truncate font-medium text-reset">' + fileName + '</a>' +
                             '                           </div>';
                         tagHtmlAttachment += tagHtmlAttachOther;
                     }

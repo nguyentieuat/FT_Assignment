@@ -9,8 +9,8 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -25,15 +25,15 @@ public class AccountDto implements Serializable {
     private int role;
     private ChatStatus chatStatus;
 
-    private Set<Message> messages;
+    private List<Message> messages;
 
     private LocalDateTime lastLogin;
     private LocalDateTime lastLogout;
     private int status = Constants.Status.ACTIVE;
 
-    private Set<CaptureScreen> captureScreens;
+    private List<CaptureScreen> captureScreens;
 
-    private Set<ChatRoom> chatRooms;
+    private List<ChatRoom> chatRooms;
 
     private LocalDateTime createdDate;
     private String createdBy;

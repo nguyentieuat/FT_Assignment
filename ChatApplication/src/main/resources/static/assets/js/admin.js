@@ -179,7 +179,8 @@ function getCaptureByUsername() {
         type: 'GET',
         success: function (response) {
             $('#chat-content-body').html(response)
-            $('#chat-content').animate({scrollTop: $('#messageArea').prop("scrollHeight")}, 333);
+            let height = document.querySelector('#messageArea').scrollHeight;
+            $('#chat-content').scrollTop(height);
         },
         error: function (response) {
             console.log('An error occurred.');

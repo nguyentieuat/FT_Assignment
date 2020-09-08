@@ -13,10 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,7 +49,7 @@ public class AccountServiceImpl implements AccountService {
 
         accounts.forEach(account -> {
             Message message = messageRepository.findTop1ByAccountSenderOrderByCreatedDateDesc(account);
-            Set<Message> messageSet = new HashSet<>();
+            List<Message> messageSet = new ArrayList<>();
             messageSet.add(message);
             account.setMessages(messageSet);
         });
@@ -65,7 +62,7 @@ public class AccountServiceImpl implements AccountService {
         List<Account> accounts = accountRepository.findAllByUsernameContainingIgnoreCaseOrderByUsernameAsc(keySearch, pageable);
         accounts.forEach(account -> {
             Message message = messageRepository.findTop1ByAccountSenderOrderByCreatedDateDesc(account);
-            Set<Message> messageSet = new HashSet<>();
+            List<Message> messageSet = new ArrayList<>();
             messageSet.add(message);
             account.setMessages(messageSet);
         });
@@ -80,7 +77,7 @@ public class AccountServiceImpl implements AccountService {
         accounts.remove(account);
         accounts.forEach(acc -> {
             Message message = messageRepository.findTop1ByAccountSenderOrderByCreatedDateDesc(acc);
-            Set<Message> messageSet = new HashSet<>();
+            List<Message> messageSet = new ArrayList<>();
             messageSet.add(message);
             acc.setMessages(messageSet);
         });
@@ -95,7 +92,7 @@ public class AccountServiceImpl implements AccountService {
         accounts.remove(account);
         accounts.forEach(acc -> {
             Message message = messageRepository.findTop1ByAccountSenderOrderByCreatedDateDesc(acc);
-            Set<Message> messageSet = new HashSet<>();
+            List<Message> messageSet = new ArrayList<>();
             messageSet.add(message);
             acc.setMessages(messageSet);
         });

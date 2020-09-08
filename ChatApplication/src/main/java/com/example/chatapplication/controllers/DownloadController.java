@@ -33,7 +33,6 @@ public class DownloadController {
     @Value("${file.path}")
     private String rootDir;
 
-
     /**
      * Download file attached
      *

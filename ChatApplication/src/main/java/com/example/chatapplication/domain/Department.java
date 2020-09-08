@@ -11,7 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -33,7 +33,7 @@ public class Department implements Serializable {
     private int status = Constants.Status.ACTIVE;
 
     @OneToMany(mappedBy = "department")
-    private Set<Employee> employees;
+    private List<Employee> employees;
 
     @CreationTimestamp
     @Column(nullable = false)

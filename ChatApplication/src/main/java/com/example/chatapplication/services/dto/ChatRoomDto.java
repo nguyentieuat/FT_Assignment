@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -29,7 +30,7 @@ public class ChatRoomDto {
 
     private int status = Constants.Status.ACTIVE;
 
-    private Set<Account> accounts;
+    private List<Account> accounts;
 
     private LocalDateTime createdDate;
     private String createdBy;

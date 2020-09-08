@@ -60,7 +60,6 @@ $(document).ready(function () {
     //     logout(confirmationMessage);
     //     return confirmationMessage;
     // });
-
 });
 
 function logout(confirmationMessage) {

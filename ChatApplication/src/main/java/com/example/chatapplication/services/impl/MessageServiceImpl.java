@@ -45,14 +45,10 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<MessageDto> getAllMessage(Pageable pageable) {
-        List<Message> listMessages = messageRepository.findAllByOrderByCreatedDateDesc(pageable);
-        listMessages.forEach(message -> {
-            List<Attachment> attachments = attachmentRepository.findAllByMessage(message);
-            message.setAttachments(new HashSet<>(attachments));
-        });
-        List<MessageDto> result = listMessages.stream().map(messageMapper::toDto).collect(Collectors.toList());
+        List<Message> messages = messageRepository.findAllByOrderByCreatedDateDesc(pageable);
+        getAttachmentForMessage(messages);
+        List<MessageDto> result = messages.stream().map(messageMapper::toDto).collect(Collectors.toList());
         Collections.reverse(result);
-
         return result;
     }
 
@@ -75,7 +71,7 @@ public class MessageServiceImpl implements MessageService {
             List<MultipartFile> files = messageDto.getFiles();
             if (!Objects.isNull(files)) {
                 List<Attachment> attachments = processSaveFileAttachment(currentUsername, files, now, result);
-                result.setAttachments(new HashSet<>(attachments));
+                result.setAttachments(attachments);
             }
             return messageMapper.toDto(result);
         }
@@ -114,7 +110,7 @@ public class MessageServiceImpl implements MessageService {
         Message message = messageRepository.findById(messageId).get();
         if (!Objects.isNull(message)) {
             List attachments = attachmentRepository.findAllByMessage(message);
-            message.setAttachments(new HashSet<>(attachments));
+            message.setAttachments(attachments);
             return messageMapper.toDto(message);
         }
         return null;
@@ -138,10 +134,7 @@ public class MessageServiceImpl implements MessageService {
     public List<MessageDto> findByContent(String keySearch, Pageable pageable) {
 
         List<Message> messages = messageRepository.findAllByContentContainingIgnoreCaseOrderByCreatedDateDesc(keySearch, pageable);
-        messages.forEach(message -> {
-            List<Attachment> attachments = attachmentRepository.findAllByMessage(message);
-            message.setAttachments(new HashSet<>(attachments));
-        });
+        getAttachmentForMessage(messages);
         List<MessageDto> messageDtos = messages.stream().map(messageMapper::toDto).collect(Collectors.toList());
         Collections.reverse(messageDtos);
         return messageDtos;
@@ -150,10 +143,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<MessageDto> findAllByAccount(Account account, Pageable pageable) {
         List<Message> messages = messageRepository.findAllByAccountSenderOrderByCreatedDateDesc(account, pageable);
-        messages.forEach(message -> {
-            List<Attachment> attachments = attachmentRepository.findAllByMessage(message);
-            message.setAttachments(new HashSet<>(attachments));
-        });
+        getAttachmentForMessage(messages);
         List<MessageDto> messageDtos = messages.stream().map(messageMapper::toDto).collect(Collectors.toList());
         Collections.reverse(messageDtos);
         return messageDtos;
@@ -162,13 +152,17 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<MessageDto> findAllByAccountAndContent(Account account, String content, Pageable pageable) {
         List<Message> messages = messageRepository.findAllByAccountSenderAndContentContainingIgnoreCaseOrderByCreatedDateDesc(account, content, pageable);
-        messages.forEach(message -> {
-            List<Attachment> attachments = attachmentRepository.findAllByMessage(message);
-            message.setAttachments(new HashSet<>(attachments));
-        });
+        getAttachmentForMessage(messages);
         List<MessageDto> messageDtos = messages.stream().map(messageMapper::toDto).collect(Collectors.toList());
         Collections.reverse(messageDtos);
         return messageDtos;
+    }
+
+    private void getAttachmentForMessage(List<Message> messages) {
+        messages.forEach(message -> {
+            List<Attachment> attachments = attachmentRepository.findAllByMessage(message);
+            message.setAttachments(attachments);
+        });
     }
 
 }

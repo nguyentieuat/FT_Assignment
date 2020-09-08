@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -39,12 +38,12 @@ public class ChatRoomServiceImpl implements ChatRomService {
 
         //Chat public contain all account is active
         List<Account> accounts = accountRepository.findAllByStatusOrderByUsernameAsc(Constants.Status.ACTIVE, pageable);
-        chatRoom.setAccounts(new HashSet<>(accounts));
+        chatRoom.setAccounts(accounts);
 
         //File attach in room public can set id is room public's id or no set id
         // and to easy process, file attachment no set id.
         List<Attachment> attachments = attachmentRepository.findAllByChatRoomOrChatRoomIsNullOrderByCreatedDateDesc(chatRoom, pageable);
-        chatRoom.setAttachments(new HashSet<>(attachments));
+        chatRoom.setAttachments(attachments);
 
         return chatRoomMapper.toDto(chatRoom);
     }
