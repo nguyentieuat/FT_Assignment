@@ -111,6 +111,26 @@ public class ChatApplicationControllerTest {
     }
 
     @Test
+    public void loadMore() {
+        Optional<String> optionalUsername = Optional.of("emp001");
+
+        PowerMockito.mockStatic(SecurityUtils.class);
+        when(SecurityUtils.getAccountCurrentUserLogin()).thenReturn(optionalUsername);
+        String username = SecurityUtils.getAccountCurrentUserLogin().get();
+        List<MessageDto> messageDtoList = new ArrayList<>();
+        Sort sortDate = Sort.by(Sort.Direction.DESC, "createdDate");
+        Pageable pageable = PageRequest.of(0, 50, sortDate);
+        long lastId = 1l;
+        int page = 1;
+        String keySearch = "";
+
+        when(messageService.loadMoreMessage(lastId, page, keySearch, pageable)).thenReturn(messageDtoList);
+
+        Assert.assertEquals("common/chat-content", chatApplicationController.loadMore(request, page, lastId, pageable));
+    }
+
+
+    @Test
     public void getAvatar() throws IOException {
         PowerMockito.mockStatic(FileCopyUtils.class);
         Long attachmentId = 1l;
@@ -254,6 +274,7 @@ public class ChatApplicationControllerTest {
 
         Assert.assertEquals("common/tab-content-dialogs", chatApplicationController.getUserOnline(request, pageable));
     }
+
     @Test
     public void getUserOnline2() {
         when(request.getParameter(Constants.KEY_SEARCH)).thenReturn(anyString());

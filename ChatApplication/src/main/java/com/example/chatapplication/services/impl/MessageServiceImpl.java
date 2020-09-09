@@ -10,6 +10,7 @@ import com.example.chatapplication.repositories.MessageRepository;
 import com.example.chatapplication.services.MessageService;
 import com.example.chatapplication.services.dto.MessageDto;
 import com.example.chatapplication.services.mapper.MessageMapper;
+import com.example.chatapplication.ultities.Constants;
 import com.example.chatapplication.ultities.FileUtilsUpload;
 import com.example.chatapplication.ultities.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -152,6 +156,18 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<MessageDto> findAllByAccountAndContent(Account account, String content, Pageable pageable) {
         List<Message> messages = messageRepository.findAllByAccountSenderAndContentContainingIgnoreCaseOrderByCreatedDateDesc(account, content, pageable);
+        getAttachmentForMessage(messages);
+        List<MessageDto> messageDtos = messages.stream().map(messageMapper::toDto).collect(Collectors.toList());
+        Collections.reverse(messageDtos);
+        return messageDtos;
+    }
+
+    @Override
+    public List<MessageDto> loadMoreMessage(long lastId, int page, String keySearch, Pageable pageable) {
+
+        keySearch = new StringBuilder().append(Constants.PERCENT).append(keySearch).append(Constants.PERCENT).toString();
+        int pageSize = pageable.getPageSize();
+        List<Message> messages = messageRepository.findAllByContentContainingIgnoreCaseOrderByCreatedDateDesc(lastId,keySearch, page * pageSize, pageSize);
         getAttachmentForMessage(messages);
         List<MessageDto> messageDtos = messages.stream().map(messageMapper::toDto).collect(Collectors.toList());
         Collections.reverse(messageDtos);

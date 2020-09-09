@@ -127,4 +127,9 @@ public class AdminControllerTest {
     @Test
     public void searchUserTabCapture() {
     }
+
+    @Test
+    public void loadMoreCapture() {
+    }
+
 }

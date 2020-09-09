@@ -12,12 +12,12 @@ $(document).ready(function () {
     //Search message
     $(document).on('submit', "#formSearch", function (event) {
         event.preventDefault();
-        var post_url = $(this).attr("action");
-        var request_method = $(this).attr("method");
-        var form_data = $(this).serialize();
+        let url = $(this).attr("action");
+        let request_method = $(this).attr("method");
+        let form_data = $(this).serialize();
 
         $.ajax({
-            url: post_url,
+            url: url,
             type: request_method,
             data: form_data
         }).done(function (response) { //
@@ -31,12 +31,12 @@ $(document).ready(function () {
     //Find user online
     $(document).on('submit', "#formGetUserOnline", function (event) {
         event.preventDefault();
-        let post_url = $(this).attr("action");
+        let url = $(this).attr("action");
         let request_method = $(this).attr("method");
         let form_data = $(this).serialize();
 
         $.ajax({
-            url: post_url,
+            url: url,
             type: request_method,
             data: form_data,
             processData: false,
@@ -60,6 +60,36 @@ $(document).ready(function () {
     //     logout(confirmationMessage);
     //     return confirmationMessage;
     // });
+
+
+    //Load more message
+    $('#chat-content').scroll(function () {
+        if ($('#chat-content').scrollTop() == 0){
+            let scrollLast = $('#messageArea').prop("scrollHeight");
+            let messageArea = document.getElementById("messageArea");
+            let keySearch = document.getElementById("keySearch").value;
+            let page = parseInt(messageArea.getAttribute("page"));
+            let lastId = parseInt(messageArea.getAttribute("lastId"));
+            $.ajax({
+                url: "/loadMore/" + page + "/" + lastId,
+                contentType: "application/json; charset=utf-8",
+                data: {keySearch :  keySearch},
+                type: 'GET',
+                dataType:'html',
+                success: function (response) {
+                    messageArea.setAttribute("page", page + 1);
+                    $("#messageArea").prepend(response);
+                    let scrollNow = $('#messageArea').prop("scrollHeight");
+                    $('#chat-content').scrollTop(scrollNow - scrollLast);
+                },
+                error: function (response) {
+                    console.log('An error occurred.');
+                    console.log(response);
+                },
+            });
+        }
+    });
+
 });
 
 function logout(confirmationMessage) {

@@ -16329,7 +16329,7 @@ code[class*=language-], pre[class*=language-] {
 }
 
 .chat-content::-webkit-scrollbar, .chat-sidebar::-webkit-scrollbar, .navigation::-webkit-scrollbar, .sidebar::-webkit-scrollbar {
-    display: none
+    /*display: none*/
 }
 
 .chat-sidebar, .main {

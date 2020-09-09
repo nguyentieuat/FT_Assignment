@@ -123,4 +123,23 @@ public class CaptureScreenServiceImpl implements CaptureScreenService {
         Collections.reverse(captureScreenDtos);
         return captureScreenDtos;
     }
+
+    @Override
+    public List<CaptureScreenDto> loadMoreCapture(String username, long lastId, int page, String createDateStr, Pageable pageable) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.FORMAT_DATE_TIME);
+        if (!createDateStr.isEmpty()) {
+            LocalDateTime time = LocalDateTime.parse(createDateStr);
+            createDateStr = time.format(formatter);
+        } else {
+            createDateStr = LocalDateTime.now().format(formatter);
+        }
+        int pageSize = pageable.getPageSize();
+        List<CaptureScreen> captureScreens = captureScreenRepository.findAllByUsernameAndCreatedDateAfterOrderByCreatedDateDesc
+                (username, lastId, page * pageSize, createDateStr, pageSize);
+        List<CaptureScreenDto> captureScreenDtos = captureScreens.stream().map(captureScreenMapper::toDto).collect(Collectors.toList());
+        Collections.reverse(captureScreenDtos);
+        return captureScreenDtos;
+    }
+
+
 }

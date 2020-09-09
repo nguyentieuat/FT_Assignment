@@ -105,7 +105,7 @@ public class AdminController {
      */
     @GetMapping(value = {"/getAllCapture/{username}"})
     public String getAllCaptureByUsername(HttpServletRequest request, @PathVariable String username,
-                                          @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
+                                          @PageableDefault Pageable pageable) {
         String currentUsername = SecurityUtils.getAccountCurrentUserLogin().get();
 
         Account account = accountService.getAccountByUsername(username);
@@ -124,12 +124,37 @@ public class AdminController {
         });
         request.setAttribute(Constants.KEY_SEARCH, createDateStr);
         request.setAttribute(Constants.NameAttribute.CAPTURE_DTO_LIST, captureScreenDtos);
+        request.setAttribute(Constants.NameAttribute.PAGE, Constants.Number.ONE);
 
+        if (!captureScreenDtos.isEmpty()) {
+            request.setAttribute(Constants.NameAttribute.LAST_ID, captureScreenDtos.get(captureScreenDtos.size() - 1).getId());
+        }
         return "admin/common/capture-body";
+    }
+
+    @GetMapping(value = {"/loadMoreCapture/{username}/{lastId}/{page}"})
+    public String loadMoreCapture(HttpServletRequest request, @PathVariable String username, @PathVariable int page, @PathVariable long lastId,
+                                  @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
+        String currentUsername = SecurityUtils.getAccountCurrentUserLogin().get();
+
+        Account account = accountService.getAccountByUsername(username);
+        request.setAttribute(Constants.NameAttribute.CURRENT_USER, accountMapper.toDto(account));
+
+        String createDateStr = request.getParameter(Constants.KEY_SEARCH);
+        createDateStr = Objects.isNull(createDateStr) ? Constants.BLANK : createDateStr.trim();
+
+        List<CaptureScreenDto> captureScreenDtos = captureScreenService.loadMoreCapture(username, lastId, page, createDateStr, pageable);
+        captureScreenDtos.forEach(captureScreenDto -> {
+            captureScreenDto.setOwner(captureScreenDto.getAccount().getUsername().equalsIgnoreCase(currentUsername));
+        });
+        request.setAttribute(Constants.NameAttribute.CAPTURE_DTO_LIST, captureScreenDtos);
+
+        return "admin/common/capture";
     }
 
     /**
      * Search user in screen manage message
+     *
      * @param request
      * @param pageable
      * @return

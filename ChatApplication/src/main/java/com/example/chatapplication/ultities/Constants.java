@@ -14,13 +14,14 @@ public class Constants {
     public static final String PATH_ATTACH_MESSAGE = "attach_file_message";
     public static final String FILE_NAME_EXTENSION_PNG = ".png";
     public static final String FORMAT_DATE_SAVE_CAPTURE = "yyyy_MM_dd/HH_mm_ss";
+    public static final String FORMAT_DATE_TIME = "yyyy-MM-dd HH:mm:ss";
     public static final String COMMA = ",";
     public static final String SPACE = " ";
     public static final String PLUS = "+";
     public static final int RULE_ADMIN = 1;
     public static final String TYPE_IMAGE = "image/png";
     public static final String BLANK = "";
-
+    public static final String PERCENT = "%";
 
     public static class NameAttribute {
 
@@ -29,6 +30,8 @@ public class Constants {
         public static final String CHAT_ROOM_DTO = "chatRoomDto";
         public static final String LIST_ACCOUNT = "accountDtos";
         public static final String CAPTURE_DTO_LIST = "captureScreenDtos";
+        public static final String PAGE = "page";
+        public static final String LAST_ID = "lastId";
     }
 
     public enum EXTENSION_IMAGE {

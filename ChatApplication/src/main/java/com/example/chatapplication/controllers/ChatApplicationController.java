@@ -66,7 +66,7 @@ public class ChatApplicationController {
      * @return
      */
     @GetMapping(value = {"/chat-light-mode", "/chat"})
-    public String chatApplication(HttpServletRequest request, @PageableDefault Pageable pageable) {
+    public String chatApplication(HttpServletRequest request, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
         String username = SecurityUtils.getAccountCurrentUserLogin().orElse(null);
 
         if (!Objects.isNull(username)) {
@@ -83,9 +83,39 @@ public class ChatApplicationController {
             // has all everyone.
             ChatRoomDto chatRoomDto = chatRomService.getChatRoomById(Constants.ID_CHAT_ROOM_ALL_USER, pageable);
             request.setAttribute(Constants.NameAttribute.CHAT_ROOM_DTO, chatRoomDto);
-        }
+            request.setAttribute(Constants.NameAttribute.PAGE, Constants.Number.ONE);
 
+            if (!messageDtoList.isEmpty()) {
+                request.setAttribute(Constants.NameAttribute.LAST_ID, messageDtoList.get(messageDtoList.size() - 1).getId());
+            }
+        }
         return "chat-light-mode";
+    }
+
+    /**
+     * Load more when scroll
+     *
+     * @param request
+     * @param page
+     * @param lastId
+     * @param pageable
+     * @return
+     */
+    @GetMapping("/loadMore/{page}/{lastId}")
+    public String loadMore(HttpServletRequest request, @PathVariable int page, @PathVariable long lastId, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
+        String username = SecurityUtils.getAccountCurrentUserLogin().get();
+
+        String keySearch = request.getParameter(Constants.KEY_SEARCH);
+        keySearch = Objects.isNull(keySearch) ? Constants.BLANK : keySearch.trim();
+
+        List<MessageDto> messageDtoList = messageService.loadMoreMessage(lastId, page, keySearch, pageable);
+        messageDtoList.forEach(messageDto -> {
+            messageDto.setOwner(messageDto.getAccountSender().getUsername().equalsIgnoreCase(username));
+        });
+        request.setAttribute(Constants.KEY_SEARCH, keySearch);
+        request.setAttribute(Constants.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
+
+        return "common/chat-content";
     }
 
     /**
@@ -170,7 +200,6 @@ public class ChatApplicationController {
             log.error(ExceptionUtils.getStackTrace(e));
             return null;
         }
-
     }
 
     /**

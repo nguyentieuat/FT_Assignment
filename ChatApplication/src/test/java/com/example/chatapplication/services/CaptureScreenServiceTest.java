@@ -167,4 +167,28 @@ public class CaptureScreenServiceTest {
 
         Assert.assertEquals(captureScreens.size(), captureScreenService.findAllByAccountAndCreateDate(account,dateStr,pageable).size());
     }
+
+
+    @Test
+    public void loadMoreCapture() {
+
+        Sort sortCreatedDate = Sort.by(Sort.Direction.DESC, "createdDate");
+        Pageable pageable = PageRequest.of(0, 50, sortCreatedDate);
+
+        List<CaptureScreen> captureScreens = new ArrayList<>();
+        String username= "emp001";
+        long lastId = 1l;
+        int page = 1;
+        int pageSize = pageable.getPageSize();
+        String createDateStr = "2020-09-09T21:26:05";
+        when(captureScreenRepository.findAllByUsernameAndCreatedDateAfterOrderByCreatedDateDesc
+                (username, lastId, page * pageSize, createDateStr, pageSize)).thenReturn(captureScreens);
+
+        CaptureScreen captureScreen = new CaptureScreen();
+        CaptureScreenDto captureScreenDto = new CaptureScreenDto();
+        when(captureScreenMapper.toDto(captureScreen)).thenReturn(captureScreenDto);
+
+        Assert.assertEquals(captureScreens.size(), captureScreenService.loadMoreCapture( username,  lastId,  page,  createDateStr, pageable).size());
+    }
+
 }

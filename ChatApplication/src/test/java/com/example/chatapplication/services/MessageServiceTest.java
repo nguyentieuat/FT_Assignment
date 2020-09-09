@@ -311,4 +311,18 @@ public class MessageServiceTest {
         Assert.assertEquals(messages.size(), messageService.findAllByAccountAndContent(account, keySearch, pageable).size());
 
     }
+
+    @Test
+    public void loadMoreMessage() {
+        String keySearch = "aaa0";
+
+        Sort sortCreatedDate = Sort.by(Sort.Direction.DESC, "createdDate");
+        Pageable pageable = PageRequest.of(0, 10, sortCreatedDate);
+        long lastId = 1l;
+        int page = 1;
+        int pageSize = pageable.getPageSize();
+        List<Message> messages = new ArrayList<>();
+        when(messageRepository.findAllByContentContainingIgnoreCaseOrderByCreatedDateDesc(lastId, keySearch, page * pageSize, pageSize)).thenReturn(messages);
+        Assert.assertEquals(messages.size(), messageService.loadMoreMessage(lastId, page, keySearch, pageable).size());
+    }
 }

@@ -1,5 +1,4 @@
 <div th:fragment="chat-content" class="container-xxl py-6 py-lg-10" th:each="message: ${messageDtoList}">
-
     <!-- Message -->
     <div th:class="${message.isOwner() ? 'message message-right' : 'message'}">
         <!-- Avatar -->

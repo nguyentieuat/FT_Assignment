@@ -161,7 +161,7 @@
                         <form method="get" action="/searchMessage" id="formSearch">
                             <div class="input-group">
                                 <input type="text" class="form-control form-control-lg" placeholder="Search this chat"
-                                       aria-label="Search this chat" name="keySearch">
+                                       aria-label="Search this chat" name="keySearch" id="keySearch" th:value="${keySearch}" >
 
                                 <div class="input-group-append">
                                     <button class="btn btn-lg btn-ico btn-secondary btn-minimal" type="submit">
@@ -177,7 +177,7 @@
 
                 <!-- Chat: Content-->
                 <div class="chat-content px-lg-8" id="chat-content">
-                    <div id="messageArea" th:page="${page}" >
+                    <div id="messageArea" th:page="${page}" th:lastId="${lastId}">
                         <div th:replace="common/chat-content.html :: chat-content"></div>
                     </div>
                     <!-- Scroll to end -->

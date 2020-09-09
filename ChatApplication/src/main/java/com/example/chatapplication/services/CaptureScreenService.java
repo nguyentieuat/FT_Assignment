@@ -41,4 +41,16 @@ public interface CaptureScreenService {
      * @return
      */
     List<CaptureScreenDto> findAllByAccountAndCreateDate(Account account, String createDate, Pageable pageable);
+
+    /**
+     * Load more capture
+     *
+     * @param username
+     * @param lastId
+     * @param page
+     * @param createDateStr
+     * @param pageable
+     * @return
+     */
+    List<CaptureScreenDto> loadMoreCapture(String username, long lastId, int page, String createDateStr, Pageable pageable);
 }

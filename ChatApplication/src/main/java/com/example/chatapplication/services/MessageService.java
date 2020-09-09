@@ -62,4 +62,14 @@ public interface MessageService {
      */
     List<MessageDto> findAllByAccountAndContent(Account account, String keySearch, Pageable pageable);
 
+    /**
+     * Load more message form index
+     *
+     * @param lastId
+     * @param page
+     * @param keySearch
+     * @param pageable
+     * @return
+     */
+    List<MessageDto> loadMoreMessage(long lastId, int page, String keySearch, Pageable pageable);
 }
