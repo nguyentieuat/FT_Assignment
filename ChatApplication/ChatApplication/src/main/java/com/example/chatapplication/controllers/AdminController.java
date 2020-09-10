@@ -161,10 +161,10 @@ public class AdminController {
      */
     @GetMapping("/searchUserTabMessage")
     public String searchUserTabMessage(HttpServletRequest request, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
-        String keySearch = request.getParameter(Constants.KEY_SEARCH).trim();
+        String keySearch = request.getParameter(Constants.KEY_SEARCH);
+        keySearch = Objects.isNull(keySearch) ? Constants.BLANK : keySearch.trim();
 
         List<AccountDto> accountDtos = accountService.findAllAccountContainUsername(keySearch, pageable);
-
         request.setAttribute(Constants.NameAttribute.LIST_ACCOUNT, accountDtos);
         request.setAttribute(Constants.KEY_SEARCH, keySearch);
 
@@ -179,7 +179,8 @@ public class AdminController {
      */
     @GetMapping("/searchUserTabCapture")
     public String searchUserTabCapture(HttpServletRequest request, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
-        String keySearch = request.getParameter(Constants.KEY_SEARCH).trim();
+        String keySearch = request.getParameter(Constants.KEY_SEARCH);
+        keySearch = Objects.isNull(keySearch) ? Constants.BLANK : keySearch.trim();
 
         List<AccountDto> accountDtos = accountService.findAllAccountContainUsername(keySearch, pageable);
 

@@ -122,7 +122,7 @@ public class ChatApplicationControllerTest {
         Pageable pageable = PageRequest.of(0, 50, sortDate);
         long lastId = 1l;
         int page = 1;
-        String keySearch = "";
+        String keySearch = "2020-09-10 01:24:05";
 
         when(messageService.loadMoreMessage(lastId, page, keySearch, pageable)).thenReturn(messageDtoList);
 
