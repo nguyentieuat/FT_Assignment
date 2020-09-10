@@ -1,7 +1,7 @@
 package com.example.chatapplication.services.dto;
 
 import com.example.chatapplication.domain.*;
-import com.example.chatapplication.ultities.Constants;
+import com.example.chatapplication.ultities.Constant;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +29,7 @@ public class AccountDto implements Serializable {
 
     private LocalDateTime lastLogin;
     private LocalDateTime lastLogout;
-    private int status = Constants.Status.ACTIVE;
+    private int status = Constant.Status.ACTIVE;
 
     private List<CaptureScreen> captureScreens;
 

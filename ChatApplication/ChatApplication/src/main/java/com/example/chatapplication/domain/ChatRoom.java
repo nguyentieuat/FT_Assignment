@@ -1,6 +1,6 @@
 package com.example.chatapplication.domain;
 
-import com.example.chatapplication.ultities.Constants;
+import com.example.chatapplication.ultities.Constant;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,7 +40,7 @@ public class ChatRoom {
     private ChatStatus chatStatus;
     @Column(length = 2)
     @ColumnDefault("1")
-    private int status = Constants.Status.ACTIVE;
+    private int status = Constant.Status.ACTIVE;
 
     @ManyToMany
     @JoinTable(name = "room_account", joinColumns = @JoinColumn(name = "room_id"), inverseJoinColumns = @JoinColumn(name = "username"))

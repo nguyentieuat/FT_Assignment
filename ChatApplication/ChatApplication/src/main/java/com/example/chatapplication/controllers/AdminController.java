@@ -8,7 +8,7 @@ import com.example.chatapplication.services.dto.AccountDto;
 import com.example.chatapplication.services.dto.CaptureScreenDto;
 import com.example.chatapplication.services.dto.MessageDto;
 import com.example.chatapplication.services.mapper.AccountMapper;
-import com.example.chatapplication.ultities.Constants;
+import com.example.chatapplication.ultities.Constant;
 import com.example.chatapplication.ultities.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,16 +46,16 @@ public class AdminController {
      * @return
      */
     @GetMapping(value = {"/manager-chat", "/manager"})
-    public String chatApplication(HttpServletRequest request, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
+    public String chatApplication(HttpServletRequest request, @PageableDefault(size = Constant.DEFAULT_SIZE_PAGE) Pageable pageable) {
         String username = SecurityUtils.getAccountCurrentUserLogin().orElse(null);
 
         if (!Objects.isNull(username)) {
             Account account = accountService.getAccountByUsername(username);
             AccountDto accountDto = accountMapper.toDto(account);
-            request.setAttribute(Constants.NameAttribute.CURRENT_USER, accountDto);
+            request.setAttribute(Constant.NameAttribute.CURRENT_USER, accountDto);
             List<AccountDto> accountDtos = accountService.findAllAccount(pageable);
 
-            request.setAttribute(Constants.NameAttribute.LIST_ACCOUNT, accountDtos);
+            request.setAttribute(Constant.NameAttribute.LIST_ACCOUNT, accountDtos);
         }
 
         return "admin/manager-chat";
@@ -71,13 +71,13 @@ public class AdminController {
      */
     @GetMapping(value = {"/getAllMessage/{username}"})
     public String getAllMessageByUsername(HttpServletRequest request, @PathVariable String username,
-                                          @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
+                                          @PageableDefault(size = Constant.DEFAULT_SIZE_PAGE) Pageable pageable) {
         String currentUsername = SecurityUtils.getAccountCurrentUserLogin().get();
 
         Account account = accountService.getAccountByUsername(username);
-        request.setAttribute(Constants.NameAttribute.CURRENT_USER, accountMapper.toDto(account));
+        request.setAttribute(Constant.NameAttribute.CURRENT_USER, accountMapper.toDto(account));
 
-        String keySearch = request.getParameter(Constants.KEY_SEARCH);
+        String keySearch = request.getParameter(Constant.KEY_SEARCH);
 
         List<MessageDto> messageDtoList;
         if (Objects.isNull(keySearch) || keySearch.isEmpty()) {
@@ -89,8 +89,8 @@ public class AdminController {
         messageDtoList.forEach(messageDto -> {
             messageDto.setOwner(messageDto.getAccountSender().getUsername().equalsIgnoreCase(currentUsername));
         });
-        request.setAttribute(Constants.KEY_SEARCH, keySearch);
-        request.setAttribute(Constants.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
+        request.setAttribute(Constant.KEY_SEARCH, keySearch);
+        request.setAttribute(Constant.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
 
         return "admin/common/chat-body";
     }
@@ -109,9 +109,9 @@ public class AdminController {
         String currentUsername = SecurityUtils.getAccountCurrentUserLogin().get();
 
         Account account = accountService.getAccountByUsername(username);
-        request.setAttribute(Constants.NameAttribute.CURRENT_USER, accountMapper.toDto(account));
+        request.setAttribute(Constant.NameAttribute.CURRENT_USER, accountMapper.toDto(account));
 
-        String createDateStr = request.getParameter(Constants.KEY_SEARCH);
+        String createDateStr = request.getParameter(Constant.KEY_SEARCH);
 
         List<CaptureScreenDto> captureScreenDtos;
         if (Objects.isNull(createDateStr) || createDateStr.isEmpty()) {
@@ -122,32 +122,32 @@ public class AdminController {
         captureScreenDtos.forEach(captureScreenDto -> {
             captureScreenDto.setOwner(captureScreenDto.getAccount().getUsername().equalsIgnoreCase(currentUsername));
         });
-        request.setAttribute(Constants.KEY_SEARCH, createDateStr);
-        request.setAttribute(Constants.NameAttribute.CAPTURE_DTO_LIST, captureScreenDtos);
-        request.setAttribute(Constants.NameAttribute.PAGE, Constants.Number.ONE);
+        request.setAttribute(Constant.KEY_SEARCH, createDateStr);
+        request.setAttribute(Constant.NameAttribute.CAPTURE_DTO_LIST, captureScreenDtos);
+        request.setAttribute(Constant.NameAttribute.PAGE, Constant.Number.ONE);
 
         if (!captureScreenDtos.isEmpty()) {
-            request.setAttribute(Constants.NameAttribute.LAST_ID, captureScreenDtos.get(captureScreenDtos.size() - 1).getId());
+            request.setAttribute(Constant.NameAttribute.LAST_ID, captureScreenDtos.get(captureScreenDtos.size() - 1).getId());
         }
         return "admin/common/capture-body";
     }
 
     @GetMapping(value = {"/loadMoreCapture/{username}/{lastId}/{page}"})
     public String loadMoreCapture(HttpServletRequest request, @PathVariable String username, @PathVariable int page, @PathVariable long lastId,
-                                  @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
+                                  @PageableDefault(size = Constant.DEFAULT_SIZE_PAGE) Pageable pageable) {
         String currentUsername = SecurityUtils.getAccountCurrentUserLogin().get();
 
         Account account = accountService.getAccountByUsername(username);
-        request.setAttribute(Constants.NameAttribute.CURRENT_USER, accountMapper.toDto(account));
+        request.setAttribute(Constant.NameAttribute.CURRENT_USER, accountMapper.toDto(account));
 
-        String createDateStr = request.getParameter(Constants.KEY_SEARCH);
-        createDateStr = Objects.isNull(createDateStr) ? Constants.BLANK : createDateStr.trim();
+        String createDateStr = request.getParameter(Constant.KEY_SEARCH);
+        createDateStr = Objects.isNull(createDateStr) ? Constant.BLANK : createDateStr.trim();
 
         List<CaptureScreenDto> captureScreenDtos = captureScreenService.loadMoreCapture(username, lastId, page, createDateStr, pageable);
         captureScreenDtos.forEach(captureScreenDto -> {
             captureScreenDto.setOwner(captureScreenDto.getAccount().getUsername().equalsIgnoreCase(currentUsername));
         });
-        request.setAttribute(Constants.NameAttribute.CAPTURE_DTO_LIST, captureScreenDtos);
+        request.setAttribute(Constant.NameAttribute.CAPTURE_DTO_LIST, captureScreenDtos);
 
         return "admin/common/capture";
     }
@@ -160,13 +160,13 @@ public class AdminController {
      * @return
      */
     @GetMapping("/searchUserTabMessage")
-    public String searchUserTabMessage(HttpServletRequest request, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
-        String keySearch = request.getParameter(Constants.KEY_SEARCH);
-        keySearch = Objects.isNull(keySearch) ? Constants.BLANK : keySearch.trim();
+    public String searchUserTabMessage(HttpServletRequest request, @PageableDefault(size = Constant.DEFAULT_SIZE_PAGE) Pageable pageable) {
+        String keySearch = request.getParameter(Constant.KEY_SEARCH);
+        keySearch = Objects.isNull(keySearch) ? Constant.BLANK : keySearch.trim();
 
         List<AccountDto> accountDtos = accountService.findAllAccountContainUsername(keySearch, pageable);
-        request.setAttribute(Constants.NameAttribute.LIST_ACCOUNT, accountDtos);
-        request.setAttribute(Constants.KEY_SEARCH, keySearch);
+        request.setAttribute(Constant.NameAttribute.LIST_ACCOUNT, accountDtos);
+        request.setAttribute(Constant.KEY_SEARCH, keySearch);
 
         return "admin/common/tab-content-message";
     }
@@ -178,14 +178,14 @@ public class AdminController {
      * @return
      */
     @GetMapping("/searchUserTabCapture")
-    public String searchUserTabCapture(HttpServletRequest request, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
-        String keySearch = request.getParameter(Constants.KEY_SEARCH);
-        keySearch = Objects.isNull(keySearch) ? Constants.BLANK : keySearch.trim();
+    public String searchUserTabCapture(HttpServletRequest request, @PageableDefault(size = Constant.DEFAULT_SIZE_PAGE) Pageable pageable) {
+        String keySearch = request.getParameter(Constant.KEY_SEARCH);
+        keySearch = Objects.isNull(keySearch) ? Constant.BLANK : keySearch.trim();
 
         List<AccountDto> accountDtos = accountService.findAllAccountContainUsername(keySearch, pageable);
 
-        request.setAttribute(Constants.NameAttribute.LIST_ACCOUNT, accountDtos);
-        request.setAttribute(Constants.KEY_SEARCH, keySearch);
+        request.setAttribute(Constant.NameAttribute.LIST_ACCOUNT, accountDtos);
+        request.setAttribute(Constant.KEY_SEARCH, keySearch);
 
         return "admin/common/tab-content-capture";
     }

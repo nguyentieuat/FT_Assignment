@@ -7,7 +7,7 @@ import com.example.chatapplication.repositories.CaptureScreenRepository;
 import com.example.chatapplication.services.CaptureScreenService;
 import com.example.chatapplication.services.dto.CaptureScreenDto;
 import com.example.chatapplication.services.mapper.CaptureScreenMapper;
-import com.example.chatapplication.ultities.Constants;
+import com.example.chatapplication.ultities.Constant;
 import com.example.chatapplication.ultities.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -47,22 +47,22 @@ public class CaptureScreenServiceImpl implements CaptureScreenService {
     public void saveCapture(String dataImg) {
         String username = SecurityUtils.getAccountCurrentUserLogin().get();
         LocalDateTime now = LocalDateTime.now();
-        String dateStrMinute = DateTimeFormatter.ofPattern(Constants.FORMAT_DATE_SAVE_CAPTURE).format(now);
+        String dateStrMinute = DateTimeFormatter.ofPattern(Constant.FORMAT_DATE_SAVE_CAPTURE).format(now);
 
         String path = new StringBuilder()
-                .append(Constants.PATH_CAPTURE_DESKTOP)
+                .append(Constant.PATH_CAPTURE_DESKTOP)
                 .append(File.separator)
                 .append(username)
                 .append(File.separator)
                 .append(dateStrMinute)
-                .append(Constants.FILE_NAME_EXTENSION_PNG)
+                .append(Constant.FILE_NAME_EXTENSION_PNG)
                 .toString();
 
         String filePath = new StringBuilder(rootDir)
                 .append(path)
                 .toString();
 
-        String data = dataImg.split(Constants.COMMA)[1].replace(Constants.SPACE, Constants.PLUS);
+        String data = dataImg.split(Constant.COMMA)[1].replace(Constant.SPACE, Constant.PLUS);
         File file = new File(filePath);
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
@@ -126,7 +126,7 @@ public class CaptureScreenServiceImpl implements CaptureScreenService {
 
     @Override
     public List<CaptureScreenDto> loadMoreCapture(String username, long lastId, int page, String createDateStr, Pageable pageable) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.FORMAT_DATE_TIME);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constant.FORMAT_DATE_TIME);
         if (!createDateStr.isEmpty()) {
             LocalDateTime time = LocalDateTime.parse(createDateStr);
             createDateStr = time.format(formatter);

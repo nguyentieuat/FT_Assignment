@@ -63,6 +63,8 @@ $(document).ready(function () {
                     $('#chat-1')[0].dropzone.removeAllFiles(true);
                     $("#messageArea").append(response);
                     $('#chat-content').animate({scrollTop: $('#messageArea').prop("scrollHeight")}, 333);
+                    $('#chat-id-1-input').val('');
+                    $('#chat-id-1-input').css('height', '46px');
                 }
             });
         } else {

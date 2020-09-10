@@ -4,7 +4,7 @@ import com.example.chatapplication.domain.Account;
 import com.example.chatapplication.services.AccountService;
 import com.example.chatapplication.services.JwtUserDetailsService;
 import com.example.chatapplication.services.dto.JwtLoginRequest;
-import com.example.chatapplication.ultities.Constants;
+import com.example.chatapplication.ultities.Constant;
 import com.example.chatapplication.ultities.JwtTokenUtil;
 import com.example.chatapplication.ultities.SecurityUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -97,7 +97,7 @@ class LoginControllerTest {
         Account account = new Account();
         String token = jwtTokenUtil.generateToken(userDetails);
 
-        Cookie cookie = new Cookie(Constants.COOKIE_NAME, token);
+        Cookie cookie = new Cookie(Constant.COOKIE_NAME, token);
 
         Mockito.when(jwtUserDetailsService.loadUserByUsername(authenticationRequest.getUsername())).thenReturn(userDetails);
         Mockito.when(accountService.getAccountByUsername("emp001")).thenReturn(account);

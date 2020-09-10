@@ -7,7 +7,7 @@ import com.example.chatapplication.repositories.ChatRoomRepository;
 import com.example.chatapplication.services.dto.ChatRoomDto;
 import com.example.chatapplication.services.impl.ChatRoomServiceImpl;
 import com.example.chatapplication.services.mapper.ChatRoomMapper;
-import com.example.chatapplication.ultities.Constants;
+import com.example.chatapplication.ultities.Constant;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,7 +50,7 @@ public class ChatRomServiceTest {
 
         when(chatRoomRepository.findById(idChatroom)).thenReturn(Optional.of(chatRoom));
 
-        when(accountRepository.findAllByStatusOrderByUsernameAsc(Constants.Status.ACTIVE, pageable)).thenReturn(new ArrayList<>());
+        when(accountRepository.findAllByStatusOrderByUsernameAsc(Constant.Status.ACTIVE, pageable)).thenReturn(new ArrayList<>());
 
         when(attachmentRepository.findAllByChatRoomOrChatRoomIsNullOrderByCreatedDateDesc(chatRoom, pageable)).thenReturn(new ArrayList<>());
 

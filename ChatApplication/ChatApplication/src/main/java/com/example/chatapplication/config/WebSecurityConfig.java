@@ -3,7 +3,7 @@ package com.example.chatapplication.config;
 
 import com.example.chatapplication.exception.AccessDeniedExceptionHandler;
 import com.example.chatapplication.filter.JwtRequestFilter;
-import com.example.chatapplication.ultities.Constants;
+import com.example.chatapplication.ultities.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -75,7 +75,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .logout().deleteCookies(Constants.COOKIE_NAME)
+                .logout().deleteCookies(Constant.COOKIE_NAME)
                 .logoutSuccessUrl("/signin")
                 .and()
                 .rememberMe().key("uniqueAndSecret");;

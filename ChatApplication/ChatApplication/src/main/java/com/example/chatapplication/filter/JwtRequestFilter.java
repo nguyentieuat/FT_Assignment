@@ -1,7 +1,7 @@
 package com.example.chatapplication.filter;
 
 import com.example.chatapplication.services.JwtUserDetailsService;
-import com.example.chatapplication.ultities.Constants;
+import com.example.chatapplication.ultities.Constant;
 import com.example.chatapplication.ultities.JwtTokenUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String requestToken = null;
         if (!Objects.isNull(cookies)) {
             requestToken = Arrays.stream(cookies)
-                    .filter(cookie -> cookie.getName().equals(Constants.COOKIE_NAME)).findFirst().map(Cookie::getValue)
+                    .filter(cookie -> cookie.getName().equals(Constant.COOKIE_NAME)).findFirst().map(Cookie::getValue)
                     .orElse(null);
         }
 

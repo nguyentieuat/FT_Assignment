@@ -4,7 +4,7 @@ import com.example.chatapplication.domain.Account;
 import com.example.chatapplication.services.AccountService;
 import com.example.chatapplication.services.JwtUserDetailsService;
 import com.example.chatapplication.services.dto.JwtLoginRequest;
-import com.example.chatapplication.ultities.Constants;
+import com.example.chatapplication.ultities.Constant;
 import com.example.chatapplication.ultities.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -70,8 +70,8 @@ public class AdminLoginController {
                 .loadUserByUsername(authenticationRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
 
-        Cookie cookie = new Cookie(Constants.COOKIE_NAME, token);
-        cookie.setPath(Constants.SLACK);
+        Cookie cookie = new Cookie(Constant.COOKIE_NAME, token);
+        cookie.setPath(Constant.SLACK);
         cookie.setMaxAge(Integer.MAX_VALUE);
 
         response.addCookie(cookie);

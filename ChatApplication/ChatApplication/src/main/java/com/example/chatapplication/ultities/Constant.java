@@ -1,6 +1,6 @@
 package com.example.chatapplication.ultities;
 
-public class Constants {
+public class Constant {
 
     public static final long JWT_TOKEN_VALIDITY = 24 * 60 * 60;
     public static final String FORMAT_DATE_UNDERSCORE = "yyyy_MM_dd";

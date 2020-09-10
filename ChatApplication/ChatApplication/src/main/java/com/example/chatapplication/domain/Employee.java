@@ -1,6 +1,6 @@
 package com.example.chatapplication.domain;
 
-import com.example.chatapplication.ultities.Constants;
+import com.example.chatapplication.ultities.Constant;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -56,7 +56,7 @@ public class Employee implements Serializable {
     private int jobTitle;
     @Column(length = 2)
     @ColumnDefault("1")
-    private int status = Constants.Status.ACTIVE;
+    private int status = Constant.Status.ACTIVE;
     private LocalDateTime dob;
 
     @CreationTimestamp

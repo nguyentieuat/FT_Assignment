@@ -11,7 +11,7 @@ import com.example.chatapplication.services.dto.ChatRoomDto;
 import com.example.chatapplication.services.dto.MessageDto;
 import com.example.chatapplication.services.dto.ResponseEntityDto;
 import com.example.chatapplication.services.mapper.AccountMapper;
-import com.example.chatapplication.ultities.Constants;
+import com.example.chatapplication.ultities.Constant;
 import com.example.chatapplication.ultities.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -66,27 +66,27 @@ public class ChatApplicationController {
      * @return
      */
     @GetMapping(value = {"/chat-light-mode", "/chat"})
-    public String chatApplication(HttpServletRequest request, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
+    public String chatApplication(HttpServletRequest request, @PageableDefault(size = Constant.DEFAULT_SIZE_PAGE) Pageable pageable) {
         String username = SecurityUtils.getAccountCurrentUserLogin().orElse(null);
 
         if (!Objects.isNull(username)) {
             Account account = accountService.getAccountByUsername(username);
             AccountDto accountDto = accountMapper.toDto(account);
-            request.setAttribute(Constants.NameAttribute.CURRENT_USER, accountDto);
+            request.setAttribute(Constant.NameAttribute.CURRENT_USER, accountDto);
             List<MessageDto> messageDtoList = messageService.getAllMessage(pageable);
             messageDtoList.forEach(messageDto -> {
                 messageDto.setOwner(messageDto.getAccountSender().getUsername().equalsIgnoreCase(username));
             });
-            request.setAttribute(Constants.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
+            request.setAttribute(Constant.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
 
             //Develop app, it will has many chat room, and chat room public for every one is a chat room specific where
             // has all everyone.
-            ChatRoomDto chatRoomDto = chatRomService.getChatRoomById(Constants.ID_CHAT_ROOM_ALL_USER, pageable);
-            request.setAttribute(Constants.NameAttribute.CHAT_ROOM_DTO, chatRoomDto);
-            request.setAttribute(Constants.NameAttribute.PAGE, Constants.Number.ONE);
+            ChatRoomDto chatRoomDto = chatRomService.getChatRoomById(Constant.ID_CHAT_ROOM_ALL_USER, pageable);
+            request.setAttribute(Constant.NameAttribute.CHAT_ROOM_DTO, chatRoomDto);
+            request.setAttribute(Constant.NameAttribute.PAGE, Constant.Number.ONE);
 
             if (!messageDtoList.isEmpty()) {
-                request.setAttribute(Constants.NameAttribute.LAST_ID, messageDtoList.get(messageDtoList.size() - 1).getId());
+                request.setAttribute(Constant.NameAttribute.LAST_ID, messageDtoList.get(messageDtoList.size() - 1).getId());
             }
         }
         return "chat-light-mode";
@@ -102,18 +102,18 @@ public class ChatApplicationController {
      * @return
      */
     @GetMapping("/loadMore/{page}/{lastId}")
-    public String loadMore(HttpServletRequest request, @PathVariable int page, @PathVariable long lastId, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
+    public String loadMore(HttpServletRequest request, @PathVariable int page, @PathVariable long lastId, @PageableDefault(size = Constant.DEFAULT_SIZE_PAGE) Pageable pageable) {
         String username = SecurityUtils.getAccountCurrentUserLogin().get();
 
-        String keySearch = request.getParameter(Constants.KEY_SEARCH);
-        keySearch = Objects.isNull(keySearch) ? Constants.BLANK : keySearch.trim();
+        String keySearch = request.getParameter(Constant.KEY_SEARCH);
+        keySearch = Objects.isNull(keySearch) ? Constant.BLANK : keySearch.trim();
 
         List<MessageDto> messageDtoList = messageService.loadMoreMessage(lastId, page, keySearch, pageable);
         messageDtoList.forEach(messageDto -> {
             messageDto.setOwner(messageDto.getAccountSender().getUsername().equalsIgnoreCase(username));
         });
-        request.setAttribute(Constants.KEY_SEARCH, keySearch);
-        request.setAttribute(Constants.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
+        request.setAttribute(Constant.KEY_SEARCH, keySearch);
+        request.setAttribute(Constant.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
 
         return "common/chat-content";
     }
@@ -137,7 +137,7 @@ public class ChatApplicationController {
             if (file.exists()) {
                 try {
                     InputStream inputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-                    response.setContentType(Constants.TYPE_IMAGE);
+                    response.setContentType(Constant.TYPE_IMAGE);
                     FileCopyUtils.copy(inputStream, response.getOutputStream());
                 } catch (IOException e) {
                     log.error("Cann't find avatar " + e);
@@ -163,7 +163,7 @@ public class ChatApplicationController {
      * @return
      */
     @PostMapping("/app/chat.uploadFile")
-    public String chatUploadFile(@ModelAttribute MessageDto messageDto, HttpServletRequest request, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
+    public String chatUploadFile(@ModelAttribute MessageDto messageDto, HttpServletRequest request, @PageableDefault(size = Constant.DEFAULT_SIZE_PAGE) Pageable pageable) {
         String username = SecurityUtils.getAccountCurrentUserLogin().orElse(null);
 
         if (!Objects.isNull(username)) {
@@ -177,7 +177,7 @@ public class ChatApplicationController {
             messageDtoList.forEach(mess -> {
                 mess.setOwner(mess.getAccountSender().getUsername().equalsIgnoreCase(username));
             });
-            request.setAttribute(Constants.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
+            request.setAttribute(Constant.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
         }
         return "common/chat-content";
     }
@@ -210,18 +210,18 @@ public class ChatApplicationController {
      * @return
      */
     @GetMapping("/searchMessage")
-    public String searchMessage(HttpServletRequest request, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
+    public String searchMessage(HttpServletRequest request, @PageableDefault(size = Constant.DEFAULT_SIZE_PAGE) Pageable pageable) {
         String username = SecurityUtils.getAccountCurrentUserLogin().get();
 
-        String keySearch = request.getParameter(Constants.KEY_SEARCH);
-        keySearch = Objects.isNull(keySearch) ? Constants.BLANK : keySearch.trim();
+        String keySearch = request.getParameter(Constant.KEY_SEARCH);
+        keySearch = Objects.isNull(keySearch) ? Constant.BLANK : keySearch.trim();
 
         List<MessageDto> messageDtoList = messageService.findByContent(keySearch, pageable);
         messageDtoList.forEach(messageDto -> {
             messageDto.setOwner(messageDto.getAccountSender().getUsername().equalsIgnoreCase(username));
         });
-        request.setAttribute(Constants.KEY_SEARCH, keySearch);
-        request.setAttribute(Constants.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
+        request.setAttribute(Constant.KEY_SEARCH, keySearch);
+        request.setAttribute(Constant.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
 
         return "common/chat-content";
     }
@@ -234,18 +234,18 @@ public class ChatApplicationController {
      * @return
      */
     @GetMapping("/getUserOnline")
-    public String getUserOnline(HttpServletRequest request, @PageableDefault(size = Constants.DEFAULT_SIZE_PAGE) Pageable pageable) {
+    public String getUserOnline(HttpServletRequest request, @PageableDefault(size = Constant.DEFAULT_SIZE_PAGE) Pageable pageable) {
 
-        String keySearch = request.getParameter(Constants.KEY_SEARCH);
-        keySearch = Objects.isNull(keySearch) ? Constants.BLANK : keySearch.trim();
+        String keySearch = request.getParameter(Constant.KEY_SEARCH);
+        keySearch = Objects.isNull(keySearch) ? Constant.BLANK : keySearch.trim();
         List<AccountDto> accountDtos;
         if (keySearch.isEmpty()) {
             accountDtos = accountService.getAccountOnline(pageable);
         } else {
             accountDtos = accountService.getAccountOnline(keySearch, pageable);
         }
-        request.setAttribute(Constants.KEY_SEARCH, keySearch);
-        request.setAttribute(Constants.NameAttribute.LIST_ACCOUNT, accountDtos);
+        request.setAttribute(Constant.KEY_SEARCH, keySearch);
+        request.setAttribute(Constant.NameAttribute.LIST_ACCOUNT, accountDtos);
         return "common/tab-content-dialogs";
     }
 

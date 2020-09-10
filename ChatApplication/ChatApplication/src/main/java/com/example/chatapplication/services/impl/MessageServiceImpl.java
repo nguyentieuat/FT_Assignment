@@ -10,7 +10,7 @@ import com.example.chatapplication.repositories.MessageRepository;
 import com.example.chatapplication.services.MessageService;
 import com.example.chatapplication.services.dto.MessageDto;
 import com.example.chatapplication.services.mapper.MessageMapper;
-import com.example.chatapplication.ultities.Constants;
+import com.example.chatapplication.ultities.Constant;
 import com.example.chatapplication.ultities.FileUtilsUpload;
 import com.example.chatapplication.ultities.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -165,7 +165,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<MessageDto> loadMoreMessage(long lastId, int page, String keySearch, Pageable pageable) {
 
-        keySearch = new StringBuilder().append(Constants.PERCENT).append(keySearch).append(Constants.PERCENT).toString();
+        keySearch = new StringBuilder().append(Constant.PERCENT).append(keySearch).append(Constant.PERCENT).toString();
         int pageSize = pageable.getPageSize();
         List<Message> messages = messageRepository.findAllByContentContainingIgnoreCaseOrderByCreatedDateDesc(lastId,keySearch, page * pageSize, pageSize);
         getAttachmentForMessage(messages);

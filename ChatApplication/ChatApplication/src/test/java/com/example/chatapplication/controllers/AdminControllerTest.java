@@ -8,7 +8,7 @@ import com.example.chatapplication.services.dto.AccountDto;
 import com.example.chatapplication.services.dto.CaptureScreenDto;
 import com.example.chatapplication.services.dto.MessageDto;
 import com.example.chatapplication.services.mapper.AccountMapper;
-import com.example.chatapplication.ultities.Constants;
+import com.example.chatapplication.ultities.Constant;
 import com.example.chatapplication.ultities.SecurityUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -122,7 +122,7 @@ public class AdminControllerTest {
         account.setUsername(username);
         when(accountService.getAccountByUsername(username)).thenReturn(account);
         String keySearch = "anh nho em";
-        when(request.getParameter(Constants.KEY_SEARCH)).thenReturn(keySearch);
+        when(request.getParameter(Constant.KEY_SEARCH)).thenReturn(keySearch);
 
         Sort sortDate = Sort.by(Sort.Direction.DESC, "createdDate");
         Pageable pageable = PageRequest.of(0, 50, sortDate);
@@ -148,7 +148,7 @@ public class AdminControllerTest {
         account.setUsername(username);
         when(accountService.getAccountByUsername(username)).thenReturn(account);
         String keySearch = "";
-        when(request.getParameter(Constants.KEY_SEARCH)).thenReturn(keySearch);
+        when(request.getParameter(Constant.KEY_SEARCH)).thenReturn(keySearch);
 
         Sort sortDate = Sort.by(Sort.Direction.DESC, "createdDate");
         Pageable pageable = PageRequest.of(0, 50, sortDate);
@@ -176,7 +176,7 @@ public class AdminControllerTest {
         account.setUsername(username);
         when(accountService.getAccountByUsername(username)).thenReturn(account);
         String keySearch = "2020-09-10 01:24:05";
-        when(request.getParameter(Constants.KEY_SEARCH)).thenReturn(keySearch);
+        when(request.getParameter(Constant.KEY_SEARCH)).thenReturn(keySearch);
 
         Sort sortDate = Sort.by(Sort.Direction.DESC, "createdDate");
         Pageable pageable = PageRequest.of(0, 50, sortDate);
@@ -229,7 +229,7 @@ public class AdminControllerTest {
         account.setUsername(username);
         when(accountService.getAccountByUsername(username)).thenReturn(account);
         String createDateStr = "2020-09-10 01:24:05";
-        when(request.getParameter(Constants.KEY_SEARCH)).thenReturn(createDateStr);
+        when(request.getParameter(Constant.KEY_SEARCH)).thenReturn(createDateStr);
         Sort sortDate = Sort.by(Sort.Direction.DESC, "createdDate");
         Pageable pageable = PageRequest.of(0, 50, sortDate);
 
@@ -251,7 +251,7 @@ public class AdminControllerTest {
     public void searchUserTabMessage() {
 
         String keySearch = "emp";
-        when(request.getParameter(Constants.KEY_SEARCH)).thenReturn(keySearch);
+        when(request.getParameter(Constant.KEY_SEARCH)).thenReturn(keySearch);
 
         Sort sortDate = Sort.by(Sort.Direction.DESC, "createdDate");
         Pageable pageable = PageRequest.of(0, 50, sortDate);
@@ -264,7 +264,7 @@ public class AdminControllerTest {
     @Test
     public void searchUserTabCapture() {
         String keySearch = "emp";
-        when(request.getParameter(Constants.KEY_SEARCH)).thenReturn(keySearch);
+        when(request.getParameter(Constant.KEY_SEARCH)).thenReturn(keySearch);
 
         Sort sortDate = Sort.by(Sort.Direction.DESC, "createdDate");
         Pageable pageable = PageRequest.of(0, 50, sortDate);

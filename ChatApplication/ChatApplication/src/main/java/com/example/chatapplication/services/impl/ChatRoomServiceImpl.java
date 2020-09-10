@@ -9,7 +9,7 @@ import com.example.chatapplication.repositories.ChatRoomRepository;
 import com.example.chatapplication.services.ChatRomService;
 import com.example.chatapplication.services.dto.ChatRoomDto;
 import com.example.chatapplication.services.mapper.ChatRoomMapper;
-import com.example.chatapplication.ultities.Constants;
+import com.example.chatapplication.ultities.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class ChatRoomServiceImpl implements ChatRomService {
         ChatRoom chatRoom = chatRoomRepository.findById(id).get();
 
         //Chat public contain all account is active
-        List<Account> accounts = accountRepository.findAllByStatusOrderByUsernameAsc(Constants.Status.ACTIVE, pageable);
+        List<Account> accounts = accountRepository.findAllByStatusOrderByUsernameAsc(Constant.Status.ACTIVE, pageable);
         chatRoom.setAccounts(accounts);
 
         //File attach in room public can set id is room public's id or no set id

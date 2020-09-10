@@ -33,16 +33,16 @@ public class FileUtilsUpload {
      */
     public String saveFileUpload(String username, Integer numberRecordInDay, LocalDateTime date, MultipartFile file) throws BusinessException {
 
-        String dateStr = DateTimeFormatter.ofPattern(Constants.FORMAT_DATE_UNDERSCORE).format(date);
+        String dateStr = DateTimeFormatter.ofPattern(Constant.FORMAT_DATE_UNDERSCORE).format(date);
         String pathResult = null;
         try {
             String fileName = FilenameUtils.getName(file.getOriginalFilename());
             StringBuilder sbPathResult = new StringBuilder();
 
             sbPathResult.append(username)
-                    .append(File.separator).append(Constants.PATH_ATTACH_MESSAGE)
+                    .append(File.separator).append(Constant.PATH_ATTACH_MESSAGE)
                     .append(File.separator).append(dateStr)
-                    .append(File.separator).append(numberRecordInDay + Constants.Number.ONE)
+                    .append(File.separator).append(numberRecordInDay + Constant.Number.ONE)
                     .append(File.separator).append(fileName);
 
             String rootPath = new StringBuilder(rootDir)

@@ -2,7 +2,7 @@ package com.example.chatapplication.services.dto;
 
 import com.example.chatapplication.domain.Account;
 import com.example.chatapplication.domain.Department;
-import com.example.chatapplication.ultities.Constants;
+import com.example.chatapplication.ultities.Constant;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,7 +30,7 @@ public class EmployeeDto implements Serializable {
     private Department department;
 
     private int jobTitle;
-    private int status = Constants.Status.ACTIVE;
+    private int status = Constant.Status.ACTIVE;
     private LocalDateTime dob;
 
     private Account account;

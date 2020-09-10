@@ -1,6 +1,6 @@
 package com.example.chatapplication.domain;
 
-import com.example.chatapplication.ultities.Constants;
+import com.example.chatapplication.ultities.Constant;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -56,7 +56,7 @@ public class Account implements Serializable {
     private LocalDateTime lastLogout;
     @Column(length = 2)
     @ColumnDefault("1")
-    private int status = Constants.Status.ACTIVE;
+    private int status = Constant.Status.ACTIVE;
 
     @CreationTimestamp
     @Column(nullable = false)

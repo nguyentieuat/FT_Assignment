@@ -4,7 +4,7 @@ import com.example.chatapplication.domain.Account;
 import com.example.chatapplication.domain.Attachment;
 import com.example.chatapplication.domain.ChatStatus;
 import com.example.chatapplication.domain.Message;
-import com.example.chatapplication.ultities.Constants;
+import com.example.chatapplication.ultities.Constant;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,7 +28,7 @@ public class ChatRoomDto {
 
     private ChatStatus chatStatus;
 
-    private int status = Constants.Status.ACTIVE;
+    private int status = Constant.Status.ACTIVE;
 
     private List<Account> accounts;
 

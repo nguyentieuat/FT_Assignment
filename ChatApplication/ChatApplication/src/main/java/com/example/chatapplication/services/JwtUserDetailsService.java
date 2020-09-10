@@ -3,7 +3,7 @@ package com.example.chatapplication.services;
 import com.example.chatapplication.domain.Account;
 import com.example.chatapplication.repositories.AccountRepository;
 import com.example.chatapplication.ultities.Common;
-import com.example.chatapplication.ultities.Constants;
+import com.example.chatapplication.ultities.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,7 +26,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = accountRepository.findByUsername(username);
-        if (Objects.isNull(account) || account.getStatus() == Constants.Status.INACTIVE) {
+        if (Objects.isNull(account) || account.getStatus() == Constant.Status.INACTIVE) {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
         List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();

@@ -1,6 +1,6 @@
 package com.example.chatapplication.interceptor;
 
-import com.example.chatapplication.ultities.Constants;
+import com.example.chatapplication.ultities.Constant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -24,9 +24,9 @@ public class HttpHandshakeInterceptor implements HandshakeInterceptor {
             ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
             Cookie[] cookies = servletRequest.getServletRequest().getCookies();
             String requestToken = Arrays.stream(cookies)
-                    .filter(cookie -> cookie.getName().equals(Constants.COOKIE_NAME)).findFirst().map(Cookie::getValue)
+                    .filter(cookie -> cookie.getName().equals(Constant.COOKIE_NAME)).findFirst().map(Cookie::getValue)
                     .orElse(null);
-            map.put(Constants.COOKIE_NAME, requestToken);
+            map.put(Constant.COOKIE_NAME, requestToken);
         }
         return true;
     }
