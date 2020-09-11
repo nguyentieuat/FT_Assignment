@@ -246,6 +246,32 @@ public class AdminControllerTest {
         Assert.assertEquals("admin/common/capture", adminController.loadMoreCapture(request, username, page, lastId, pageable));
     }
 
+    @Test
+    public void loadMoreMessage() {
+        Optional<String> optionalUsername = Optional.of("emp001");
+        PowerMockito.mockStatic(SecurityUtils.class);
+        when(SecurityUtils.getAccountCurrentUserLogin()).thenReturn(optionalUsername);
+        String username = SecurityUtils.getAccountCurrentUserLogin().get();
+        Account account = new Account();
+        account.setUsername(username);
+        when(accountService.getAccountByUsername(username)).thenReturn(account);
+        String keySearch = "anh nho em";
+        when(request.getParameter(Constant.KEY_SEARCH)).thenReturn(keySearch);
+        Sort sortDate = Sort.by(Sort.Direction.DESC, "createdDate");
+        Pageable pageable = PageRequest.of(0, 50, sortDate);
+
+        MessageDto messageDto = new MessageDto();
+        messageDto.setId(1l);
+        messageDto.setAccountSender(account);
+
+        List<MessageDto> messageDtos = new ArrayList<>();
+        messageDtos.add(messageDto);
+        long lastId = 1l;
+        int page = 1;
+
+        when(messageService.loadMoreMessage(username, lastId, page, keySearch, pageable)).thenReturn(messageDtos);
+        Assert.assertEquals("admin/common/message", adminController.loadMoreMessage(request, username, page, lastId, pageable));
+    }
 
     @Test
     public void searchUserTabMessage() {

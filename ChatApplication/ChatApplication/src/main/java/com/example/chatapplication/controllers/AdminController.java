@@ -79,18 +79,23 @@ public class AdminController {
 
         String keySearch = request.getParameter(Constant.KEY_SEARCH);
 
-        List<MessageDto> messageDtoList;
+        List<MessageDto> messageDtos;
         if (Objects.isNull(keySearch) || keySearch.isEmpty()) {
-            messageDtoList = messageService.findAllByAccount(account, pageable);
+            messageDtos = messageService.findAllByAccount(account, pageable);
         } else {
-            messageDtoList = messageService.findAllByAccountAndContent(account, keySearch.trim(), pageable);
+            messageDtos = messageService.findAllByAccountAndContent(account, keySearch.trim(), pageable);
         }
 
-        messageDtoList.forEach(messageDto -> {
+        messageDtos.forEach(messageDto -> {
             messageDto.setOwner(messageDto.getAccountSender().getUsername().equalsIgnoreCase(currentUsername));
         });
         request.setAttribute(Constant.KEY_SEARCH, keySearch);
-        request.setAttribute(Constant.NameAttribute.MESSAGE_DTO_LIST, messageDtoList);
+        request.setAttribute(Constant.NameAttribute.MESSAGE_DTO_LIST, messageDtos);
+        request.setAttribute(Constant.NameAttribute.PAGE, Constant.Number.ONE);
+
+        if (!messageDtos.isEmpty()) {
+            request.setAttribute(Constant.NameAttribute.LAST_ID, messageDtos.get(messageDtos.size() - 1).getId());
+        }
 
         return "admin/common/chat-body";
     }
@@ -150,6 +155,26 @@ public class AdminController {
         request.setAttribute(Constant.NameAttribute.CAPTURE_DTO_LIST, captureScreenDtos);
 
         return "admin/common/capture";
+    }
+
+    @GetMapping(value = {"/loadMoreMessage/{username}/{lastId}/{page}"})
+    public String loadMoreMessage(HttpServletRequest request, @PathVariable String username, @PathVariable int page, @PathVariable long lastId,
+                                  @PageableDefault(size = Constant.DEFAULT_SIZE_PAGE) Pageable pageable) {
+        String currentUsername = SecurityUtils.getAccountCurrentUserLogin().get();
+
+        Account account = accountService.getAccountByUsername(username);
+        request.setAttribute(Constant.NameAttribute.CURRENT_USER, accountMapper.toDto(account));
+
+        String keySearch = request.getParameter(Constant.KEY_SEARCH);
+        keySearch = Objects.isNull(keySearch) ? Constant.BLANK : keySearch.trim();
+
+        List<MessageDto> messageDtos = messageService.loadMoreMessage(username, lastId, page, keySearch, pageable);
+        messageDtos.forEach(messageDto -> {
+            messageDto.setOwner(messageDto.getAccountSender().getUsername().equalsIgnoreCase(currentUsername));
+        });
+        request.setAttribute(Constant.NameAttribute.MESSAGE_DTO_LIST, messageDtos);
+
+        return "admin/common/message";
     }
 
     /**

@@ -164,10 +164,21 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<MessageDto> loadMoreMessage(long lastId, int page, String keySearch, Pageable pageable) {
-
         keySearch = new StringBuilder().append(Constant.PERCENT).append(keySearch).append(Constant.PERCENT).toString();
         int pageSize = pageable.getPageSize();
         List<Message> messages = messageRepository.findAllByContentContainingIgnoreCaseOrderByCreatedDateDesc(lastId,keySearch, page * pageSize, pageSize);
+        getAttachmentForMessage(messages);
+        List<MessageDto> messageDtos = messages.stream().map(messageMapper::toDto).collect(Collectors.toList());
+        Collections.reverse(messageDtos);
+        return messageDtos;
+    }
+
+    @Override
+    public List<MessageDto> loadMoreMessage(String username, long lastId, int page, String keySearch, Pageable pageable) {
+        keySearch = new StringBuilder().append(Constant.PERCENT).append(keySearch).append(Constant.PERCENT).toString();
+        int pageSize = pageable.getPageSize();
+        List<Message> messages = messageRepository.findAllByUsernameAndCreatedDateAfterOrderByCreatedDateDesc
+                (username, lastId, page * pageSize, keySearch, pageSize);
         getAttachmentForMessage(messages);
         List<MessageDto> messageDtos = messages.stream().map(messageMapper::toDto).collect(Collectors.toList());
         Collections.reverse(messageDtos);

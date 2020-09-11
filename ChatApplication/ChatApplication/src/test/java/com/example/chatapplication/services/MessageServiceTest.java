@@ -325,4 +325,27 @@ public class MessageServiceTest {
         when(messageRepository.findAllByContentContainingIgnoreCaseOrderByCreatedDateDesc(lastId, keySearch, page * pageSize, pageSize)).thenReturn(messages);
         Assert.assertEquals(messages.size(), messageService.loadMoreMessage(lastId, page, keySearch, pageable).size());
     }
+
+    @Test
+    public void loadMoreCapture() {
+
+        Sort sortCreatedDate = Sort.by(Sort.Direction.DESC, "createdDate");
+        Pageable pageable = PageRequest.of(0, 50, sortCreatedDate);
+
+        List<Message> messages = new ArrayList<>();
+        String username= "emp001";
+        long lastId = 1l;
+        int page = 1;
+        int pageSize = pageable.getPageSize();
+        String keySearch = "anh nhoe m";
+        when(messageRepository.findAllByUsernameAndCreatedDateAfterOrderByCreatedDateDesc
+                (username, lastId, page * pageSize, keySearch, pageSize)).thenReturn(messages);
+
+        Message message = new Message();
+        MessageDto messageDto = new MessageDto();
+        when(messageMapper.toDto(message)).thenReturn(messageDto);
+
+        Assert.assertEquals(messages.size(), messageService.loadMoreMessage( username,  lastId,  page,  keySearch, pageable).size());
+    }
+
 }

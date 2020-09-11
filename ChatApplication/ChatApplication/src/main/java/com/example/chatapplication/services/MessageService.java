@@ -11,6 +11,7 @@ public interface MessageService {
 
     /**
      * Get all message
+     *
      * @param pageable
      * @return
      */
@@ -18,6 +19,7 @@ public interface MessageService {
 
     /**
      * Save message
+     *
      * @param messageDto
      * @return
      */
@@ -25,6 +27,7 @@ public interface MessageService {
 
     /**
      * Find message by id
+     *
      * @param l
      * @return
      */
@@ -32,6 +35,7 @@ public interface MessageService {
 
     /**
      * delete message by id
+     *
      * @param idMessage
      * @throws BusinessException
      */
@@ -39,6 +43,7 @@ public interface MessageService {
 
     /**
      * Find messages by context contain key search
+     *
      * @param keySearch
      * @param pageable
      * @return
@@ -47,6 +52,7 @@ public interface MessageService {
 
     /**
      * Find message by account owner
+     *
      * @param account
      * @param pageable
      * @return
@@ -55,6 +61,7 @@ public interface MessageService {
 
     /**
      * Find message by account owner and context contain key search
+     *
      * @param account
      * @param keySearch
      * @param pageable
@@ -63,7 +70,7 @@ public interface MessageService {
     List<MessageDto> findAllByAccountAndContent(Account account, String keySearch, Pageable pageable);
 
     /**
-     * Load more message form index
+     * Load more message in chat screen
      *
      * @param lastId
      * @param page
@@ -72,4 +79,16 @@ public interface MessageService {
      * @return
      */
     List<MessageDto> loadMoreMessage(long lastId, int page, String keySearch, Pageable pageable);
+
+    /**
+     * Load more message from screen manager
+     *
+     * @param username
+     * @param lastId
+     * @param page
+     * @param keySearch
+     * @param pageable
+     * @return
+     */
+    List<MessageDto> loadMoreMessage(String username, long lastId, int page, String keySearch, Pageable pageable);
 }

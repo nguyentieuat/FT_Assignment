@@ -71,7 +71,7 @@
         <form method="get" th:action="${'/admin/getAllMessage/' + currentUser.username}" id="formSearchMessage">
             <div class="input-group">
                 <input type="text" class="form-control form-control-lg" placeholder="Search this chat"
-                       aria-label="Search this chat" name="keySearch" th:value="${keySearch}">
+                       aria-label="Search this chat" name="keySearch" th:value="${keySearch}" id="keySearch">
 
                 <div class="input-group-append">
                     <button class="btn btn-lg btn-ico btn-secondary btn-minimal" type="submit">
@@ -85,8 +85,8 @@
 <!-- Chat: Search -->
 
 <!-- Chat: Content-->
-<div class="chat-content px-lg-8" id="chat-content">
-    <div id="messageArea">
+<div class="chat-content px-lg-8" id="chat-content" onscroll="loadMore()">
+    <div id="messageArea" th:page="${page}" th:username="${currentUser.username}" th:lastId="${lastId}" type="message">
         <div th:replace="admin/common/message.html :: message"></div>
     </div>
     <!-- Scroll to end -->

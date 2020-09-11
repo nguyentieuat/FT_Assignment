@@ -203,7 +203,7 @@ function getCaptureByUsername() {
 //     }
 // });
 
-function loadMoreCapture() {
+function loadMore() {
     if ($('#chat-content').scrollTop() == 0) {
         let scrollLast = $('#messageArea').prop("scrollHeight");
         let messageArea = document.getElementById("messageArea");
@@ -211,8 +211,15 @@ function loadMoreCapture() {
         let page = parseInt(messageArea.getAttribute("page"));
         let username = messageArea.getAttribute("username");
         let lastId = parseInt(messageArea.getAttribute("lastId"));
+        let type = messageArea.getAttribute("type");
+        let url;
+        if (type == 'capture') {
+            url = "/admin/loadMoreCapture/" + username + "/" + lastId + "/" + page;
+        } else if (type == 'message') {
+            url = "/admin/loadMoreMessage/" + username + "/" + lastId + "/" + page;
+        }
         $.ajax({
-            url: "/admin/loadMoreCapture/" + username + "/" + lastId + "/" + page,
+            url: url,
             contentType: "application/json; charset=utf-8",
             data: {keySearch: keySearch},
             type: 'GET',

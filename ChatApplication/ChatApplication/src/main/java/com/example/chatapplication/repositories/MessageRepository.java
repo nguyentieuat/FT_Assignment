@@ -25,4 +25,7 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
     @Query(value="SELECT * FROM message m WHERE m.content LIKE ?2 AND m.id < ?1 ORDER BY m.created_date DESC limit ?4 offset ?3", nativeQuery = true)
     List<Message> findAllByContentContainingIgnoreCaseOrderByCreatedDateDesc(long lastId, String keySearch, int i, int pageSize);
+
+    @Query(value="SELECT * FROM message m WHERE m.sender like ?1  AND m.content LIKE ?4 AND m.id < ?2 ORDER BY m.created_date DESC limit ?5 offset ?3", nativeQuery = true)
+    List<Message> findAllByUsernameAndCreatedDateAfterOrderByCreatedDateDesc(String username, long lastId, int i, String keySearch, int pageSize);
 }

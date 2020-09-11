@@ -86,7 +86,7 @@
 <!-- Chat: Search -->
 
 <!-- Chat: Content-->
-<div class="chat-content px-lg-8" id="chat-content" onscroll="loadMoreCapture()">
+<div class="chat-content px-lg-8" id="chat-content" onscroll="loadMore()">
     <div id="messageArea" th:page="${page}" th:username="${currentUser.username}" th:lastId="${lastId}" type="capture">
         <div th:replace="admin/common/capture.html :: capture"></div>
     </div>
